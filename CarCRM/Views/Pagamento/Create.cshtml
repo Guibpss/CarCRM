@@ -1,0 +1,66 @@
+@model CarCRM.Models.Pagamento
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Pagamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Valor" class="control-label"></label>
+                <input asp-for="Valor" class="form-control" />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Parcelas" class="control-label"></label>
+                <input asp-for="Parcelas" class="form-control" />
+                <span asp-validation-for="Parcelas" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataVencimento" class="control-label"></label>
+                <input asp-for="DataVencimento" class="form-control" />
+                <span asp-validation-for="DataVencimento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataPagamento" class="control-label"></label>
+                <input asp-for="DataPagamento" class="form-control" />
+                <span asp-validation-for="DataPagamento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CriadoEm" class="control-label"></label>
+                <input asp-for="CriadoEm" class="form-control" />
+                <span asp-validation-for="CriadoEm" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StatusPagamentoId" class="control-label"></label>
+                <input asp-for="StatusPagamentoId" class="form-control" />
+                <span asp-validation-for="StatusPagamentoId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MetodoPagamentoId" class="control-label"></label>
+                <input asp-for="MetodoPagamentoId" class="form-control" />
+                <span asp-validation-for="MetodoPagamentoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
