@@ -48,7 +48,7 @@ public class PessoaJuridicasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,razaoSocial,nomeFantasia,nomeInterno,CNPJ,PessoaId,TelefoneId")] PessoaJuridica pessoajuridica)
+    public async Task<IActionResult> Create([Bind("RazaoSocial,NomeFantasia,NomeInterno,CNPJ,Nome,Email,Id,CriadoEm,Excluido")] PessoaJuridica pessoajuridica)
     {
         if (ModelState.IsValid)
         {
@@ -80,7 +80,7 @@ public class PessoaJuridicasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,razaoSocial,nomeFantasia,nomeInterno,CNPJ,PessoaId,TelefoneId")] PessoaJuridica pessoajuridica)
+    public async Task<IActionResult> Edit(int? id, [Bind("RazaoSocial,NomeFantasia,NomeInterno,CNPJ,Nome,Email,Id,CriadoEm,Excluido")] PessoaJuridica pessoajuridica)
     {
         if (id != pessoajuridica.Id)
         {

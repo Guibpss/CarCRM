@@ -25,13 +25,22 @@
                 @Html.DisplayNameFor(model => model.DataPagamento)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CriadoEm)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.StatusPagamentoId)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.StatusPagamento)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.MetodoPagamentoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MetodoPagamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriadoEm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Excluido)
             </th>
             <th></th>
         </tr>
@@ -52,13 +61,22 @@
                 @Html.DisplayFor(model => item.DataPagamento)
             </td>
             <td>
-                @Html.DisplayFor(model => item.CriadoEm)
-            </td>
-            <td>
                 @Html.DisplayFor(model => item.StatusPagamentoId)
             </td>
             <td>
+                @Html.DisplayFor(model => item.StatusPagamento)
+            </td>
+            <td>
                 @Html.DisplayFor(model => item.MetodoPagamentoId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.MetodoPagamento)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CriadoEm)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Excluido)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

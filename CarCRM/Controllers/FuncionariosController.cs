@@ -48,7 +48,7 @@ public class FuncionariosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Admissão,CriadoEm,Salario,UsuarioId,CargoId")] Funcionario funcionario)
+    public async Task<IActionResult> Create([Bind("Admissao,Salario,Nome,Email,Id,CriadoEm,Excluido")] Funcionario funcionario)
     {
         if (ModelState.IsValid)
         {
@@ -80,7 +80,7 @@ public class FuncionariosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Admissão,CriadoEm,Salario,UsuarioId,CargoId")] Funcionario funcionario)
+    public async Task<IActionResult> Edit(int? id, [Bind("Admissao,Salario,Nome,Email,Id,CriadoEm,Excluido")] Funcionario funcionario)
     {
         if (id != funcionario.Id)
         {

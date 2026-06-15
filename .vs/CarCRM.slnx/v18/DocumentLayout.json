@@ -3,8 +3,88 @@
   "WorkspaceRootPath": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\veiculocor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\veiculocor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\veiculo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\veiculo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\views\\usuarios\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\views\\usuarios\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\telefone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\telefone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\veiculomodelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\veiculomodelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\veiculomarca.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\veiculomarca.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\statusestoque.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\statusestoque.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\pessoafisica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\pessoafisica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\cargo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\cargo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\estoque.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\estoque.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\funcionario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\funcionario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\veiculotipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\veiculotipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\pagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\pagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\metodopagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\metodopagamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|c:\\users\\guilherme.santos\\documents\\estudos\\carcrm\\carcrm\\models\\fornecedortipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E0C4CD0-B1E0-AFD6-8B74-AA7E687672F8}|CarCRM\\CarCRM.csproj|solutionrelative:carcrm\\models\\fornecedortipo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +94,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -25,12 +105,242 @@
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Views\\Usuarios\\Create.cshtml",
+              "RelativeDocumentMoniker": "CarCRM\\Views\\Usuarios\\Create.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Views\\Usuarios\\Create.cshtml",
+              "RelativeToolTip": "CarCRM\\Views\\Usuarios\\Create.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAACoAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-15T02:54:00.451Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "CarCRM\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAwwDIAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-15T02:52:16.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "CarCRM\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "CarCRM\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-15T02:39:47.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_ViewStart.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Views\\_ViewStart.cshtml",
+              "RelativeDocumentMoniker": "CarCRM\\Views\\_ViewStart.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Views\\_ViewStart.cshtml",
+              "RelativeToolTip": "CarCRM\\Views\\_ViewStart.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-15T02:39:17.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "CarCRM\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "CarCRM\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-15T01:57:00.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "VeiculoModelo.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\VeiculoModelo.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\VeiculoModelo.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\VeiculoModelo.cs",
+              "RelativeToolTip": "CarCRM\\Models\\VeiculoModelo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-14T23:21:25.781Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "VeiculoCor.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\VeiculoCor.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\VeiculoCor.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\VeiculoCor.cs",
+              "RelativeToolTip": "CarCRM\\Models\\VeiculoCor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:39:04.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Estoque.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Estoque.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\Estoque.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Estoque.cs",
+              "RelativeToolTip": "CarCRM\\Models\\Estoque.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:54.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Veiculo.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Veiculo.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\Veiculo.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Veiculo.cs",
+              "RelativeToolTip": "CarCRM\\Models\\Veiculo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:52.352Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "VeiculoTipo.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\VeiculoTipo.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\VeiculoTipo.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\VeiculoTipo.cs",
+              "RelativeToolTip": "CarCRM\\Models\\VeiculoTipo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:51.631Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "VeiculoMarca.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\VeiculoMarca.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\VeiculoMarca.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\VeiculoMarca.cs",
+              "RelativeToolTip": "CarCRM\\Models\\VeiculoMarca.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:49.655Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Usuario.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\Usuario.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Usuario.cs",
+              "RelativeToolTip": "CarCRM\\Models\\Usuario.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:49.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Telefone.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Telefone.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\Telefone.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Telefone.cs",
+              "RelativeToolTip": "CarCRM\\Models\\Telefone.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:48.231Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "StatusEstoque.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\StatusEstoque.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\StatusEstoque.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\StatusEstoque.cs",
+              "RelativeToolTip": "CarCRM\\Models\\StatusEstoque.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:47.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PessoaFisica.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\PessoaFisica.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\PessoaFisica.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\PessoaFisica.cs",
+              "RelativeToolTip": "CarCRM\\Models\\PessoaFisica.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:46.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Cliente.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Cliente.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\Cliente.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Cliente.cs",
+              "RelativeToolTip": "CarCRM\\Models\\Cliente.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:43.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Cargo.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Cargo.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\Cargo.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Cargo.cs",
+              "RelativeToolTip": "CarCRM\\Models\\Cargo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:42.408Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Pagamento.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Pagamento.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\Pagamento.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Pagamento.cs",
+              "RelativeToolTip": "CarCRM\\Models\\Pagamento.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:40:18.67Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "Funcionario.cs",
               "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\Funcionario.cs",
               "RelativeDocumentMoniker": "CarCRM\\Models\\Funcionario.cs",
@@ -39,6 +349,32 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-27T00:37:12.892Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "MetodoPagamento.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\MetodoPagamento.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\MetodoPagamento.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\MetodoPagamento.cs",
+              "RelativeToolTip": "CarCRM\\Models\\MetodoPagamento.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:46.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "FornecedorTipo.cs",
+              "DocumentMoniker": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\FornecedorTipo.cs",
+              "RelativeDocumentMoniker": "CarCRM\\Models\\FornecedorTipo.cs",
+              "ToolTip": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\Models\\FornecedorTipo.cs",
+              "RelativeToolTip": "CarCRM\\Models\\FornecedorTipo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T22:38:43.969Z",
               "EditorCaption": ""
             }
           ]

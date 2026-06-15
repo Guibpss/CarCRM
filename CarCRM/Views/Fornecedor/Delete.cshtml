@@ -12,10 +12,34 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FornecedorTipoId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FornecedorTipoId)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FornecedorTipo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FornecedorTipo)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Nome)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
         </dd>
     </dl>
     <dl class="row">
@@ -28,18 +52,10 @@
     </dl>
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PessoaJuridicaId)
+            @Html.DisplayNameFor(model => model.Excluido)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PessoaJuridicaId)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FornecedorTipoId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FornecedorTipoId)
+            @Html.DisplayFor(model => model.Excluido)
         </dd>
     </dl>
     <form asp-action="Delete">

@@ -13,22 +13,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.razaoSocial)
+                @Html.DisplayNameFor(model => model.RazaoSocial)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nomeFantasia)
+                @Html.DisplayNameFor(model => model.NomeFantasia)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nomeInterno)
+                @Html.DisplayNameFor(model => model.NomeInterno)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CNPJ)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PessoaId)
+                @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TelefoneId)
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriadoEm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Excluido)
             </th>
             <th></th>
         </tr>
@@ -37,22 +43,28 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(model => item.razaoSocial)
+                @Html.DisplayFor(model => item.RazaoSocial)
             </td>
             <td>
-                @Html.DisplayFor(model => item.nomeFantasia)
+                @Html.DisplayFor(model => item.NomeFantasia)
             </td>
             <td>
-                @Html.DisplayFor(model => item.nomeInterno)
+                @Html.DisplayFor(model => item.NomeInterno)
             </td>
             <td>
                 @Html.DisplayFor(model => item.CNPJ)
             </td>
             <td>
-                @Html.DisplayFor(model => item.PessoaId)
+                @Html.DisplayFor(model => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(model => item.TelefoneId)
+                @Html.DisplayFor(model => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CriadoEm)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Excluido)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

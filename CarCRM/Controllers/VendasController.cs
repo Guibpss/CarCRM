@@ -48,7 +48,7 @@ public class VendasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,DataVenda,ValorVenda,Desconto,ValorFinal,CriadoEm,ClienteId,EstoqueId,FuncionarioId,StatusVendaId")] Venda venda)
+    public async Task<IActionResult> Create([Bind("DataVenda,ValorVenda,Desconto,ClienteId,Cliente,FuncionarioId,Funcionario,StatusVendaId,StatusVenda,ValorFinal,Id,CriadoEm,Excluido")] Venda venda)
     {
         if (ModelState.IsValid)
         {
@@ -80,7 +80,7 @@ public class VendasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,DataVenda,ValorVenda,Desconto,ValorFinal,CriadoEm,ClienteId,EstoqueId,FuncionarioId,StatusVendaId")] Venda venda)
+    public async Task<IActionResult> Edit(int? id, [Bind("DataVenda,ValorVenda,Desconto,ClienteId,Cliente,FuncionarioId,Funcionario,StatusVendaId,StatusVenda,ValorFinal,Id,CriadoEm,Excluido")] Venda venda)
     {
         if (id != venda.Id)
         {

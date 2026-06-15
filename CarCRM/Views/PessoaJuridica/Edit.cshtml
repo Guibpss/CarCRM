@@ -14,19 +14,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="razaoSocial" class="control-label"></label>
-                <input asp-for="razaoSocial" class="form-control" />
-                <span asp-validation-for="razaoSocial" class="text-danger"></span>
+                <label asp-for="RazaoSocial" class="control-label"></label>
+                <input asp-for="RazaoSocial" class="form-control" />
+                <span asp-validation-for="RazaoSocial" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="nomeFantasia" class="control-label"></label>
-                <input asp-for="nomeFantasia" class="form-control" />
-                <span asp-validation-for="nomeFantasia" class="text-danger"></span>
+                <label asp-for="NomeFantasia" class="control-label"></label>
+                <input asp-for="NomeFantasia" class="form-control" />
+                <span asp-validation-for="NomeFantasia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="nomeInterno" class="control-label"></label>
-                <input asp-for="nomeInterno" class="form-control" />
-                <span asp-validation-for="nomeInterno" class="text-danger"></span>
+                <label asp-for="NomeInterno" class="control-label"></label>
+                <input asp-for="NomeInterno" class="form-control" />
+                <span asp-validation-for="NomeInterno" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CNPJ" class="control-label"></label>
@@ -34,14 +34,24 @@
                 <span asp-validation-for="CNPJ" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PessoaId" class="control-label"></label>
-                <input asp-for="PessoaId" class="form-control" />
-                <span asp-validation-for="PessoaId" class="text-danger"></span>
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TelefoneId" class="control-label"></label>
-                <input asp-for="TelefoneId" class="form-control" />
-                <span asp-validation-for="TelefoneId" class="text-danger"></span>
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CriadoEm" class="control-label"></label>
+                <input asp-for="CriadoEm" class="form-control" />
+                <span asp-validation-for="CriadoEm" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Excluido" class="control-label"></label>
+                <input asp-for="Excluido" class="form-check-input" />
+                <span asp-validation-for="Excluido" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

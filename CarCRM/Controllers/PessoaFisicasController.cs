@@ -48,7 +48,7 @@ public class PessoaFisicasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,CPF,nomeCompleto,RG,dataNascimento,PessoaId,TelefoneId")] PessoaFisica pessoafisica)
+    public async Task<IActionResult> Create([Bind("CPF,RG,DataNascimento,Nome,Email,Id,CriadoEm,Excluido")] PessoaFisica pessoafisica)
     {
         if (ModelState.IsValid)
         {
@@ -80,7 +80,7 @@ public class PessoaFisicasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,CPF,nomeCompleto,RG,dataNascimento,PessoaId,TelefoneId")] PessoaFisica pessoafisica)
+    public async Task<IActionResult> Edit(int? id, [Bind("CPF,RG,DataNascimento,Nome,Email,Id,CriadoEm,Excluido")] PessoaFisica pessoafisica)
     {
         if (id != pessoafisica.Id)
         {

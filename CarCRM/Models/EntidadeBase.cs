@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public DateTime CidaoEm { get; set; }
+        public DateTime CriadoEm { get; set; }
 
         public bool Excluido { get; set; }
     }

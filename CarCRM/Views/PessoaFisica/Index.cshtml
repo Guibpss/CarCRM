@@ -16,19 +16,22 @@
                 @Html.DisplayNameFor(model => model.CPF)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nomeCompleto)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.RG)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dataNascimento)
+                @Html.DisplayNameFor(model => model.DataNascimento)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PessoaId)
+                @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TelefoneId)
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriadoEm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Excluido)
             </th>
             <th></th>
         </tr>
@@ -40,19 +43,22 @@
                 @Html.DisplayFor(model => item.CPF)
             </td>
             <td>
-                @Html.DisplayFor(model => item.nomeCompleto)
-            </td>
-            <td>
                 @Html.DisplayFor(model => item.RG)
             </td>
             <td>
-                @Html.DisplayFor(model => item.dataNascimento)
+                @Html.DisplayFor(model => item.DataNascimento)
             </td>
             <td>
-                @Html.DisplayFor(model => item.PessoaId)
+                @Html.DisplayFor(model => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(model => item.TelefoneId)
+                @Html.DisplayFor(model => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CriadoEm)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Excluido)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

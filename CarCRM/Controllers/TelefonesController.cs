@@ -48,7 +48,7 @@ public class TelefonesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,DDD,Numero,TelefoneTipoId")] Telefone telefone)
+    public async Task<IActionResult> Create([Bind("Id,DDD,Numero,TelefoneTipoId,TelefoneTipo,PessoaId,Pessoa")] Telefone telefone)
     {
         if (ModelState.IsValid)
         {
@@ -80,7 +80,7 @@ public class TelefonesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,DDD,Numero,TelefoneTipoId")] Telefone telefone)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,DDD,Numero,TelefoneTipoId,TelefoneTipo,PessoaId,Pessoa")] Telefone telefone)
     {
         if (id != telefone.Id)
         {

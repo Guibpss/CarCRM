@@ -22,22 +22,31 @@
                 @Html.DisplayNameFor(model => model.Desconto)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ClienteId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuncionarioId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Funcionario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusVendaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusVenda)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ValorFinal)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CriadoEm)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClienteId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstoqueId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FuncionarioId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StatusVendaId)
+                @Html.DisplayNameFor(model => model.Excluido)
             </th>
             <th></th>
         </tr>
@@ -55,22 +64,31 @@
                 @Html.DisplayFor(model => item.Desconto)
             </td>
             <td>
+                @Html.DisplayFor(model => item.ClienteId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FuncionarioId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Funcionario)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.StatusVendaId)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.StatusVenda)
+            </td>
+            <td>
                 @Html.DisplayFor(model => item.ValorFinal)
             </td>
             <td>
                 @Html.DisplayFor(model => item.CriadoEm)
             </td>
             <td>
-                @Html.DisplayFor(model => item.ClienteId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.EstoqueId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.FuncionarioId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.StatusVendaId)
+                @Html.DisplayFor(model => item.Excluido)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

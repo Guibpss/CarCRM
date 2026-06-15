@@ -1,0 +1,95 @@
+@model IEnumerable<CarCRM.Models.Veiculo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VeiculoCorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KilometragemAtual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Placa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Combustivel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorizacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnoFabricacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnoModelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VeiculoTipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VeiculoMarca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CriadoEm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Excluido)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VeiculoCorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KilometragemAtual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Placa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Combustivel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Motorizacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnoFabricacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnoModelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VeiculoTipo.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VeiculoMarca.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CriadoEm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Excluido)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

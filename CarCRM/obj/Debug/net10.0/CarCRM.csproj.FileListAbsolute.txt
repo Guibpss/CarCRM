@@ -255,6 +255,7 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarC
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.RazorAssemblyInfo.cache
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.RazorAssemblyInfo.cs
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.sourcelink.json
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
@@ -330,10 +331,10 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\stat
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\swae.build.ex.cache
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.csproj.Up2Date
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.dll
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\refint\CarCRM.dll
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.pdb
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.genruntimeconfig.cache
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\ref\CarCRM.dll
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

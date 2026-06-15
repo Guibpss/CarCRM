@@ -48,7 +48,7 @@ public class ClientesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Nome,Email,CriadoEm,PessoaFisicaId")] Cliente cliente)
+    public async Task<IActionResult> Create([Bind("Nome,Email,Id,CriadoEm,Excluido")] Cliente cliente)
     {
         if (ModelState.IsValid)
         {
@@ -80,7 +80,7 @@ public class ClientesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Nome,Email,CriadoEm,PessoaFisicaId")] Cliente cliente)
+    public async Task<IActionResult> Edit(int? id, [Bind("Nome,Email,Id,CriadoEm,Excluido")] Cliente cliente)
     {
         if (id != cliente.Id)
         {

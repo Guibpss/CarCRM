@@ -1,6 +1,4 @@
-﻿using AspNetCoreGeneratedDocument;
-
-namespace CarCRM.Models
+﻿namespace CarCRM.Models
 {
     public class Telefone
     {
