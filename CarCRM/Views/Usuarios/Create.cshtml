@@ -32,14 +32,12 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="PerfilId" class="control-label"></label>
-                <input asp-for="PerfilId" class="form-control" />
-                <span asp-validation-for="PerfilId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
                 <label asp-for="Perfil" class="control-label"></label>
-                <input asp-for="Perfil" class="form-control" />
+                @* <input asp-for="Perfil" class="form-control" /> *@
+
+                @Html.DropDownList("PerfilId", new SelectList(ViewBag.Perfis, "Id", "Nome"), new { @class = "form-control" })
+
+
                 <span asp-validation-for="Perfil" class="text-danger"></span>
             </div>
 

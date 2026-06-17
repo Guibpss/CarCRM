@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarCRM.Models;
 using CarCRM.Data;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 public class UsuariosController : Controller
 {
@@ -40,7 +41,10 @@ public class UsuariosController : Controller
     // GET: USUARIOS/Create
     public IActionResult Create()
     {
-        return View();
+        var usuario = new Usuario();
+        var perfis = _context.Perfis.ToList();
+        ViewBag.Perfis = perfis;
+        return View(usuario);
     }
 
     // POST: USUARIOS/Create
