@@ -1,6 +1,373 @@
 ﻿@{
     Layout = null;
 }
-<h1>ESCREVE UM TITULO AE</h1>
+@* <h1>ESCREVE UM TITULO AE</h1>
 
-<a type="button" href="~/Home/Index">Acesse-aqui</a>
+<a type="button" href="~/Home/Index">Acesse-aqui</a> *@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Crie uma Landing Page eficaz e aumente sua lista de leads prontos para comprar!" />
+    <meta name="keywords" content="Landingpage, Landingpage Rápida, Landingpage Responsiva, Landingpage de Alta Conversão" />
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta name="robots" content="index, follow" />
+
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="~/landingpage/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="~/landingpage/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/landingpage/css/fonts-icones.css">
+    <link rel="shortcut icon" href="~/landingpage/img/logo/favicon.png" type="image/png" />
+
+    <title>CarCRM</title>
+
+</head>
+
+<body>
+
+    <header class="header container">
+
+        <div class="content">
+
+            <div class="header_logo">
+
+                <a href="#" target="_blank">
+                    <img src="~/landingpage/img/logo/logo.png" style="width: 250px; height: auto;" alt="Logo" title="Logo" />
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="main_content container">
+
+        <section class="section-banner container">
+
+            <div class="content">
+
+                <div class="row">
+
+                    <div class="col-left-b"> <img src="~/landingpage/img/sections/banner.jpg" alt="Banner" title="Banner">  </div>
+
+                    <div class="col-right-b">
+
+                        <h1 class="title"><i class="icon icon-rocket"></i> Bem Vindo a CarCRM </h1>
+                        <p class="txt">
+
+                            <b>Tenha o controle da sua loja em um clique!</b><br>
+                            Cadastre veiculos, gerencie estoque, clientes e funcionários.<br>
+                            Pensando no cliente, o CarCRM foi feito para facilitar o controle do seu negocio.<br>
+                            Site personalizado de acordo com o seu produto e seu gosto.<br>
+                            <b>Já é nosso cliente? Acesse no botão abaixo!</b>
+
+                        </p>
+
+                        <a href="~/Home/Index" target="_blank" class="btn-chamada" title="Saiba mais">Area do Usuario</a>
+
+                    </div>
+
+                </div><!--row-->
+
+
+                <div class="clear"></div>
+            </div>
+
+        </section><!--Banner-->
+
+        <section class="section-servicos container">
+
+            <div class="content">
+
+                <h2 class="title"><i class="icon icon-settings-1"></i> Serviços</h2>
+
+                <div class="row">
+
+                    <article class="servicos">
+
+                        <i class="icone"><img src="~/landingpage/img/icones/sites.webp" alt="Grátis" title="Grátis"></i>
+                        <h2>Site WEB</h2>
+                        <p>Tenha seu site rapido e fácil. Layout personalizado de acordo com seu gosto.</p>
+
+                    </article>
+
+                
+                    <article class="servicos">
+
+                        <i class="icone"><img src="~/landingpage/img/icones/seo.webp" alt="SEO" title="SEO"></i>
+                        <h2>Controle</h2>
+                        <p>Controle total da sua loja. Gráficos e dados para monitoramento de resultados.</p>
+
+                    </article>
+
+
+                    <article class="servicos">
+
+                        <i class="icone"><img src="~/landingpage/img/icones/hospedagem.webp" alt="Hospedagem" title="Hospedagem"></i>
+                        <h2>Personalização</h2>
+                        <p>Site com a sua cara. Personalizamos de acordo com a sua preferencia e seu negocio.</p>
+
+                    </article>
+
+                </div><!--row-->
+
+
+                <div class="clear"></div>
+            </div>
+
+        </section><!--Serviços-->
+
+        <section class="section-destaque container">
+
+            <div class="content">
+
+                <div class="row">
+
+                    <div class="col-left-b">
+
+                        <h1 class="title"><i class="icon icon-rocket"></i> Vale a pena? </h1>
+                        <p class="txt">
+
+                            <b>Mais de 1.000 clientes satisfeitos!</b><br>
+                            Disponivel para todo o Brasil.<br>
+                            Temos uma variedade de lojistas e clientes que usam nosso sistema<br>
+                            Suporte sempre online e pronto para te ajudar no que for preciso.<br>
+                            
+
+                        </p>
+
+                       @*  <a href="https://www.loopnerd.com.br/landing-page/" target="_blank" class="btn-chamada" title="Saiba mais">Saiba mais</a> *@
+
+                    </div>
+
+                    <div class="col-right-b">
+
+                        <img src="~/landingpage/img/sections/banner.jpg" alt="Destaque" title="Destaque">
+
+                    </div>
+
+                </div><!--row-->
+
+
+                <div class="clear"></div>
+            </div>
+
+        </section><!--Destaque-->
+
+        <section class="section-depoimentos container">
+
+            <div class="content">
+
+                <h2 class="title"><i class="icon icon-comments-o"></i> Depoimentos</h2>
+
+                <div class="row">
+
+                    <div class="bxCarrosel">
+
+                        <article class="depoimento">
+
+                            <p>"Excelente produto, muito rápido e pratico.<br> Personalizei de acordo com a minha loja."</p>
+                            <span>Paulo Fernando</span>
+
+                        </article>
+
+                        <article class="depoimento">
+
+                            <p>"Muito bom de usar, recomendo.<br> Suporte sempre ativo quando precisa."</p>
+                            <span>Barbara Silva</span>
+
+                        </article>
+
+                        <article class="depoimento">
+
+                            <p>"Adorei esse formato, ficou muito fácil de ter o controle da minha loja<br> Além disso bem intuitivo e simples."</p>
+                            <span>Jennifer Costa</span>
+
+                        </article>
+
+                    </div>
+
+                </div><!--row-->
+
+
+                <div class="clear"></div>
+            </div>
+
+        </section><!--Depoimentos-->
+
+        <section class="section-faq container">
+
+            <div class="content">
+
+                <div class="row">
+
+                    <div class="col-left-faq">
+                        <img src="~/landingpage/img/sections/faq.jpg" alt="faq" title="Faq">
+                    </div>
+
+                    <div class="col-right-faq">
+
+                        <h2 class="title"><i class="icon icon-checkbox"></i> FAQ</h2>
+
+                        <div class="accordion">
+
+                            <input type="checkbox" id="faq-1">
+                            <h3><label for="faq-1">O que é o CarCRM ?</label></h3>
+                            <div class="texto">
+
+                                <p>
+                                    É um sistema de gestão pensado para lojas de veículos. Em um só lugar você cadastra carros, controla o estoque, organiza clientes e funcionários e acompanha as vendas da sua loja.
+                                </p>
+
+                            </div>
+
+                        </div><!--faq 1-->
+
+                        <div class="accordion">
+
+                            <input type="checkbox" id="faq-2">
+                            <h3><label for="faq-2">Preciso instalar alguma coisa ?</label></h3>
+                            <div class="texto">
+
+                                <p>
+                                    Não. O CarCRM é 100% online: você acessa de qualquer computador ou celular com internet, sem instalar nada e sem se preocupar com atualizações.
+                                </p>
+
+                            </div>
+
+                        </div><!--faq 2-->
+
+                        <div class="accordion">
+
+                            <input type="checkbox" id="faq-3">
+                            <h3><label for="faq-3">Consigo controlar meu estoque de veículos ?</label></h3>
+                            <div class="texto">
+
+                                <p>
+                                    Sim. Você cadastra cada veículo com fotos e informações, acompanha o que está<br>
+                                    disponível, reservado ou vendido, e vê tudo organizado em um painel com gráficos e relatórios.
+                                </p>
+
+                            </div>
+
+                        </div><!--faq 3-->
+
+                        <div class="accordion">
+
+                            <input type="checkbox" id="faq-4">
+                            <h3><label for="faq-4">Dá para personalizar para a minha loja ?</label></h3>
+                            <div class="texto">
+
+                                <p>
+                                    Com certeza. Tanto o sistema quanto o site da sua loja são personalizados de acordo<br>
+                                    com a sua marca, as suas cores e a sua forma de trabalhar.
+                                </p>
+
+                            </div>
+
+                        </div><!--faq 5-->
+
+                        <div class="accordion">
+
+                            <input type="checkbox" id="faq-5">
+                            <h3><label for="faq-5">Como funciona o suporte ?</label></h3>
+                            <div class="texto">
+
+                                <p>
+                                    Nosso suporte fica online e pronto para te ajudar no que precisar — desde o primeiro cadastro até as dúvidas do dia a dia da loja.
+                                </p>
+
+                            </div>
+
+                        </div><!--faq 5-->
+
+                    </div>
+
+                </div><!--row-->
+
+
+                <div class="clear"></div>
+            </div>
+
+        </section><!--Faq-->
+
+    </main>
+
+    <footer class="footer container">
+
+        <div class="content">
+
+           
+            <div class="box-formulario">
+
+                <div class="formulario">
+
+                    <div class="title-form">
+                        <h4>Fale com nossos colaboradores</h4>
+                    </div>
+
+                    <form action="#" method="post">
+
+                         
+                        <span>
+                            <input type="text" class="input-balao-up" id="nome" name="nome" placeholder="Nome" autocomplete="off" required="" />
+                            <label for="nome"> <i class="icon icon-user-outline"></i> </label>
+                        </span>
+
+                        <span>
+                            <input type="text" class="input-balao-up" id="email" name="email" placeholder="E-mail" autocomplete="off" required="" />
+                            <label for="email"> <i class="icon icon-mail-3"></i> </label>
+                        </span>
+
+                        <span>
+                            <textarea type="text" class="textarea-balao-up" id="mensagem" name="mensagem" rows="3" placeholder="Mensagem" autocomplete="off" required=""></textarea>
+                            <label for="mensagem"> <i class="icon icon-bubble-4"></i> </label>
+                        </span>
+
+                        <div class="box-btn">
+
+                            <button type="submit" class="btn-envia zoom-shadow">
+                                <i class="icon icon-forward-1"> Enviar</i>
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div><!--Box Formulario-->
+
+            <div class="clear"></div>
+        </div><!--Content-->
+
+        <div class="copyright">
+
+            <div class="content">
+
+                <div class="col">
+                    <div class="copy-text">
+                        <p>Copyright &copy; CarCRM 2026 - Todos os Direitos Reservados.</p>
+                    </div>
+                </div>
+
+            </div><!--content-->
+
+        </div><!--copyright-->
+
+    </footer>
+
+    <script src="~/landingpage/js/jquery.js"></script>
+    <script src="~/landingpage/js/script.js"></script>
+    <script src="~/landingpage/js/bxslider.js"></script>
+
+</body>
+</html>

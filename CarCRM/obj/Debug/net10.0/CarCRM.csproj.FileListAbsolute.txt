@@ -648,3 +648,13 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\bin\Debug\net10.0\refs
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\bin\Debug\net10.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\bin\Debug\net10.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\8jkvzrdsv7-{0}-iqk9jp4sq1-iqk9jp4sq1.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\hwni3bjgb8-{0}-9dj1fd3lkt-9dj1fd3lkt.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\n76rbm9bam-{0}-tpwmbgngw8-tpwmbgngw8.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\zixm8y536s-{0}-jedi5wzsq3-jedi5wzsq3.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\xj2014swkj-{0}-g4xwa5w820-g4xwa5w820.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\1jwhax1n8w-{0}-l3imk9dw1z-l3imk9dw1z.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\xuie9gsdg1-{0}-nafgcklik7-nafgcklik7.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\fv29wsgm0b-{0}-x24fbm6gmp-x24fbm6gmp.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\dc8oaua73l-{0}-2n572846an-2n572846an.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\q5zw6ytx1r-{0}-7otjb8a4q9-7otjb8a4q9.gz
