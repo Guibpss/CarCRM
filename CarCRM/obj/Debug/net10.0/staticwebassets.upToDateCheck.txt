@@ -8,6 +8,7 @@ wwwroot\landingpage\css\fonts-icones\untitled-font-1.ttf
 wwwroot\landingpage\css\fonts-icones\untitled-font-1.woff
 wwwroot\landingpage\css\icons-reference.html
 wwwroot\landingpage\css\reset.css
+wwwroot\landingpage\css\style.css
 wwwroot\landingpage\img\icones\facebook.webp
 wwwroot\landingpage\img\icones\hospedagem.webp
 wwwroot\landingpage\img\icones\instagram.webp
@@ -70,6 +71,8 @@ wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
 wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
 wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
 wwwroot\lib\bootstrap\LICENSE
+wwwroot\lib\datatables\datatables.min.css
+wwwroot\lib\datatables\datatables.min.js
 wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js
 wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
 wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
@@ -85,7 +88,6 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\landingpage\css\style.css
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\css\site.css
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\favicon.ico
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\js\site.js
@@ -93,6 +95,7 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\cs
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\css\fonts-icones\untitled-font-1.svg
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\css\icons-reference.html
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\css\reset.css
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\css\style.css
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\img\logo\favicon.ico
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\js\bxslider.js
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\js\html5shiv.js
@@ -142,6 +145,8 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\bootstrap\
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\bootstrap\dist\js\bootstrap.js.map
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\datatables\datatables.min.css
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\datatables\datatables.min.js
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
@@ -157,4 +162,3 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\jquery\dis
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\jquery\dist\jquery.slim.min.js
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\lib\jquery\LICENSE.txt
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\wwwroot\landingpage\css\style.css

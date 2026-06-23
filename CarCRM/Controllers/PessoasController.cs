@@ -52,12 +52,15 @@ public class PessoasController : Controller
     {
         if (ModelState.IsValid)
         {
+            
             _context.Add(pessoa);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         return View(pessoa);
     }
+
+
 
     // GET: PESSOAS/Edit/5
     public async Task<IActionResult> Edit(int? id)

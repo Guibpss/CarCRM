@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Usuarios</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Novo Usuario</a>
 </p>
-<table class="table">
+<table id="UsuarioListaID" class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -61,11 +61,32 @@
                 @Html.DisplayFor(model => item.Pessoa)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts {
+    <script src="~/lib/datatables/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+        var table = new DataTable('#UsuarioListaID', {
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json',
+                },
+            layout: {
+                topStart: 'info',
+                bottom: 'paging',
+                bottomStart: null,
+                bottomEnd: null
+                },
+            });
+      });
+
+    </script>
+}

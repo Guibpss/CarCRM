@@ -324,8 +324,6 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\comp
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\upuh8gv2w9-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\11ip5xtdr3-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\5unnxzs3ju-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\b4vv5c5fqc-{0}-mhrq71kmd8-mhrq71kmd8.gz
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\mdzq37ooml-{0}-mhrq71kmd8-mhrq71kmd8.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.development.json
@@ -658,3 +656,8 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\comp
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\fv29wsgm0b-{0}-x24fbm6gmp-x24fbm6gmp.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\dc8oaua73l-{0}-2n572846an-2n572846an.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\q5zw6ytx1r-{0}-7otjb8a4q9-7otjb8a4q9.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\fz93a5gonh-{0}-v1j7b4p25m-v1j7b4p25m.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\vd3osla6qn-{0}-ipkj62t5rx-ipkj62t5rx.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\scopedcss\Views\Shared\_LayoutAreaDeslogada.cshtml.rz.scp.css
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\b4vv5c5fqc-{0}-3o5uo5oz1d-3o5uo5oz1d.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\mdzq37ooml-{0}-3o5uo5oz1d-3o5uo5oz1d.gz
