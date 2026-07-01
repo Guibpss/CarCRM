@@ -14,9 +14,9 @@
 
         public string Motorizacao { get; set; }
 
-        public DateOnly AnoFabricacao { get; set; }
+        public int AnoFabricacao { get; set; }
 
-        public DateOnly AnoModelo { get; set; }
+        public int AnoModelo { get; set; }
 
         public int VeiculoTipoId { get; set; }
         

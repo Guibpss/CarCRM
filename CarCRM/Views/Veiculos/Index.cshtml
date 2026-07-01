@@ -7,89 +7,92 @@
 <h1>Veiculos</h1>
 
 <p>
-    <a asp-action="Create">Novo Veiculo</a>
+    <a asp-action="Create" class="btn btn-primary"> Novo <i class="bi bi-plus-lg"></i></a>
 </p>
-<table class="table">
+<table id="veiculoListaId" class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VeiculoCorId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KilometragemAtual)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Placa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Combustivel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Motorizacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AnoFabricacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AnoModelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VeiculoTipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VeiculoMarca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CriadoEm)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Excluido)
-            </th>
-            <th></th>
+            <th>Cor</th>
+            <th>Km</th>
+            <th>Placa</th>
+            <th>Combustivel</th>
+            <th>Motorização</th>
+            <th>Ano Fabricação</th>
+            <th>Ano Modelo</th>
+            <th>Tipo</th>
+            <th>Marca</th>
+            <th>Criado Em</th>
+            <th>Excluido</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VeiculoCorId)
+                @item.VeiculoCor?.Nome
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KilometragemAtual)
+                @item.KilometragemAtual
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Placa)
+                @item.Placa
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Combustivel)
+                @item.Combustivel
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Motorizacao)
+                @item.Motorizacao
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AnoFabricacao)
+                @item.AnoFabricacao
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AnoModelo)
+                @item.AnoModelo
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VeiculoTipo.Id)
+                @item.VeiculoTipo?.Nome
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VeiculoMarca.Id)
+                @item.VeiculoMarca?.Nome
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CriadoEm)
+                @item.CriadoEm
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Excluido)
+                @item.Excluido
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
+                    <i class="bi bi-pencil-square"></i></a>
+                <a asp-action="Details" asp-route-id="@item.Id" title="Detalhes">
+                    <i class="bi bi-eye"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Excluir">
+                    <i class="bi bi-trash"></i></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+@section Scripts {
+    <script src="~/lib/datatables/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+        var table = new DataTable('#veiculoListaId', {
+        language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json',
+        },
+        layout: {
+        topStart: 'info',
+        bottom: 'paging',
+        bottomStart: null,
+        bottomEnd: null
+        },
+        });
+        });
+
+    </script>
+}

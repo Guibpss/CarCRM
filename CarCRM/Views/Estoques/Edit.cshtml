@@ -11,22 +11,21 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="id" value="@Model.Id" />
+
             <div class="form-group">
-                <label asp-for="DataEntrada" class="control-label"></label>
-                <input asp-for="DataEntrada" class="form-control" />
-                <span asp-validation-for="DataEntrada" class="text-danger"></span>
+                <label class="control-label">Nome</label>
+                <input name="nome" value="@Model.Nome" class="form-control" />
             </div>
+
             <div class="form-group">
-                <label asp-for="CriadoEm" class="control-label"></label>
-                <input asp-for="CriadoEm" class="form-control" />
-                <span asp-validation-for="CriadoEm" class="text-danger"></span>
+                <label class="control-label">Data de Entrada</label>
+                <input name="dataEntrada" value="@Model.DataEntrada.ToString("dd/MM/yyyy")" class="form-control" />
             </div>
+
             <div class="form-group">
-                <label asp-for="Excluido" class="control-label"></label>
-                <input asp-for="Excluido" class="form-check-input" />
-                <span asp-validation-for="Excluido" class="text-danger"></span>
+                <label class="control-label">Excluido</label>
+                <input name="excluido" type="checkbox" value="true" class="form-check-input" @(Model.Excluido ? "checked" : "") />
             </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-primary" />

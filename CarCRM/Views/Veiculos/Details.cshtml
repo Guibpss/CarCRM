@@ -9,72 +9,72 @@
 <div>
     <h4>Veiculo</h4>
     <hr />
-    <dl class="row">
+    <dl>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VeiculoCorId)
+            Cor
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VeiculoCorId)
+            @Model.VeiculoCor.Nome
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.KilometragemAtual)
+            Km
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.KilometragemAtual)
+            @Model.KilometragemAtual
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Placa)
+            Placa
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Placa)
+            @Model.Placa
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Combustivel)
+            Combustível
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Combustivel)
+            @Model.Combustivel
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Motorizacao)
+            Motorização
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Motorizacao)
+            @Model.Motorizacao
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnoFabricacao)
+            Ano Fabricação
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnoFabricacao)
+            @Model.AnoFabricacao
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnoModelo)
+            Ano Modelo
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnoModelo)
+            @Model.AnoFabricacao
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VeiculoTipo)
+            Tipo
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VeiculoTipo.Id)
+            @Model.VeiculoTipo.Nome
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VeiculoMarca)
+            Marca
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VeiculoMarca.Id)
+            @Model.VeiculoMarca.Nome
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriadoEm)
+            Criado Em
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriadoEm)
+            @Model.CriadoEm
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Excluido)
+            Excluido
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Excluido)
+            @(Model.Excluido ? "Sim" : "Não")
         </dd>
     </dl>
 </div>

@@ -10,72 +10,72 @@
 <div>
     <h4>Veiculo</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VeiculoCorId)
+    <dl>
+        <dt class="col-sm-2">
+            Cor
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VeiculoCorId)
+        <dd class="col-sm-10">
+            @Model.VeiculoCor.Nome
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.KilometragemAtual)
+        <dt class="col-sm-2">
+            Km
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.KilometragemAtual)
+        <dd class="col-sm-10">
+            @Model.KilometragemAtual
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Placa)
+        <dt class="col-sm-2">
+            Placa
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Placa)
+        <dd class="col-sm-10">
+            @Model.Placa
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Combustivel)
+        <dt class="col-sm-2">
+            Combustível
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Combustivel)
+        <dd class="col-sm-10">
+            @Model.Combustivel
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Motorizacao)
+        <dt class="col-sm-2">
+            Motorização
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Motorizacao)
+        <dd class="col-sm-10">
+            @Model.Motorizacao
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnoFabricacao)
+        <dt class="col-sm-2">
+            Ano Fabricação
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnoFabricacao)
+        <dd class="col-sm-10">
+            @Model.AnoFabricacao
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnoModelo)
+        <dt class="col-sm-2">
+            Ano Modelo
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AnoModelo)
+        <dd class="col-sm-10">
+            @Model.AnoFabricacao
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VeiculoTipo)
+        <dt class="col-sm-2">
+            Tipo
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VeiculoTipo.Id)
+        <dd class="col-sm-10">
+            @Model.VeiculoTipo.Nome
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VeiculoMarca)
+        <dt class="col-sm-2">
+            Marca
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VeiculoMarca.Id)
+        <dd class="col-sm-10">
+            @Model.VeiculoMarca.Nome
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriadoEm)
+        <dt class="col-sm-2">
+            Criado Em
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriadoEm)
+        <dd class="col-sm-10">
+            @Model.CriadoEm
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Excluido)
+        <dt class="col-sm-2">
+            Excluido
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Excluido)
+        <dd class="col-sm-10">
+            @(Model.Excluido ? "Sim" : "Não")
         </dd>
     </dl>
     

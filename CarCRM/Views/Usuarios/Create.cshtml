@@ -6,53 +6,49 @@
 }
 
 <h1>Criar</h1>
-
 <h4>Usuario</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label class="control-label">Nome</label>
+                <input name="nome" class="form-control" required />
             </div>
 
             <div class="form-group">
-                <label asp-for="CriadoEm" class="control-label"></label>
-                <input asp-for="CriadoEm" class="form-control" />
-                <span asp-validation-for="CriadoEm" class="text-danger"></span>
+                <label class="control-label">CPF</label>
+                <input name="cpf" class="form-control" required />
             </div>
 
             <div class="form-group">
-                <label asp-for="Ativo" class="control-label"></label>
-                <input asp-for="Ativo" class="form-check-input" />
-                <span asp-validation-for="Ativo" class="text-danger"></span>
+                <label class="control-label">RG</label>
+                <input name="rg" class="form-control" required />
             </div>
 
             <div class="form-group">
-                <label asp-for="Perfil" class="control-label"></label>
-                @* <input asp-for="Perfil" class="form-control" /> *@
-
-                @Html.DropDownList("PerfilId", new SelectList(ViewBag.Perfis, "Id", "Nome"), new { @class = "form-control" })
-
-
-                <span asp-validation-for="Perfil" class="text-danger"></span>
+                <label class="control-label">Data de Nascimento</label>
+                <input name="dataNascimento" type="date" class="form-control" required />
             </div>
 
             <div class="form-group">
-                <label asp-for="PessoaId" class="control-label"></label>
-                <input asp-for="PessoaId" class="form-control" />
-                <span asp-validation-for="PessoaId" class="text-danger"></span>
+                <label class="control-label">Email</label>
+                <input name="email" class="form-control" required />
             </div>
 
             <div class="form-group">
-                <label asp-for="Pessoa" class="control-label"></label>
-                <input asp-for="Pessoa" class="form-control" />
-                <span asp-validation-for="Pessoa" class="text-danger"></span>
+                <label class="control-label">Ativo</label>
+                <input name="ativo" type="checkbox" value="true" class="form-check-input" />
             </div>
+
+            <div class="form-group">
+                <label class="control-label">Perfil</label>
+                @Html.DropDownList("perfilId",
+                    new SelectList(ViewBag.Perfis, "Id", "Nome"),
+                    new { @class = "form-control", required = "required" })
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
             </div>

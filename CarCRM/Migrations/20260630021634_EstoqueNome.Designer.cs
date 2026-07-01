@@ -4,6 +4,7 @@ using CarCRM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarCRM.Migrations
 {
     [DbContext(typeof(CarCRMContext))]
-    partial class CarCRMContextModelSnapshot : ModelSnapshot
+    [Migration("20260630021634_EstoqueNome")]
+    partial class EstoqueNome
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cargos", (string)null);
+                    b.ToTable("Cargos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Cliente", b =>
@@ -102,7 +105,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("VendaId");
 
-                    b.ToTable("Comissoes", (string)null);
+                    b.ToTable("Comissoes");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Estoque", b =>
@@ -128,7 +131,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estoques", (string)null);
+                    b.ToTable("Estoques");
                 });
 
             modelBuilder.Entity("CarCRM.Models.FornecedorTipo", b =>
@@ -145,7 +148,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FornecedorTipos", (string)null);
+                    b.ToTable("FornecedorTipos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.FuncionarioCargo", b =>
@@ -183,7 +186,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("FuncionarioId");
 
-                    b.ToTable("FuncionarioCargo", (string)null);
+                    b.ToTable("FuncionarioCargo");
                 });
 
             modelBuilder.Entity("CarCRM.Models.MetodoPagamento", b =>
@@ -203,7 +206,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MetodosPagamento", (string)null);
+                    b.ToTable("MetodosPagamento");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Pagamento", b =>
@@ -244,7 +247,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("StatusPagamentoId");
 
-                    b.ToTable("Pagamentos", (string)null);
+                    b.ToTable("Pagamentos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Perfil", b =>
@@ -261,7 +264,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Perfis", (string)null);
+                    b.ToTable("Perfis");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Pessoa", b =>
@@ -310,7 +313,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusComissoes", (string)null);
+                    b.ToTable("StatusComissoes");
                 });
 
             modelBuilder.Entity("CarCRM.Models.StatusEstoque", b =>
@@ -330,7 +333,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusEstoques", (string)null);
+                    b.ToTable("StatusEstoques");
                 });
 
             modelBuilder.Entity("CarCRM.Models.StatusPagamento", b =>
@@ -350,7 +353,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusPagamentos", (string)null);
+                    b.ToTable("StatusPagamentos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.StatusVenda", b =>
@@ -370,7 +373,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusVendas", (string)null);
+                    b.ToTable("StatusVendas");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Telefone", b =>
@@ -401,7 +404,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("TelefoneTipoId");
 
-                    b.ToTable("Telefones", (string)null);
+                    b.ToTable("Telefones");
                 });
 
             modelBuilder.Entity("CarCRM.Models.TelefoneTipo", b =>
@@ -418,7 +421,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TelefonesTipo", (string)null);
+                    b.ToTable("TelefonesTipo");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Usuario", b =>
@@ -451,7 +454,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("PessoaId");
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Veiculo", b =>
@@ -506,7 +509,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("VeiculoTipoId");
 
-                    b.ToTable("Veiculos", (string)null);
+                    b.ToTable("Veiculos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoCor", b =>
@@ -523,7 +526,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VeiculoCor", (string)null);
+                    b.ToTable("VeiculoCor");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoMarca", b =>
@@ -540,7 +543,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("veiculoMarcas", (string)null);
+                    b.ToTable("veiculoMarcas");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoModelo", b =>
@@ -562,7 +565,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("VeiculoMarcaId");
 
-                    b.ToTable("VeiculoModelo", (string)null);
+                    b.ToTable("VeiculoModelo");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoTipo", b =>
@@ -579,7 +582,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VeiculoTipos", (string)null);
+                    b.ToTable("VeiculoTipos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Venda", b =>
@@ -622,7 +625,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("StatusVendaId");
 
-                    b.ToTable("Vendas", (string)null);
+                    b.ToTable("Vendas");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Fornecedor", b =>

@@ -262,7 +262,6 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\rjsm
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\scopedcss\bundle\CarCRM.styles.css
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\scopedcss\projectbundle\CarCRM.bundle.scp.css
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\40248rlqku-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\fjf28u6ojn-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\uliad0bloc-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\0dkh69rxxq-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -335,7 +334,6 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\refi
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.pdb
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.genruntimeconfig.cache
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\ref\CarCRM.dll
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\bin\Debug\net10.0\refs\Microsoft.AspNetCore.Antiforgery.dll
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\bin\Debug\net10.0\refs\Microsoft.AspNetCore.Authentication.Abstractions.dll
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\bin\Debug\net10.0\refs\Microsoft.AspNetCore.Authentication.BearerToken.dll
@@ -661,3 +659,5 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\comp
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\scopedcss\Views\Shared\_LayoutAreaDeslogada.cshtml.rz.scp.css
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\b4vv5c5fqc-{0}-3o5uo5oz1d-3o5uo5oz1d.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\mdzq37ooml-{0}-3o5uo5oz1d-3o5uo5oz1d.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\40248rlqku-{0}-mfqtwd2q5w-mfqtwd2q5w.gz

@@ -7,66 +7,43 @@
 <h1>Usuarios</h1>
 
 <p>
-    <a asp-action="Create">Novo Usuario</a>
+    <a asp-action="Create" class="btn btn-primary"> Novo <i class="bi bi-plus-lg"></i></a>
 </p>
-<table id="UsuarioListaID" class="table table-striped">
+<table id="usuarioListaID" class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CriadoEm)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ativo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PerfilId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Perfil)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PessoaId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pessoa)
-            </th>
-            <th></th>
+            <th>Nome</th>
+            <th>Criado Em</th>
+            <th>Ativo</th>
+            <th>Perfil</th>
+            <th>CPF</th>
+            <th>RG</th>
+            <th>Email</th>
+            <th>Nascimento</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.CriadoEm)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Ativo)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.PerfilId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Perfil)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.PessoaId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Pessoa)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
-            </td>
-        </tr>
-}
+    @foreach (var item in Model) {
+            <tr>
+                <td>@item.Nome</td>
+                <td>@item.CriadoEm.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@(item.Ativo ? "Sim": "Não")</td>
+                <td>@item.Perfil?.Nome</td>
+                <td>@item.Pessoa.CPF</td>
+                <td>@item.Pessoa.RG</td>
+                <td>@item.Pessoa.Email</td>
+                <td>@item.Pessoa.DataNascimento.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
+                        <i class="bi bi-pencil-square"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" title="Detalhes">
+                        <i class="bi bi-eye"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" title="Excluir">
+                        <i class="bi bi-trash"></i></a>
+                </td>
+            </tr>
+    }
     </tbody>
 </table>
 
@@ -75,7 +52,7 @@
     <script>
         $(document).ready(function () {
 
-        var table = new DataTable('#UsuarioListaID', {
+        var table = new DataTable('#usuarioListaID', {
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json',
                 },

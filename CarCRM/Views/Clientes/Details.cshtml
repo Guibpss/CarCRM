@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "Details";
+    var pf = Model.Pessoa as CarCRM.Models.PessoaFisica;
+    var pj = Model.Pessoa as CarCRM.Models.PessoaJuridica;
+    var telefone = Model.Pessoa?.Telefones?.FirstOrDefault();
 }
 
 <h1>Detalhes</h1>
@@ -9,34 +12,101 @@
 <div>
     <h4>Cliente</h4>
     <hr />
-    <dl class="row">
+    <dl >
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
+            Nome
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
+            @Model.Pessoa?.Nome
         </dd>
-    </dl>
+    
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+            @Model.Pessoa?.Email
         </dd>
-    </dl>
+        <div class ="row" style="display:@(pf != null ? "block" : "none");">
+            <dt class = "col-sm-2" >
+                CPF
+            </dt>
+            <dd class = "col-sm-10">
+                @pf?.CPF
+            </dd>
+            <dt class="col-sm-2">
+                RG
+            </dt>
+            <dd class="col-sm-10">
+                @pf?.RG
+            </dd>
+            <dt class="col-sm-2">
+                Data de Nascimento
+            </dt>
+            <dd class="col-sm-10">
+                @pf?.DataNascimento.ToString("dd/MM/yyyy")
+            </dd>   
+        </div>
+        <div class="row" style="display:@(pj != null ? "block" : "none");">
+            <dt class="col-sm-2">
+                CNPJ
+            </dt>
+            <dd class="col-sm-10">
+                @pj?.CNPJ
+            </dd>
+            <dt class="col-sm-2">
+                Razão Social
+            </dt>
+            <dd class="col-sm-10">
+                @pj?.RazaoSocial
+            </dd>
+            <dt class="col-sm-2">
+                Nome Fantasia
+            </dt>
+            <dd class="col-sm-10">
+                @pj?.NomeFantasia
+            </dd>
+            <dt class="col-sm-2">
+                Nome Interno
+            </dt>
+            <dd class="col-sm-10">
+                @pj?.NomeInterno
+            </dd>          
+        </div>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriadoEm)
+            Excluido
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriadoEm)
+            @(Model.Excluido ? "Sim" : "Não")
         </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Excluido)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Excluido)
-        </dd>
+        <div>
+            <br />
+            <h4>Telefone</h4>
+            <hr />
+            <div style="display: flex; align-items: flex-end; gap: 10px;">
+                <div>
+                    <label class="control-label">Tipo</label>
+                    @Html.DropDownList("telefonetipoId",
+                    new SelectList(ViewBag.telefonesTipo, "Id", "Nome", telefone?.TelefoneTipoId),
+                    new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+            <div style="width: 80px;">
+                <dt class="col-sm-2">
+                    DDD
+                </dt>
+                <dd class="col-sm-10">
+                    @telefone?.DDD
+                </dd>
+            </div>
+            <div style="flex: 1px;">
+                <dt class="col-sm-2">
+                    Número
+                </dt>
+                <dd class="col-sm-10">
+                    @telefone?.Numero
+                </dd>
+            </div>
+        </div>
     </dl>
 </div>
 <div>

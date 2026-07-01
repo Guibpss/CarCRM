@@ -7,9 +7,9 @@
 <h1>Vendas</h1>
 
 <p>
-    <a asp-action="Create">Nova Venda</a>
+    <a asp-action="Create" class="btn btn-primary"> Novo <i class="bi bi-plus-lg"></i></a>
 </p>
-<table class="table">
+<table id="vendaListaId" class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -48,7 +48,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Excluido)
             </th>
-            <th></th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -91,11 +91,35 @@
                 @Html.DisplayFor(model => item.Excluido)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
+                    <i class="bi bi-pencil-square"></i></a>
+                <a asp-action="Details" asp-route-id="@item.Id" title="Detalhes">
+                    <i class="bi bi-eye"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Excluir">
+                    <i class="bi bi-trash"></i></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts {
+    <script src="~/lib/datatables/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+        var table = new DataTable('#vendaListaId', {
+        language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json',
+        },
+        layout: {
+        topStart: 'info',
+        bottom: 'paging',
+        bottomStart: null,
+        bottomEnd: null
+        },
+        });
+        });
+
+    </script>
+}

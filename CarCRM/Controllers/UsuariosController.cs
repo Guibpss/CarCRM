@@ -17,7 +17,11 @@ public class UsuariosController : Controller
     // GET: USUARIOS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Usuarios.ToListAsync());
+        var usuarios = await _context.Usuarios
+            .Include(u => u.Pessoa)
+            .Include(u => u.Perfil)
+            .ToListAsync();
+        return View(usuarios);
     }
 
     // GET: USUARIOS/Details/5
@@ -29,7 +33,10 @@ public class UsuariosController : Controller
         }
 
         var usuario = await _context.Usuarios
-            .FirstOrDefaultAsync(m => m.Id == id);
+       .Include(u => u.Pessoa)
+       .Include(u => u.Perfil)
+       .FirstOrDefaultAsync(u => u.Id == id);
+
         if (usuario == null)
         {
             return NotFound();
@@ -52,14 +59,48 @@ public class UsuariosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Nome,CriadoEm,Ativo,PerfilId,Perfil,PessoaId,Pessoa")] Usuario usuario)
+    public async Task<IActionResult> Create(string nome, string email, string cpf, string rg,
+    DateTime dataNascimento, bool ativo, int perfilId)
     {
-        if (ModelState.IsValid)
+        if (string.IsNullOrWhiteSpace(nome))
+            ModelState.AddModelError("nome", "O nome é obrigatório.");
+
+        if (string.IsNullOrWhiteSpace(cpf))
+            ModelState.AddModelError("cpf", "O CPF é obrigatório.");
+
+        if (string.IsNullOrWhiteSpace(rg))
+            ModelState.AddModelError("rg", "O RG é obrigatório.");
+
+        if (string.IsNullOrWhiteSpace(email))
+            ModelState.AddModelError("email", "O email é obrigatório.");
+
+        if (perfilId == 0)
+            ModelState.AddModelError("perfilId", "Selecione um perfil.");
+
+        if (dataNascimento == default)
+            ModelState.AddModelError("dataNascimento", "A data de nascimento é obrigatória.");
+
+
+        var usuario = new Usuario();
+        usuario.Nome = nome;
+        usuario.CriadoEm = DateTime.Now;
+        usuario.Ativo = ativo;
+        usuario.PerfilId = perfilId;
+
+        usuario.Pessoa = new PessoaFisica
         {
+            Nome = nome,
+            Email = email,
+            CPF = cpf,
+            RG = rg,
+            DataNascimento = dataNascimento
+        };
             _context.Add(usuario);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
+        
+
+        ViewBag.Perfis = _context.Perfis.ToList();
         return View(usuario);
     }
 
@@ -71,11 +112,16 @@ public class UsuariosController : Controller
             return NotFound();
         }
 
-        var usuario = await _context.Usuarios.FindAsync(id);
+        var usuario = await _context.Usuarios
+        .Include(u => u.Pessoa)
+        .FirstOrDefaultAsync(u => u.Id == id);
+  
         if (usuario == null)
         {
             return NotFound();
         }
+
+        ViewBag.Perfis = _context.Perfis.ToList();
         return View(usuario);
     }
 
@@ -84,17 +130,24 @@ public class UsuariosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Nome,CriadoEm,Ativo,PerfilId,Perfil,PessoaId,Pessoa")] Usuario usuario)
+    public async Task<IActionResult> Edit(int? id, string nome, DateTime dataNascimento, bool ativo, int perfilId)
     {
-        if (id != usuario.Id)
-        {
+        var usuario = await _context.Usuarios
+        .Include(u => u.Pessoa)
+        .FirstOrDefaultAsync(u => u.Id == id);
+
+        if (usuario == null)
             return NotFound();
-        }
 
         if (ModelState.IsValid)
         {
             try
             {
+                usuario.Nome = nome;
+                usuario.Pessoa.DataNascimento = dataNascimento;
+                usuario.Ativo = ativo;
+                usuario.PerfilId = perfilId;
+
                 _context.Update(usuario);
                 await _context.SaveChangesAsync();
             }
@@ -123,7 +176,10 @@ public class UsuariosController : Controller
         }
 
         var usuario = await _context.Usuarios
-            .FirstOrDefaultAsync(m => m.Id == id);
+       .Include(u => u.Pessoa)
+       .Include(u => u.Perfil)
+       .FirstOrDefaultAsync(u => u.Id == id);
+
         if (usuario == null)
         {
             return NotFound();
