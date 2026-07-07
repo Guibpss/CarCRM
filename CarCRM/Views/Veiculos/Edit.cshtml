@@ -1,4 +1,4 @@
-@model CarCRM.Models.Veiculo
+@model CarCRM.ViewModels.VeiculoViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -30,12 +30,15 @@
             </div>
             <div class="form-group">
                 <label class="control-label">Combustível</label>
-                <input name="Combustivel" value="@Model.Combustivel" class="form-control" />
-
+                @Html.DropDownList("VeiculoCombustivelId",
+                        new SelectList(ViewBag.veiculosCombustivel, "Id", "Nome"),
+                        new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label class="control-label">Motorização</label>
-                <input name="Motorizacao" value="@Model.Motorizacao" class="form-control" />
+                @Html.DropDownList("VeiculoMotorizacaoId",
+                        new SelectList(ViewBag.veiculosMotorizacao, "Id", "Nome"),
+                        new { @class = "form-control" })
 
             </div>
             <div class="form-group">

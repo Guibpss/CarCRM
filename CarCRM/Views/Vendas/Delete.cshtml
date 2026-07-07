@@ -12,98 +12,53 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataVenda)
+            Data
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataVenda)
+            @Model.DataVenda.ToString("dd/MM/yyyy")
         </dd>
-    </dl>
-    <dl class="row">
+
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ValorVenda)
+            Cliente
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ValorVenda)
+            @Model.Cliente?.Pessoa?.Nome
         </dd>
-    </dl>
-    <dl class="row">
+
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Desconto)
+            Vendedor
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Desconto)
+            @Model.Vendedor?.Nome
         </dd>
-    </dl>
-    <dl class="row">
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ClienteId)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ClienteId)
         </dd>
-    </dl>
-    <dl class="row">
+
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Cliente)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Cliente)
         </dd>
-    </dl>
-    <dl class="row">
+
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FuncionarioId)
+            Status da Venda
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FuncionarioId)
+            @Model.StatusVenda.Nome
         </dd>
-    </dl>
-    <dl class="row">
+
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Funcionario)
+            Valor Final
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Funcionario)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusVendaId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusVendaId)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusVenda)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusVenda)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ValorFinal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ValorFinal)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriadoEm)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriadoEm)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Excluido)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Excluido)
+            @Model.ValorFinal.ToString("C")
         </dd>
     </dl>
     <form asp-action="Delete">

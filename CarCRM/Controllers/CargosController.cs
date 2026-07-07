@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarCRM.Models;
 using CarCRM.Data;
+using CarCRM.ViewModels;
 
 public class CargosController : Controller
 {
@@ -16,7 +17,13 @@ public class CargosController : Controller
     // GET: CARGOS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Cargos.ToListAsync());
+        var cargos = await _context.Cargos.ToListAsync();
+        var cargosViwModel = cargos.Select(c => new CargoViewModel
+        {
+            Id = c.Id,
+            Nome = c.Nome
+        }).ToList();
+        return View(cargosViwModel);
     }
 
     // GET: CARGOS/Details/5
@@ -34,7 +41,13 @@ public class CargosController : Controller
             return NotFound();
         }
 
-        return View(cargo);
+        var cargoViewModel = new CargoViewModel
+        {
+            Id = cargo.Id,
+            Nome = cargo.Nome
+        };
+
+        return View(cargoViewModel);
     }
 
     // GET: CARGOS/Create
@@ -48,15 +61,19 @@ public class CargosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Nome")] Cargo cargo)
+    public async Task<IActionResult> Create(CargoViewModel cargoViewModel)
     {
         if (ModelState.IsValid)
         {
+            var cargo = new Cargo
+            { 
+                Nome = cargoViewModel.Nome 
+            };
             _context.Add(cargo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(cargo);
+        return View(cargoViewModel);
     }
 
     // GET: CARGOS/Edit/5
@@ -72,7 +89,12 @@ public class CargosController : Controller
         {
             return NotFound();
         }
-        return View(cargo);
+        var cargoViewModel = new CargoViewModel
+        {
+            Id = cargo.Id,
+            Nome = cargo.Nome
+        };
+        return View(cargoViewModel);
     }
 
     // POST: CARGOS/Edit/5
@@ -80,9 +102,9 @@ public class CargosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Nome")] Cargo cargo)
+    public async Task<IActionResult> Edit(int? id, CargoViewModel cargoViewModel)
     {
-        if (id != cargo.Id)
+        if (id != cargoViewModel.Id)
         {
             return NotFound();
         }
@@ -91,12 +113,17 @@ public class CargosController : Controller
         {
             try
             {
+                var cargo = _context.Cargos.Find(id);
+                if(cargo == null)
+                    return NotFound();
+
+                cargo.Nome = cargoViewModel.Nome;
                 _context.Update(cargo);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CargoExists(cargo.Id))
+                if (!CargoExists(cargoViewModel.Id))
                 {
                     return NotFound();
                 }
@@ -107,7 +134,7 @@ public class CargosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(cargo);
+        return View(cargoViewModel);
     }
 
     // GET: CARGOS/Delete/5
@@ -125,7 +152,12 @@ public class CargosController : Controller
             return NotFound();
         }
 
-        return View(cargo);
+        var cargoViewModel = new CargoViewModel
+        {
+            Id = cargo.Id,
+            Nome = cargo.Nome
+        };
+        return View(cargoViewModel);
     }
 
     // POST: CARGOS/Delete/5

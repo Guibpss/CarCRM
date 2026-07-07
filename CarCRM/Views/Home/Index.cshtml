@@ -1,55 +1,118 @@
 ﻿@{
 
     ViewData["Title"] = "Login";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Car CRM</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                font-family: 'Segoe UI', sans-serif;
+            }
 
-<style>
-    .gradient-custom {
-        /* fallback for old browsers */
-        background: #FFFFFF;
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: -webkit-linear-gradient(to right, rgba(240, 239, 239, 0.8), rgba(217, 217, 217, 1));
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        background: linear-gradient(to right, rgba(240, 239, 239, 0.8), rgba(217, 217, 217, 1))
-    }
+            .login-card {
+                background: rgba(20, 20, 30, 0.95);
+                border-radius: 1.5rem;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
 
-</style>
-<section class="gradient-custom flex-fill d-flex align-items-center">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                    <div class="card-body p-5 text-center">
+                .login-card .form-control {
+                    background: rgba(255, 255, 255, 0.05);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    color: #fff;
+                    padding: 0.9rem 1rem;
+                }
 
-                        <div class="mb-md-5 mt-md-4 pb-5">
+                    .login-card .form-control:focus {
+                        background: rgba(255, 255, 255, 0.1);
+                        border-color: #4a90d9;
+                        box-shadow: 0 0 0 0.2rem rgba(74, 144, 217, 0.25);
+                        color: #fff;
+                    }
 
-                            <h2 class="fw-bold mb-2 text-uppercase">Car CRM</h2>
-                            <p class="text-white-50 mb-5">Por favor entre com o seu usuario e senha!</p>
+                    .login-card .form-control::placeholder {
+                        color: rgba(255, 255, 255, 0.4);
+                    }
 
-                            <div data-mdb-input-init class="form-outline form-white mb-4">
-                                <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                                <label class="form-label" for="typeEmailX">Email</label>
-                            </div>
+            .btn-entrar {
+                background: linear-gradient(135deg, #4a90d9, #357abd);
+                border: none;
+                color: #fff;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
 
-                            <div data-mdb-input-init class="form-outline form-white mb-4">
-                                <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                                <label class="form-label" for="typePasswordX">Senha</label>
-                            </div>
+                .btn-entrar:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 8px 20px rgba(74, 144, 217, 0.4);
+                    color: #fff;
+                }
 
-                            <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Esqueceu sua senha?</a></p>
+            .login-title {
+                font-weight: 700;
+                letter-spacing: 2px;
+                color: #fff;
+            }
 
-                            <a data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" href="~/Usuarios/Index">Entrar</a>
+            .social-link {
+                color: rgba(255, 255, 255, 0.7);
+                transition: color 0.2s;
+                text-decoration: none;
+            }
 
-                            <div class="d-flex justify-content-center text-center mt-4 pt-1">
-                                <a href="#!" class="text-white">Facebook<i class="fab fa-facebook-f fa-lg mx-4 px-1"></i></a>
-                                <a href="#!" class="text-white">Twitter<i class="fab fa-twitter fa-lg mx-4 px-1"></i></a>
-                                <a href="#!" class="text-white">Google<i class="fab fa-google fa-lg"></i></a>
-                            </div>
+                .social-link:hover {
+                    color: #4a90d9;
+                }
+    </style>
+</head>
+<body>
+    <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+        <div class="login-card text-white p-5">
+            <div class="text-center">
 
-                        </div>
-                    </div>
+                <h2 class="login-title text-uppercase mb-2">Car CRM</h2>
+                <p class="text-white-50 mb-4">Por favor entre com o seu usuário e senha!</p>
+
+                <div class="mb-3 text-start">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-control form-control-lg" placeholder="seu@email.com" />
                 </div>
+
+                <div class="mb-2 text-start">
+                    <label class="form-label" for="senha">Senha</label>
+                    <input type="password" id="senha" class="form-control form-control-lg" placeholder="••••••••" />
+                </div>
+
+                <p class="small mb-4 text-start">
+                    <a class="text-white-50 social-link" href="#!">Esqueceu sua senha?</a>
+                </p>
+
+                <a class="btn btn-entrar btn-lg px-5 w-100 mb-4" href="~/Usuarios/Index">Entrar</a>
+
+                <div class="d-flex justify-content-center gap-4 mt-3">
+                    <a href="#!" class="social-link"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#!" class="social-link"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#!" class="social-link"><i class="fab fa-google"></i> Google</a>
+                </div>
+
             </div>
         </div>
     </div>
-</section>
+</body>
+</html>
+

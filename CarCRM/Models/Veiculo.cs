@@ -10,9 +10,13 @@
         
         public string Placa { get; set; }//GDR4C69
 
-        public string Combustivel { get; set; }
+        public int VeiculoCombustivelId { get; set; }
 
-        public string Motorizacao { get; set; }
+        public VeiculoCombustivel VeiculoCombustivel { get; set; }
+
+        public int VeiculoMotorizacaoId { get; set; }
+
+        public VeiculoMotorizacao VeiculoMotorizacao { get; set; }
 
         public int AnoFabricacao { get; set; }
 
@@ -25,5 +29,8 @@
         public int VeiculoMarcaId { get; set; }
 
         public VeiculoMarca VeiculoMarca { get; set; }
+        public int VeiculoModeloId { get; set; }
+
+        public VeiculoMarca VeiculoModelo { get; set; }
     }
 }

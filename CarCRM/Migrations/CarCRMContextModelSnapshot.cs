@@ -36,7 +36,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cargos", (string)null);
+                    b.ToTable("Cargos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Cliente", b =>
@@ -102,7 +102,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("VendaId");
 
-                    b.ToTable("Comissoes", (string)null);
+                    b.ToTable("Comissoes");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Estoque", b =>
@@ -128,7 +128,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estoques", (string)null);
+                    b.ToTable("Estoques");
                 });
 
             modelBuilder.Entity("CarCRM.Models.FornecedorTipo", b =>
@@ -145,7 +145,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FornecedorTipos", (string)null);
+                    b.ToTable("FornecedorTipos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.FuncionarioCargo", b =>
@@ -183,7 +183,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("FuncionarioId");
 
-                    b.ToTable("FuncionarioCargo", (string)null);
+                    b.ToTable("FuncionarioCargo");
                 });
 
             modelBuilder.Entity("CarCRM.Models.MetodoPagamento", b =>
@@ -203,7 +203,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MetodosPagamento", (string)null);
+                    b.ToTable("MetodosPagamento");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Pagamento", b =>
@@ -244,7 +244,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("StatusPagamentoId");
 
-                    b.ToTable("Pagamentos", (string)null);
+                    b.ToTable("Pagamentos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Perfil", b =>
@@ -261,7 +261,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Perfis", (string)null);
+                    b.ToTable("Perfis");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Pessoa", b =>
@@ -310,7 +310,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusComissoes", (string)null);
+                    b.ToTable("StatusComissoes");
                 });
 
             modelBuilder.Entity("CarCRM.Models.StatusEstoque", b =>
@@ -330,7 +330,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusEstoques", (string)null);
+                    b.ToTable("StatusEstoques");
                 });
 
             modelBuilder.Entity("CarCRM.Models.StatusPagamento", b =>
@@ -350,7 +350,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusPagamentos", (string)null);
+                    b.ToTable("StatusPagamentos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.StatusVenda", b =>
@@ -370,7 +370,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusVendas", (string)null);
+                    b.ToTable("StatusVendas");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Telefone", b =>
@@ -401,7 +401,7 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("TelefoneTipoId");
 
-                    b.ToTable("Telefones", (string)null);
+                    b.ToTable("Telefones");
                 });
 
             modelBuilder.Entity("CarCRM.Models.TelefoneTipo", b =>
@@ -418,7 +418,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TelefonesTipo", (string)null);
+                    b.ToTable("TelefonesTipo");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Usuario", b =>
@@ -431,6 +431,10 @@ namespace CarCRM.Migrations
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ConfirmaSenha")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("datetime2");
@@ -445,13 +449,17 @@ namespace CarCRM.Migrations
                     b.Property<int>("PessoaId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PerfilId");
 
                     b.HasIndex("PessoaId");
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Veiculo", b =>
@@ -462,15 +470,11 @@ namespace CarCRM.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("AnoFabricacao")
-                        .HasColumnType("date");
+                    b.Property<int>("AnoFabricacao")
+                        .HasColumnType("int");
 
-                    b.Property<DateOnly>("AnoModelo")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Combustivel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AnoModelo")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("datetime2");
@@ -481,13 +485,12 @@ namespace CarCRM.Migrations
                     b.Property<int>("KilometragemAtual")
                         .HasColumnType("int");
 
-                    b.Property<string>("Motorizacao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Placa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VeiculoCombustivelId")
+                        .HasColumnType("int");
 
                     b.Property<int>("VeiculoCorId")
                         .HasColumnType("int");
@@ -495,18 +498,47 @@ namespace CarCRM.Migrations
                     b.Property<int>("VeiculoMarcaId")
                         .HasColumnType("int");
 
+                    b.Property<int>("VeiculoModeloId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VeiculoMotorizacaoId")
+                        .HasColumnType("int");
+
                     b.Property<int>("VeiculoTipoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("VeiculoCombustivelId");
+
                     b.HasIndex("VeiculoCorId");
 
                     b.HasIndex("VeiculoMarcaId");
 
+                    b.HasIndex("VeiculoModeloId");
+
+                    b.HasIndex("VeiculoMotorizacaoId");
+
                     b.HasIndex("VeiculoTipoId");
 
-                    b.ToTable("Veiculos", (string)null);
+                    b.ToTable("Veiculos");
+                });
+
+            modelBuilder.Entity("CarCRM.Models.VeiculoCombustivel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VeiculoCombustivel");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoCor", b =>
@@ -523,7 +555,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VeiculoCor", (string)null);
+                    b.ToTable("VeiculoCor");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoMarca", b =>
@@ -540,7 +572,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("veiculoMarcas", (string)null);
+                    b.ToTable("veiculoMarcas");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoModelo", b =>
@@ -562,7 +594,24 @@ namespace CarCRM.Migrations
 
                     b.HasIndex("VeiculoMarcaId");
 
-                    b.ToTable("VeiculoModelo", (string)null);
+                    b.ToTable("VeiculoModelo");
+                });
+
+            modelBuilder.Entity("CarCRM.Models.VeiculoMotorizacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VeiculoMotorizacao");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoTipo", b =>
@@ -579,7 +628,7 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VeiculoTipos", (string)null);
+                    b.ToTable("VeiculoTipos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Venda", b =>
@@ -605,24 +654,24 @@ namespace CarCRM.Migrations
                     b.Property<bool>("Excluido")
                         .HasColumnType("bit");
 
-                    b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
-
                     b.Property<int>("StatusVendaId")
                         .HasColumnType("int");
 
                     b.Property<float>("ValorVenda")
                         .HasColumnType("real");
 
+                    b.Property<int>("VendedorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("FuncionarioId");
-
                     b.HasIndex("StatusVendaId");
 
-                    b.ToTable("Vendas", (string)null);
+                    b.HasIndex("VendedorId");
+
+                    b.ToTable("Vendas");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Fornecedor", b =>
@@ -815,6 +864,12 @@ namespace CarCRM.Migrations
 
             modelBuilder.Entity("CarCRM.Models.Veiculo", b =>
                 {
+                    b.HasOne("CarCRM.Models.VeiculoCombustivel", "VeiculoCombustivel")
+                        .WithMany()
+                        .HasForeignKey("VeiculoCombustivelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CarCRM.Models.VeiculoCor", "VeiculoCor")
                         .WithMany()
                         .HasForeignKey("VeiculoCorId")
@@ -824,6 +879,18 @@ namespace CarCRM.Migrations
                     b.HasOne("CarCRM.Models.VeiculoMarca", "VeiculoMarca")
                         .WithMany()
                         .HasForeignKey("VeiculoMarcaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CarCRM.Models.VeiculoMarca", "VeiculoModelo")
+                        .WithMany()
+                        .HasForeignKey("VeiculoModeloId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CarCRM.Models.VeiculoMotorizacao", "VeiculoMotorizacao")
+                        .WithMany()
+                        .HasForeignKey("VeiculoMotorizacaoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -837,7 +904,13 @@ namespace CarCRM.Migrations
 
                     b.Navigation("VeiculoMarca");
 
+                    b.Navigation("VeiculoModelo");
+
                     b.Navigation("VeiculoTipo");
+
+                    b.Navigation("VeiculoCombustivel");
+
+                    b.Navigation("VeiculoMotorizacao");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoModelo", b =>
@@ -859,23 +932,23 @@ namespace CarCRM.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CarCRM.Models.Funcionario", "Funcionario")
-                        .WithMany()
-                        .HasForeignKey("FuncionarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CarCRM.Models.StatusVenda", "StatusVenda")
                         .WithMany()
                         .HasForeignKey("StatusVendaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CarCRM.Models.Usuario", "Vendedor")
+                        .WithMany()
+                        .HasForeignKey("VendedorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Cliente");
 
-                    b.Navigation("Funcionario");
-
                     b.Navigation("StatusVenda");
+
+                    b.Navigation("Vendedor");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Fornecedor", b =>

@@ -9,18 +9,25 @@
 <p>
     <a asp-action="Create" class="btn btn-primary"> Novo <i class="bi bi-plus-lg"></i></a>
 </p>
-<table id="clienteListaID" class="table table-striped">
+<table id="clienteListaID" class="table table-striped js-datatable">
     <thead>
         <tr>
             <th>Nome</th>
             <th>Email</th>
             <th>Telefone</th>
             <th>CPF/CNPJ</th>
-            <th>Excluido</th>
-            <th>Criado Em</th>
-            <th>Ações</th>
+            <th class="no-sort" data-priority="1">Ações</th>
         </tr>
     </thead>
+    <tfoot>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>CPF/CNPJ</th>
+            <th class="no-sort" data-priority="1"></th>
+        </tr>
+    </tfoot>
     <tbody>
 @foreach (var item in Model) {
         <tr>
@@ -41,8 +48,6 @@
                         @pj.CNPJ
                     }
                 </td>
-                <td>@(item.Pessoa.Excluido ? "Sim" : "Não")</td>
-                <td>@item.CriadoEm.ToString("dd/MM/yyyy HH:mm")</td>
             <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
                     <i class="bi bi-pencil-square"></i></a> 
@@ -55,24 +60,3 @@
 }
     </tbody>
 </table>
-
-@section Scripts {
-    <script src="~/lib/datatables/datatables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-
-        var table = new DataTable('#clienteListaID', {
-        language: {
-        url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json',
-        },
-        layout: {
-        topStart: 'info',
-        bottom: 'paging',
-        bottomStart: null,
-        bottomEnd: null
-        },
-        });
-        });
-
-    </script>
-}
