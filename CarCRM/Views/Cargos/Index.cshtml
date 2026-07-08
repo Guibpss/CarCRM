@@ -1,4 +1,4 @@
-@model IEnumerable<CarCRM.Models.Cargo>
+@model IEnumerable<CarCRM.ViewModels.CargoViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,15 +7,13 @@
 <h1>Cargos</h1>
 
 <p>
-    <a asp-action="Create">Novo Cargo</a>
+    <a asp-action="Create" class="btn btn-primary"> Novo <i class="bi bi-plus-lg"></i></a>
 </p>
-<table class="table">
+<table id="cargoListaId" class="table table-striped js-datatable">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th></th>
+            <th>Nome</th>
+            <th class="no-sort" data-priority="1">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -25,9 +23,12 @@
                 @Html.DisplayFor(model => item.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
+                    <i class="bi bi-pencil-square"></i></a>
+                <a asp-action="Details" asp-route-id="@item.Id" title="Detalhes">
+                    <i class="bi bi-eye"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Excluir">
+                    <i class="bi bi-trash"></i></a>
             </td>
         </tr>
 }

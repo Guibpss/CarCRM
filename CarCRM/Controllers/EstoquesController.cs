@@ -16,6 +16,7 @@ public class EstoquesController : Controller
     // GET: ESTOQUES
     public async Task<IActionResult> Index()    
     {
+
         return View(await _context.Estoques.ToListAsync());
     }
 
@@ -40,7 +41,8 @@ public class EstoquesController : Controller
     // GET: ESTOQUES/Create
     public IActionResult Create()
     {
-        return View();
+        var estoque = new Estoque();
+        return View(estoque);
     }
 
     // POST: ESTOQUES/Create
@@ -48,14 +50,18 @@ public class EstoquesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("DataEntrada,Id,CriadoEm,Excluido")] Estoque estoque)
+    public async Task<IActionResult> Create(string nome, DateTime dataEntrada, bool excluido)
     {
-        if (ModelState.IsValid)
-        {
+        var estoque = new Estoque();
+        estoque.Nome = nome;
+        estoque.DataEntrada = dataEntrada;
+        estoque.CriadoEm = DateTime.Now;
+        estoque.Excluido = excluido;
+
             _context.Add(estoque);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
+      
         return View(estoque);
     }
 
@@ -80,34 +86,27 @@ public class EstoquesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("DataEntrada,Id,CriadoEm,Excluido")] Estoque estoque)
+    public async Task<IActionResult> Edit(int? id, string nome, DateTime dataEntrada, bool excluido)
     {
-        if (id != estoque.Id)
+       
+        if (id == null)
         {
             return NotFound();
         }
 
-        if (ModelState.IsValid)
+        var estoque = await _context.Estoques.FindAsync(id);
+
+        if (estoque == null)
         {
-            try
-            {
-                _context.Update(estoque);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EstoqueExists(estoque.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
+            return NotFound();
         }
-        return View(estoque);
+
+        estoque.Nome = nome;
+        estoque.DataEntrada = dataEntrada;
+        estoque.Excluido = excluido;
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: ESTOQUES/Delete/5

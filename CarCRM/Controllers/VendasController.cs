@@ -16,7 +16,11 @@ public class VendasController : Controller
     // GET: VENDAS
     public async Task<IActionResult> Index()    
     {
-        return View(await _context.Vendas.ToListAsync());
+        var vendas = _context.Vendas
+            .Include(v => v.Cliente).ThenInclude(c => c.Pessoa)
+            .Include(v => v.Vendedor)
+            .Include(v => v.StatusVenda);
+        return View(await vendas.ToListAsync());
     }
 
     // GET: VENDAS/Details/5
@@ -28,7 +32,11 @@ public class VendasController : Controller
         }
 
         var venda = await _context.Vendas
-            .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(v => v.Cliente).ThenInclude(c => c.Pessoa)
+            .Include(v => v.Vendedor)
+            .Include(v => v.StatusVenda)
+            .FirstOrDefaultAsync(v => v.Id == id);
+
         if (venda == null)
         {
             return NotFound();
@@ -40,6 +48,7 @@ public class VendasController : Controller
     // GET: VENDAS/Create
     public IActionResult Create()
     {
+        CarregarDropdowns();
         return View();
     }
 
@@ -48,8 +57,18 @@ public class VendasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("DataVenda,ValorVenda,Desconto,ClienteId,Cliente,FuncionarioId,Funcionario,StatusVendaId,StatusVenda,ValorFinal,Id,CriadoEm,Excluido")] Venda venda)
+    public async Task<IActionResult> Create(DateTime dataVenda, float valorVenda, float desconto, int clienteId, int vendedorId, int statusVendaId)
     {
+        var venda = new Venda
+        {
+            DataVenda = dataVenda,
+            ValorVenda = valorVenda,
+            Desconto = desconto,
+            ClienteId = clienteId,
+            VendedorId = vendedorId,
+            StatusVendaId = statusVendaId
+        };
+
         if (ModelState.IsValid)
         {
             _context.Add(venda);
@@ -67,11 +86,18 @@ public class VendasController : Controller
             return NotFound();
         }
 
-        var venda = await _context.Vendas.FindAsync(id);
+        var venda = await _context.Vendas
+                .Include(v => v.Cliente).ThenInclude(c => c.Pessoa)
+                .Include(v => v.Vendedor)
+                .Include(v => v.StatusVenda)
+                .FirstOrDefaultAsync(v => v.Id == id);
+
         if (venda == null)
         {
             return NotFound();
         }
+
+        CarregarDropdowns();
         return View(venda);
     }
 
@@ -80,33 +106,28 @@ public class VendasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("DataVenda,ValorVenda,Desconto,ClienteId,Cliente,FuncionarioId,Funcionario,StatusVendaId,StatusVenda,ValorFinal,Id,CriadoEm,Excluido")] Venda venda)
+    public async Task<IActionResult> Edit(int? id, DateTime dataVenda, float valorVenda, float desconto, int clienteId, int vendedorId, int statusVendaId)
     {
-        if (id != venda.Id)
+        if (id != null)
         {
             return NotFound();
         }
 
-        if (ModelState.IsValid)
+        var venda = await _context.Vendas.FindAsync(id);
+
+        if (venda == null)
         {
-            try
-            {
-                _context.Update(venda);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!VendaExists(venda.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
+            return NotFound();
         }
+
+        venda.DataVenda = dataVenda;
+        venda.ValorVenda = valorVenda;
+        venda.Desconto = desconto;
+        venda.ClienteId = clienteId;
+        venda.VendedorId = vendedorId;
+        venda.StatusVendaId = statusVendaId;
+
+        await _context.SaveChangesAsync();
         return View(venda);
     }
 
@@ -119,7 +140,11 @@ public class VendasController : Controller
         }
 
         var venda = await _context.Vendas
-            .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(v => v.Cliente).ThenInclude(c => c.Pessoa)
+            .Include(v => v.Vendedor)
+            .Include(v => v.StatusVenda)
+            .FirstOrDefaultAsync(v => v.Id == id);
+
         if (venda == null)
         {
             return NotFound();
@@ -146,5 +171,12 @@ public class VendasController : Controller
     private bool VendaExists(int? id)
     {
         return _context.Vendas.Any(e => e.Id == id);
+    }
+
+    private void CarregarDropdowns()
+    {
+        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).ToList();
+        ViewBag.Vendedores = _context.Usuarios.ToList();
+        ViewBag.StatusVendas = _context.StatusVendas.ToList();
     }
 }

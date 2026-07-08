@@ -11,42 +11,42 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="id" value="@Model.Id" />
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label class="control-label">Nome</label>
+                <input name="nome" value="@Model.Nome" class="form-control"  />
             </div>
+
             <div class="form-group">
-                <label asp-for="CriadoEm" class="control-label"></label>
-                <input asp-for="CriadoEm" class="form-control" />
-                <span asp-validation-for="CriadoEm" class="text-danger"></span>
+                <label class="control-label">CPF</label>
+                <input name="cpf" value="@Model.Pessoa.CPF" class="form-control" disabled />
             </div>
+
             <div class="form-group">
-                <label asp-for="Ativo" class="control-label"></label>
-                <input asp-for="Ativo" class="form-check-input" />
-                <span asp-validation-for="Ativo" class="text-danger"></span>
+                <label class="control-label">RG</label>
+                <input name="rg" value="@Model.Pessoa.RG" class="form-control" disabled />
             </div>
+
             <div class="form-group">
-                <label asp-for="PerfilId" class="control-label"></label>
-                <input asp-for="PerfilId" class="form-control" />
-                <span asp-validation-for="PerfilId" class="text-danger"></span>
+                <label class="control-label">Data de Nascimento</label>
+                <input name="dataNascimento" value="@Model.Pessoa.DataNascimento.ToString("dd/MM/yyyy")" class="form-control" />
             </div>
+            
             <div class="form-group">
-                <label asp-for="Perfil" class="control-label"></label>
-                <input asp-for="Perfil" class="form-control" />
-                <span asp-validation-for="Perfil" class="text-danger"></span>
+                <label class="control-label">Email</label>
+                <input name="email" value="@Model.Pessoa.Email" class="form-control" disabled />
             </div>
+
             <div class="form-group">
-                <label asp-for="PessoaId" class="control-label"></label>
-                <input asp-for="PessoaId" class="form-control" />
-                <span asp-validation-for="PessoaId" class="text-danger"></span>
+                <label class="control-label">Ativo</label>
+                <input name="ativo" type="checkbox" value="true" class="form-check-input" @(Model.Ativo ? "checked" : "") />
             </div>
+
             <div class="form-group">
-                <label asp-for="Pessoa" class="control-label"></label>
-                <input asp-for="Pessoa" class="form-control" />
-                <span asp-validation-for="Pessoa" class="text-danger"></span>
+                <label class="control-label">Perfil</label>
+                @Html.DropDownList("perfilId",
+                    new SelectList(ViewBag.Perfis, "Id", "Nome"),
+                    new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <input type="submit" value="Salvar" class="btn btn-primary" />

@@ -12,9 +12,13 @@
 
         public Cliente Cliente { get; set; }
 
-        public int FuncionarioId { get; set; }
+        public int VendedorId { get; set; }
 
-        public Funcionario Funcionario { get; set; }
+        public Usuario Vendedor { get; set; }
+
+        //public int FuncionarioId { get; set; }
+
+        //public Funcionario Funcionario { get; set; }
 
         public int StatusVendaId { get; set; }
         

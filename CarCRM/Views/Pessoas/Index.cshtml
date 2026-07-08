@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Nova Pessoa</a>
 </p>
-<table id="PessoaListaID" class="table table-striped">
+<table id="PessoaListaID" class="table table-striped js-datatable">
     <thead>
         <tr>
             <th>
@@ -24,7 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Excluido)
             </th>
-            <th></th>
+            <th class="no-sort" data-priority="1"></th>
         </tr>
     </thead>
     <tbody>
@@ -51,24 +51,3 @@
 }
     </tbody>
 </table>
-
-@section Scripts {
-    <script src="~/lib/datatables/datatables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-
-        var table = new DataTable('#PessoaListaID', {
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json',
-                },
-            layout: {
-                topStart: 'info',
-                bottom: 'paging',
-                bottomStart: null,
-                bottomEnd: null
-                },
-            });
-      });
-
-    </script>
-}

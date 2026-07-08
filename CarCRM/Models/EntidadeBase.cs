@@ -5,6 +5,7 @@
         public EntidadeBase()
         {
             CriadoEm = DateTime.Now;
+            
         }
 
         public int Id { get; set; }

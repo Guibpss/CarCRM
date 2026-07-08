@@ -5,6 +5,8 @@ namespace CarCRM.Data
 {
     public class CarCRMContext : DbContext
     {
+        public DbSet<CarCRM.Models.VeiculoMotorizacao> VeiculoMotorizacao { get; set; } = default!;
+        public DbSet<CarCRM.Models.VeiculoCombustivel> VeiculoCombustivel { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoModelo> VeiculoModelo { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoCor> VeiculoCor { get; set; } = default!;
         public DbSet<CarCRM.Models.FuncionarioCargo> FuncionarioCargo { get; set; } = default!;

@@ -1,4 +1,4 @@
-@model IEnumerable<CarCRM.Models.Veiculo>
+@model IEnumerable<CarCRM.ViewModels.VeiculoViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,87 +7,74 @@
 <h1>Veiculos</h1>
 
 <p>
-    <a asp-action="Create">Novo Veiculo</a>
+    <a asp-action="Create" class="btn btn-primary"> Novo <i class="bi bi-plus-lg"></i></a>
 </p>
-<table class="table">
+<table id="veiculoListaId" class="table table-striped js-datatable">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VeiculoCorId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KilometragemAtual)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Placa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Combustivel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Motorizacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AnoFabricacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AnoModelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VeiculoTipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VeiculoMarca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CriadoEm)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Excluido)
-            </th>
-            <th></th>
-        </tr>
+            <th>Cor</th>
+            <th>Km</th>
+            <th>Placa</th>
+            <th>Combustivel</th>
+            <th>Motorização</th>
+            <th>Ano Fabricação</th>
+            <th>Ano Modelo</th>
+            <th>Tipo</th>
+            <th>Marca</th>
+            <th class="no-sort" data-priority="1">Ações</th>
+        </tr>    
     </thead>
+    <tfoot>
+        <tr>
+            <th>Cor</th>
+            <th>Km</th>
+            <th>Placa</th>
+            <th>Combustivel</th>
+            <th>Motorização</th>
+            <th>Ano Fabricação</th>
+            <th>Ano Modelo</th>
+            <th>Tipo</th>
+            <th>Marca</th>
+            <th class="no-sort" data-priority="1"></th>
+        </tr>
+    </tfoot>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VeiculoCorId)
+                @item.VeiculoCor?.Nome
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.KilometragemAtual)
+                @item.KilometragemAtual
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Placa)
+                @item.Placa
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Combustivel)
+                @item.VeiculoCombustivel?.Nome
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Motorizacao)
+                @item.VeiculoMotorizacao?.Nome
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AnoFabricacao)
+                @item.AnoFabricacao
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AnoModelo)
+                @item.AnoModelo
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VeiculoTipo.Id)
+                @item.VeiculoTipo?.Nome
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VeiculoMarca.Id)
+                @item.VeiculoMarca?.Nome
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CriadoEm)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Excluido)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
+                    <i class="bi bi-pencil-square"></i></a>
+                <a asp-action="Details" asp-route-id="@item.Id" title="Detalhes">
+                    <i class="bi bi-eye"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Excluir">
+                    <i class="bi bi-trash"></i></a>
             </td>
         </tr>
 }
