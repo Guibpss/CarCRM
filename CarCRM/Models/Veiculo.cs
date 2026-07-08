@@ -31,6 +31,6 @@
         public VeiculoMarca VeiculoMarca { get; set; }
         public int VeiculoModeloId { get; set; }
 
-        public VeiculoMarca VeiculoModelo { get; set; }
+        public VeiculoModelo VeiculoModelo { get; set; }
     }
 }

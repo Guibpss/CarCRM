@@ -167,13 +167,41 @@ namespace CarCRM.Controllers
 
             var veiculoViewModel = new VeiculoViewModel 
             {
-                Id = veiculo.Id,
-                Placa = veiculo.Placa,
-                VeiculoCor = new VeiculoCorViewModel 
-                {
-                    Id = veiculo.VeiculoCor.Id,
-                    Nome = veiculo.VeiculoCor.Nome 
-                },
+                //Id = veiculo.Id,
+                //Placa = veiculo.Placa,
+                //KilometragemAtual = veiculo.KilometragemAtual,
+                //VeiculoCombustivel = new VeiculoCombustivelViewModel
+                //{
+                //    Id = veiculo.VeiculoCombustivel.Id,
+                //    Nome = veiculo.VeiculoCombustivel.Nome
+                //},
+                //VeiculoMotorizacao = new VeiculoMotorizacaoViewModel
+                //{
+                //    Id = veiculo.VeiculoMotorizacao.Id,
+                //    Nome = veiculo.VeiculoMotorizacao.Nome
+                //},
+                //VeiculoCor = new VeiculoCorViewModel 
+                //{
+                //    Id = veiculo.VeiculoCor.Id,
+                //    Nome = veiculo.VeiculoCor.Nome 
+                //},
+                //AnoFabricacao = veiculo.AnoFabricacao,
+                //AnoModelo = veiculo.AnoModelo,
+                //VeiculoTipo = new VeiculoTipoViewModel
+                //{
+                //    Id = veiculo.VeiculoTipo.Id,
+                //    Nome = veiculo.VeiculoTipo.Nome
+                //},
+                //VeiculoMarca = new VeiculoMarcaViewModel
+                //{
+                //    Id = veiculo.VeiculoMarca.Id,
+                //    Nome = veiculo.VeiculoMarca.Nome
+                //},
+                //VeiculoModelo = new VeiculoModeloViewModel
+                //{
+                //    Id = veiculo.VeiculoModelo.Id,
+                //    Nome = veiculo.VeiculoModelo.Nome
+                //}
 
                 //TODO: demais
             };
