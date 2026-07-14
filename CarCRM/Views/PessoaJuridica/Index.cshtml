@@ -1,75 +1,48 @@
-@model IEnumerable<CarCRM.Models.PessoaJuridica>
+@model IEnumerable<CarCRM.ViewModels.PessoaJuridicaViewModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Pessoas Jurídicas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary"> Novo <i class="bi bi-plus-lg"></i></a>
 </p>
-<table class="table">
+<table id="pessoaJuridicaListaId" class="table table-striped js-datatable">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.RazaoSocial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NomeFantasia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NomeInterno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CNPJ)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CriadoEm)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Excluido)
-            </th>
-            <th></th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>CNPJ</th>
+            <th>Razão Social</th>
+            <th>Nome Fantasia</th>
+            <th class="no-sort" data-priority="1">Ações</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>@item.Nome</td>
+            <td>@item.Email</td>
             <td>
-                @Html.DisplayFor(model => item.RazaoSocial)
+                @foreach (var telefone in item.Telefones)
+                {
+                    var numeroCompleto = "(" + telefone.DDD + ") " + telefone.Numero;
+                    <span>@numeroCompleto</span> <br />
+                }
             </td>
+            <td>@item.CNPJ</td>
+            <td>@item.RazaoSocial</td>
+            <td>@item.NomeFantasia</td>
             <td>
-                @Html.DisplayFor(model => item.NomeFantasia)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.NomeInterno)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.CNPJ)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.CriadoEm)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Excluido)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
+                    <i class="bi bi-pencil-square"></i></a>
+                <a asp-action="Details" asp-route-id="@item.Id" title="Detalhes">
+                    <i class="bi bi-eye"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Excluir">
+                    <i class="bi bi-trash"></i></a>
             </td>
         </tr>
 }

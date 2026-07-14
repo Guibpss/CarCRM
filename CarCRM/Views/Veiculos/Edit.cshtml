@@ -11,10 +11,11 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
+            <input type="hidden" name="id" value="@Model.Id" />
             <div class="form-group">
                 <label class="control-label">Cor</label>
                 @Html.DropDownList("veiculoCorId",
-                        new SelectList(ViewBag.veiculosCor, "Id", "Nome"),
+                        new SelectList(ViewBag.veiculosCor, "Id", "Nome", Model.VeiculoCor.Id),
                         new { @class = "form-control" })
 
             </div>
@@ -31,13 +32,13 @@
             <div class="form-group">
                 <label class="control-label">Combustível</label>
                 @Html.DropDownList("VeiculoCombustivelId",
-                        new SelectList(ViewBag.veiculosCombustivel, "Id", "Nome"),
+                        new SelectList(ViewBag.veiculosCombustivel, "Id", "Nome", Model.VeiculoCombustivel.Id),
                         new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label class="control-label">Motorização</label>
                 @Html.DropDownList("VeiculoMotorizacaoId",
-                        new SelectList(ViewBag.veiculosMotorizacao, "Id", "Nome"),
+                        new SelectList(ViewBag.veiculosMotorizacao, "Id", "Nome", Model.VeiculoMotorizacao.Id),
                         new { @class = "form-control" })
 
             </div>
@@ -54,16 +55,24 @@
             <div class="form-group">
                 <label class="control-label">Tipo</label>
                 @Html.DropDownList("veiculoTipoId",
-                        new SelectList(ViewBag.VeiculosTipo, "Id", "Nome"),
+                        new SelectList(ViewBag.veiculosTipo, "Id", "Nome", Model.VeiculoTipo.Id),
                         new { @class = "form-control" })
 
             </div>
             <div class="form-group">
                 <label class="control-label">Marca</label>
                 @Html.DropDownList("veiculoMarcaId",
-                        new SelectList(ViewBag.VeiculosMarca, "Id", "Nome"),
-                        new { @class = "form-control" })
+                        new SelectList(ViewBag.veiculosMarca, "Id", "Nome", Model.VeiculoMarca.Id),
+                        new { @class = "form-control", id = "marcaSelect" })
 
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label class="control-label">Modelo</label>
+                    <select name="veiculoModeloId" id="modeloSelect" class="form-control">
+                        <option value="">Selecione a marca primeiro</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group form-check">
                 <label class="control-label">Excluído</label>
@@ -81,5 +90,32 @@
 </div>
 
 @section Scripts {
+   <script>
+        $(document).ready(function () {
+        var modeloAtual = '@Model.VeiculoModelo.Id';
+
+    function carregarModelos(marcaId, selecionado) {
+        $("#modeloSelect").empty();
+        if (!marcaId) {
+            $("#modeloSelect").append('<option value="">Selecione a marca primeiro</option>');
+            return;
+        }
+        $.getJSON('@Url.Action("ModelosPorMarca", "Veiculos")', { marcaId: marcaId }, function (modelos) {
+            $("#modeloSelect").append('<option value="">Selecione o modelo</option>');
+            $.each(modelos, function (i, modelo) {
+                var sel = (modelo.id == selecionado) ? ' selected' : '';
+                $("#modeloSelect").append('<option value="' + modelo.id + '"' + sel + '>' + modelo.nome + '</option>');
+            });
+        });
+    }
+
+
+    carregarModelos($("#marcaSelect").val(), modeloAtual);
+
+    $("#marcaSelect").change(function () {
+        carregarModelos($(this).val(), null);
+    });
+});
+ </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -1,4 +1,4 @@
-@model CarCRM.Models.Usuario
+@model CarCRM.ViewModels.UsuarioViewModel
 
 @{
    
@@ -14,27 +14,27 @@
 
             <div class="form-group">
                 <label class="control-label">Nome</label>
-                <input name="nome" class="form-control" required />
+                <input name="Pessoa.Nome" class="form-control" required />
             </div>
 
             <div class="form-group">
                 <label class="control-label">CPF</label>
-                <input name="cpf" class="form-control" required />
+                <input name="Pessoa.CPF" class="form-control" required />
             </div>
 
             <div class="form-group">
                 <label class="control-label">RG</label>
-                <input name="rg" class="form-control" required />
+                <input name="Pessoa.RG" class="form-control" required />
             </div>
 
             <div class="form-group">
                 <label class="control-label">Data de Nascimento</label>
-                <input name="dataNascimento" type="date" class="form-control" required />
+                <input name="Pessoa.DataNascimento" type="date" class="form-control" required />
             </div>
 
             <div class="form-group">
                 <label class="control-label">Email</label>
-                <input name="email" class="form-control" required />
+                <input name="Pessoa.Email" class="form-control" required />
             </div>
 
             <div class="form-group">
@@ -46,6 +46,7 @@
                 <label class="control-label">Perfil</label>
                 @Html.DropDownList("perfilId",
                     new SelectList(ViewBag.Perfis, "Id", "Nome"),
+                    "Selecione o Perfil",
                     new { @class = "form-control", required = "required" })
             </div>
 

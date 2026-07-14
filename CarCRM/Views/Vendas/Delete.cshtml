@@ -1,4 +1,4 @@
-@model CarCRM.Models.Venda
+@model CarCRM.ViewModels.VendaViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -33,25 +33,24 @@
         </dd>
 
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ClienteId)
+            Valor da Venda
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ClienteId)
+            @Model.ValorVenda.ToString("C")
         </dd>
 
-
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cliente)
+            Desconto
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cliente)
+            @Model.Desconto.ToString("C")
         </dd>
 
         <dt class = "col-sm-2">
             Status da Venda
         </dt>
         <dd class = "col-sm-10">
-            @Model.StatusVenda.Nome
+            @Model.StatusVenda?.Nome
         </dd>
 
         <dt class = "col-sm-2">

@@ -17,7 +17,9 @@ $(function () {
             columnDefs: [
                 // coluna(s) marcadas com a classe "no-sort" não ordenam nem entram na busca
                 { targets: 'no-sort', orderable: false, searchable: false }
-            ],
+            ]
+            /* FILTRO POR COLUNA (rodapé) - desativado temporariamente, revisar depois
+            ,
             initComplete: function () {
                 this.api().columns().every(function () {
                     let column = this;
@@ -41,10 +43,11 @@ $(function () {
                         if (d !== null && d !== '') {
                             select.add(new Option(d));
                         }
-                                
+
                     });
                });
             }
+            */
         });
     });
 });

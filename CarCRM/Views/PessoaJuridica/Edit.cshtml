@@ -1,67 +1,73 @@
-@model CarCRM.Models.PessoaJuridica
+@model CarCRM.ViewModels.PessoaJuridicaViewModel
 
 @{
     ViewData["Title"] = "Edit";
+    var telefone = Model.Telefones?.FirstOrDefault();
 }
 
-<h1>Edit</h1>
+<h1>Editar</h1>
 
-<h4>PessoaJuridica</h4>
+<h4>Pessoa Jurídica</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="id" value="@Model.Id" />
             <div class="form-group">
-                <label asp-for="RazaoSocial" class="control-label"></label>
-                <input asp-for="RazaoSocial" class="form-control" />
-                <span asp-validation-for="RazaoSocial" class="text-danger"></span>
+                <label class="control-label">Nome</label>
+                <input name="nome" value="@Model.Nome" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="NomeFantasia" class="control-label"></label>
-                <input asp-for="NomeFantasia" class="form-control" />
-                <span asp-validation-for="NomeFantasia" class="text-danger"></span>
+                <label class="control-label">Email</label>
+                <input name="email" value="@Model.Email" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="NomeInterno" class="control-label"></label>
-                <input asp-for="NomeInterno" class="form-control" />
-                <span asp-validation-for="NomeInterno" class="text-danger"></span>
+                <label class="control-label">CNPJ</label>
+                <input name="cnpj" value="@Model.CNPJ" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="CNPJ" class="control-label"></label>
-                <input asp-for="CNPJ" class="form-control" />
-                <span asp-validation-for="CNPJ" class="text-danger"></span>
+                <label class="control-label">Razão Social</label>
+                <input name="razaoSocial" value="@Model.RazaoSocial" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label class="control-label">Nome Fantasia</label>
+                <input name="nomeFantasia" value="@Model.NomeFantasia" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label class="control-label">Nome Interno</label>
+                <input name="nomeInterno" value="@Model.NomeInterno" class="form-control" />
             </div>
-            <div class="form-group">
-                <label asp-for="CriadoEm" class="control-label"></label>
-                <input asp-for="CriadoEm" class="form-control" />
-                <span asp-validation-for="CriadoEm" class="text-danger"></span>
+            <div>
+                <br />
+                <h4>Telefone</h4>
+                <hr />
+                <div style="display: flex; align-items: flex-end; gap: 10px;">
+                    <div>
+                        <label class="control-label">Tipo</label>
+                        @Html.DropDownList("telefonetipoId",
+                        new SelectList(ViewBag.telefonesTipo, "Id", "Nome", telefone?.TelefoneTipoId),
+                        new { @class = "form-control" })
+                    </div>
+                    <div style="width: 80px;">
+                        <label class="control-label">DDD</label>
+                        <input name="ddd" value="@telefone?.DDD" class="form-control" />
+                    </div>
+                    <div style="flex: 1;">
+                        <label class="control-label">Número</label>
+                        <input name="numero" value="@telefone?.Numero" class="form-control" />
+                    </div>
+                </div>
             </div>
+            <br />
             <div class="form-group">
-                <label asp-for="Excluido" class="control-label"></label>
-                <input asp-for="Excluido" class="form-check-input" />
-                <span asp-validation-for="Excluido" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 
 @section Scripts {

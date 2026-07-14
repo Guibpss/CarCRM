@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label class="control-label">Tipo</label>
                 @Html.DropDownList("veiculoTipoId",
-                        new SelectList(ViewBag.VeiculosTipo, "Id", "Nome"),
+                        new SelectList(ViewBag.veiculosTipo, "Id", "Nome"),
                         "Selecione o Tipo",
                         new { @class = "form-control" })
 
@@ -61,7 +61,7 @@
             <div class="form-group">
                 <label class="control-label">Marca</label>
                 @Html.DropDownList("veiculoMarcaId",
-                        new SelectList(ViewBag.VeiculosMarca, "Id", "Nome"),
+                        new SelectList(ViewBag.veiculosMarca, "Id", "Nome"),
                         "Selecione a Marca",
                         new { @class = "form-control", id = "marcaSelect" })
 

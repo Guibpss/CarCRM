@@ -32,13 +32,13 @@
             Combustível
         </dt>
         <dd class = "col-sm-10">
-            @Model.VeiculoCombustivel
+            @Model.VeiculoCombustivel.Nome
         </dd>
         <dt class = "col-sm-2">
             Motorização
         </dt>
         <dd class = "col-sm-10">
-            @Model.VeiculoMotorizacao
+            @Model.VeiculoMotorizacao.Nome
         </dd>
         <dt class = "col-sm-2">
             Ano Fabricação
@@ -50,7 +50,7 @@
             Ano Modelo
         </dt>
         <dd class = "col-sm-10">
-            @Model.AnoFabricacao
+            @Model.AnoModelo
         </dd>
         <dt class = "col-sm-2">
             Tipo
@@ -63,6 +63,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Model.VeiculoMarca.Nome
+        </dd>
+        <dt class="col-sm-2">
+            Modelo
+        </dt>
+        <dd class="col-sm-10">
+            @Model.VeiculoModelo.Nome
         </dd>
         <dt class = "col-sm-2">
             Criado Em

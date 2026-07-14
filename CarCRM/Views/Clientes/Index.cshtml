@@ -1,4 +1,4 @@
-@model IEnumerable<CarCRM.Models.Cliente>
+@model IEnumerable<CarCRM.ViewModels.ClienteViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -39,11 +39,11 @@
                         <span>@numeroCompleto</span> <br />
                     }
                 </td>
-                <td>@if (item.Pessoa is CarCRM.Models.PessoaFisica pf)
+                <td>@if (item.Pessoa is CarCRM.ViewModels.PessoaFisicaViewModel pf)
                     {
                         @pf.CPF
                     }
-                    else if (item.Pessoa is CarCRM.Models.PessoaJuridica pj)
+                    else if (item.Pessoa is CarCRM.ViewModels.PessoaJuridicaViewModel pj)
                     {
                         @pj.CNPJ
                     }

@@ -12,6 +12,20 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarCRM.styles.css" asp-append-version="true" />
     <style>
+        .footer-basic {
+        padding: 10px 0;
+        background-color: #f8f9fa;
+        color: white;
+        }
+
+        .footer-basic .copyright {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 13px;
+        color: black;
+        margin-bottom: 0;
+        }
+
         .navbar-dark .nav-item .nav-link {
         color: #fff;
         }
@@ -119,59 +133,7 @@
             </div>
         </nav>
         <!-- Navbar -->
-        <!-- Navbar -->
-        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CarCRM</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        @{
-                            if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
-                            {
-                                // <li class="nav-item">
-                                //     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Login</a>
-                                // </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuário</a>
-                                </li>                              
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Perfils" asp-action="Index">Perfil</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Cargos" asp-action="Index">Cargo</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Cliente</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Estoques" asp-action="Index">Estoque</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Veiculos" asp-action="Index">Veiculo</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vendas" asp-action="Index">Venda</a>
-                                </li>
-                            }
-                        }
-                    </ul>
-
-                    @{
-                        if (ViewContext.RouteData.Values["controller"]?.ToString() != "Home" || ViewContext.RouteData.Values["action"]?.ToString() != "Index")
-                        {
-                            <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Sair</a>
-                        }
-                    }
-                </div>
-            </div>
-        </nav> *@
+        
     </header>
     <div class="container">
   
@@ -180,11 +142,17 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <div class="footer-basic">
+        <footer>
+            <hr style="height:2px;border-width:0;color:gray;background-color:white">
+            <p class="copyright">Copyright © 2026 CarCRM. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+    @* <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2026 - CarCRM - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
         </div>
-    </footer>
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/datatables/datatables.min.js"></script>

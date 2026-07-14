@@ -1,8 +1,9 @@
 
+using CarCRM.Data;
+using CarCRM.Models;
+using CarCRM.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CarCRM.Models;
-using CarCRM.Data;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 public class UsuariosController : Controller
@@ -21,7 +22,32 @@ public class UsuariosController : Controller
             .Include(u => u.Pessoa)
             .Include(u => u.Perfil)
             .ToListAsync();
-        return View(usuarios);
+
+        var usuariosViewModel = usuarios.Select(u => new UsuarioViewModel
+        {
+            Id = u.Id,
+            Nome = u.Nome,
+            CriadoEm = u.CriadoEm,
+            Ativo = u.Ativo,
+            PerfilId = u.PerfilId,
+            Perfil = u.Perfil == null ? null : new PerfilViewModel
+            {
+                Id = u.Perfil.Id,
+                Nome = u.Perfil.Nome
+            },
+            PessoaId = u.PessoaId,
+            Pessoa = new PessoaFisicaViewModel
+            {
+                Id = u.Pessoa.Id,
+                Nome = u.Pessoa.Nome,
+                Email = u.Pessoa.Email,
+                CPF = u.Pessoa.CPF,
+                RG = u.Pessoa.RG,
+                DataNascimento = u.Pessoa.DataNascimento
+            }
+        }).ToList();
+
+        return View(usuariosViewModel);
     }
 
     // GET: USUARIOS/Details/5
@@ -42,7 +68,31 @@ public class UsuariosController : Controller
             return NotFound();
         }
 
-        return View(usuario);
+        var usuarioViewModel = new UsuarioViewModel
+        {
+            Id = usuario.Id,
+            Nome = usuario.Nome,
+            CriadoEm = usuario.CriadoEm,
+            Ativo = usuario.Ativo,
+            PerfilId = usuario.PerfilId,
+            Perfil = usuario.Perfil == null ? null : new PerfilViewModel
+            {
+                Id = usuario.Perfil.Id,
+                Nome = usuario.Perfil.Nome
+            },
+            PessoaId = usuario.PessoaId,
+            Pessoa = new PessoaFisicaViewModel
+            {
+                Id = usuario.Pessoa.Id,
+                Nome = usuario.Pessoa.Nome,
+                Email = usuario.Pessoa.Email,
+                CPF = usuario.Pessoa.CPF,
+                RG = usuario.Pessoa.RG,
+                DataNascimento = usuario.Pessoa.DataNascimento
+            }
+        };
+
+        return View(usuarioViewModel);
     }
 
     // GET: USUARIOS/Create
@@ -59,49 +109,37 @@ public class UsuariosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(string nome, string email, string cpf, string rg,
-    DateTime dataNascimento, bool ativo, int perfilId)
+    public async Task<IActionResult> Create(UsuarioViewModel usuarioViewModel)
     {
-        if (string.IsNullOrWhiteSpace(nome))
-            ModelState.AddModelError("nome", "O nome é obrigatório.");
 
-        if (string.IsNullOrWhiteSpace(cpf))
-            ModelState.AddModelError("cpf", "O CPF é obrigatório.");
-
-        if (string.IsNullOrWhiteSpace(rg))
-            ModelState.AddModelError("rg", "O RG é obrigatório.");
-
-        if (string.IsNullOrWhiteSpace(email))
-            ModelState.AddModelError("email", "O email é obrigatório.");
-
-        if (perfilId == 0)
-            ModelState.AddModelError("perfilId", "Selecione um perfil.");
-
-        if (dataNascimento == default)
-            ModelState.AddModelError("dataNascimento", "A data de nascimento é obrigatória.");
-
-
-        var usuario = new Usuario();
-        usuario.Nome = nome;
-        usuario.CriadoEm = DateTime.Now;
-        usuario.Ativo = ativo;
-        usuario.PerfilId = perfilId;
-
-        usuario.Pessoa = new PessoaFisica
+        if (ModelState.IsValid)
         {
-            Nome = nome,
-            Email = email,
-            CPF = cpf,
-            RG = rg,
-            DataNascimento = dataNascimento
-        };
+            var usuario = new Usuario
+            {
+                Nome = usuarioViewModel.Nome,
+                Senha = usuarioViewModel.Senha,
+                ConfirmaSenha = usuarioViewModel.ConfirmaSenha,
+                CriadoEm = usuarioViewModel.CriadoEm,
+                Ativo = usuarioViewModel.Ativo,
+                PerfilId = usuarioViewModel.PerfilId,
+
+                Pessoa = new PessoaFisica
+                {
+                    Nome = usuarioViewModel.Nome,
+                    Email = usuarioViewModel.Pessoa.Email,
+                    CPF = usuarioViewModel.Pessoa.CPF,
+                    RG = usuarioViewModel.Pessoa.RG,
+                    DataNascimento = usuarioViewModel.Pessoa.DataNascimento,
+                }
+            };
+            
             _context.Add(usuario);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        
+        }
 
         ViewBag.Perfis = _context.Perfis.ToList();
-        return View(usuario);
+        return View(usuarioViewModel);
     }
 
     // GET: USUARIOS/Edit/5
@@ -114,6 +152,7 @@ public class UsuariosController : Controller
 
         var usuario = await _context.Usuarios
         .Include(u => u.Pessoa)
+        .Include(u => u.Perfil)
         .FirstOrDefaultAsync(u => u.Id == id);
   
         if (usuario == null)
@@ -122,7 +161,31 @@ public class UsuariosController : Controller
         }
 
         ViewBag.Perfis = _context.Perfis.ToList();
-        return View(usuario);
+
+        var usuarioViewModel = new UsuarioViewModel
+        {
+            Id = usuario.Id,
+            Nome = usuario.Nome,
+            CriadoEm = usuario.CriadoEm,
+            Ativo = usuario.Ativo,
+            PerfilId = usuario.PerfilId,
+            Perfil = usuario.Perfil == null ? null : new PerfilViewModel
+            {
+                Id = usuario.Perfil.Id,
+                Nome = usuario.Perfil.Nome
+            },
+            PessoaId = usuario.PessoaId,
+            Pessoa = new PessoaFisicaViewModel
+            {
+                Id = usuario.Pessoa.Id,
+                Nome = usuario.Pessoa.Nome,
+                Email = usuario.Pessoa.Email,
+                CPF = usuario.Pessoa.CPF,
+                RG = usuario.Pessoa.RG,
+                DataNascimento = usuario.Pessoa.DataNascimento
+            }
+        };
+        return View(usuarioViewModel);
     }
 
     // POST: USUARIOS/Edit/5
@@ -130,30 +193,38 @@ public class UsuariosController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, string nome, DateTime dataNascimento, bool ativo, int perfilId)
+    public async Task<IActionResult> Edit(int? id, UsuarioViewModel usuarioViewModel)
     {
-        var usuario = await _context.Usuarios
-        .Include(u => u.Pessoa)
-        .FirstOrDefaultAsync(u => u.Id == id);
-
-        if (usuario == null)
+        if (id != usuarioViewModel.Id)
+        {
             return NotFound();
+        }
 
         if (ModelState.IsValid)
         {
             try
             {
-                usuario.Nome = nome;
-                usuario.Pessoa.DataNascimento = dataNascimento;
-                usuario.Ativo = ativo;
-                usuario.PerfilId = perfilId;
+                var usuario = await _context.Usuarios
+                    .Include(u => u.Pessoa)
+                    .FirstOrDefaultAsync(u => u.Id == id);
+
+                if (usuario == null)
+                {
+                    return NotFound();
+                }
+
+                usuario.Nome = usuarioViewModel.Nome;
+                usuario.Ativo = usuarioViewModel.Ativo;
+                usuario.PerfilId = usuarioViewModel.PerfilId;
+                usuario.Pessoa.Nome = usuarioViewModel.Nome;
+                usuario.Pessoa.DataNascimento = usuarioViewModel.Pessoa.DataNascimento;
 
                 _context.Update(usuario);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsuarioExists(usuario.Id))
+                if (!UsuarioExists(usuarioViewModel.Id))
                 {
                     return NotFound();
                 }
@@ -164,7 +235,7 @@ public class UsuariosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(usuario);
+        return View(usuarioViewModel);
     }
 
     // GET: USUARIOS/Delete/5
@@ -185,7 +256,31 @@ public class UsuariosController : Controller
             return NotFound();
         }
 
-        return View(usuario);
+        var usuarioViewModel = new UsuarioViewModel
+        {
+            Id = usuario.Id,
+            Nome = usuario.Nome,
+            CriadoEm = usuario.CriadoEm,
+            Ativo = usuario.Ativo,
+            PerfilId = usuario.PerfilId,
+            Perfil = usuario.Perfil == null ? null : new PerfilViewModel
+            {
+                Id = usuario.Perfil.Id,
+                Nome = usuario.Perfil.Nome
+            },
+            PessoaId = usuario.PessoaId,
+            Pessoa = new PessoaFisicaViewModel
+            {
+                Id = usuario.Pessoa.Id,
+                Nome = usuario.Pessoa.Nome,
+                Email = usuario.Pessoa.Email,
+                CPF = usuario.Pessoa.CPF,
+                RG = usuario.Pessoa.RG,
+                DataNascimento = usuario.Pessoa.DataNascimento
+            }
+        };
+
+        return View(usuarioViewModel);
     }
 
     // POST: USUARIOS/Delete/5

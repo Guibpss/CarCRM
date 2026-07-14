@@ -656,8 +656,8 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\comp
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\scopedcss\Views\Shared\_LayoutAreaDeslogada.cshtml.rz.scp.css
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\b4vv5c5fqc-{0}-3o5uo5oz1d-3o5uo5oz1d.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\mdzq37ooml-{0}-3o5uo5oz1d-3o5uo5oz1d.gz
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\40248rlqku-{0}-mfqtwd2q5w-mfqtwd2q5w.gz
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\fz93a5gonh-{0}-fwa5tyvmo2-fwa5tyvmo2.gz
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\vd3osla6qn-{0}-naeybtolbi-naeybtolbi.gz
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\uliad0bloc-{0}-tesnfcjflb-tesnfcjflb.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\fz93a5gonh-{0}-sa27rentsf-sa27rentsf.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\vd3osla6qn-{0}-f9xix7i51j-f9xix7i51j.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\uliad0bloc-{0}-dlb3s3u3oj-dlb3s3u3oj.gz

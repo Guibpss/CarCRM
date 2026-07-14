@@ -1,9 +1,9 @@
-@model CarCRM.Models.Cliente
+@model CarCRM.ViewModels.ClienteViewModel
 
 @{
     ViewData["Title"] = "Edit";
-    var pf = Model.Pessoa as CarCRM.Models.PessoaFisica;
-    var pj = Model.Pessoa as CarCRM.Models.PessoaJuridica;
+    var pf = Model.Pessoa as CarCRM.ViewModels.PessoaFisicaViewModel;
+    var pj = Model.Pessoa as CarCRM.ViewModels.PessoaJuridicaViewModel;
     var telefone = Model.Pessoa?.Telefones?.FirstOrDefault();
 }
 

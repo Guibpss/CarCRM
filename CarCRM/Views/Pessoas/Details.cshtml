@@ -1,7 +1,8 @@
-@model CarCRM.Models.Pessoa
+@model CarCRM.ViewModels.PessoaViewModel
 
 @{
     ViewData["Title"] = "Details";
+    var telefone = Model.Telefones?.FirstOrDefault();
 }
 
 <h1>Detalhes</h1>
@@ -9,34 +10,64 @@
 <div>
     <h4>Pessoa</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
+    <dl>
+        <dt class="col-sm-2">
+            Nome
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
+        <dd class="col-sm-10">
+            @Model.Nome
         </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+
+        <dt class="col-sm-2">
+            Email
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
+        <dd class="col-sm-10">
+            @Model.Email
         </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriadoEm)
+
+        <dt class="col-sm-2">
+            Excluido
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriadoEm)
+        <dd class="col-sm-10">
+            @(Model.Excluido ? "Sim" : "Não")
         </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Excluido)
+
+        <dt class="col-sm-2">
+            Criado Em
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Excluido)
+        <dd class="col-sm-10">
+            @Model.CriadoEm.ToString("dd/MM/yyyy")
         </dd>
+
+        <div>
+            <br />
+            <h4>Telefone</h4>
+            <hr />
+            <div style="display: flex; align-items: flex-end; gap: 10px;">
+                <div>
+                    <label class="control-label">Tipo</label>
+                    @Html.DropDownList("telefonetipoId",
+                    new SelectList(ViewBag.telefonesTipo, "Id", "Nome", telefone?.TelefoneTipoId),
+                    new { @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+            <div style="width: 80px;">
+                <dt class="col-sm-2">
+                    DDD
+                </dt>
+                <dd class="col-sm-10">
+                    @telefone?.DDD
+                </dd>
+            </div>
+            <div style="flex: 1px;">
+                <dt class="col-sm-2">
+                    Número
+                </dt>
+                <dd class="col-sm-10">
+                    @telefone?.Numero
+                </dd>
+            </div>
+        </div>
     </dl>
 </div>
 <div>
