@@ -28,17 +28,19 @@ namespace CarCRM.Controllers
                 .Include(v => v.VeiculoTipo)
                 .Include(v => v.VeiculoCor)
                 .Include(v => v.VeiculoCombustivel)
-                .Include(v => v.VeiculoMotorizacao);
+                .Include(v => v.VeiculoMotorizacao)
+                .Include(v => v.VeiculoTransmissao);
             var veiculos = await carCRMContext.ToListAsync();
 
-            var veiculosViewModel = veiculos.Select(v => 
-            new VeiculoViewModel 
+            var veiculosViewModel = veiculos.Select(v =>
+            new VeiculoViewModel
             {
                 Id = v.Id,
                 AnoFabricacao = v.AnoFabricacao,
                 AnoModelo = v.AnoModelo,
                 VeiculoCor = new VeiculoCorViewModel
                 {
+                    Id = v.VeiculoCor.Id,
                     Nome = v.VeiculoCor.Nome
                 },
                 VeiculoMarca = new VeiculoMarcaViewModel
@@ -48,16 +50,26 @@ namespace CarCRM.Controllers
                 },
                 KilometragemAtual = v.KilometragemAtual,
                 Placa = v.Placa,
+                Renavam = v.Renavam,
+                VeiculoTransmissaoId = v.VeiculoTransmissaoId,
+                VeiculoTransmissao = v.VeiculoTransmissao == null ? null : new VeiculoTransmissaoViewModel
+                {
+                    Id = v.VeiculoTransmissao.Id,
+                    Nome = v.VeiculoTransmissao.Nome
+                },
                 VeiculoCombustivel = new VeiculoCombustivelViewModel
                 {
+                    Id = v.VeiculoCombustivel.Id,
                     Nome = v.VeiculoCombustivel.Nome
                 },
                 VeiculoMotorizacao = new VeiculoMotorizacaoViewModel
                 {
+                    Id = v.VeiculoMotorizacao.Id,
                     Nome = v.VeiculoMotorizacao.Nome
                 },
                 VeiculoTipo = new VeiculoTipoViewModel
                 {
+                    Id = v.VeiculoTipo.Id,
                     Nome = v.VeiculoTipo.Nome
                 }
 
@@ -81,6 +93,7 @@ namespace CarCRM.Controllers
                 .Include(v => v.VeiculoCor)
                 .Include(v => v.VeiculoCombustivel)
                 .Include(v => v.VeiculoMotorizacao)
+                .Include(v => v.VeiculoTransmissao)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (veiculo == null)
             {
@@ -91,6 +104,7 @@ namespace CarCRM.Controllers
             {
                 Id = veiculo.Id,
                 Placa = veiculo.Placa,
+                Renavam = veiculo.Renavam,
                 KilometragemAtual = veiculo.KilometragemAtual,
                 VeiculoCombustivel = new VeiculoCombustivelViewModel
                 {
@@ -101,6 +115,12 @@ namespace CarCRM.Controllers
                 {
                     Id = veiculo.VeiculoMotorizacao.Id,
                     Nome = veiculo.VeiculoMotorizacao.Nome
+                },
+                VeiculoTransmissaoId = veiculo.VeiculoTransmissaoId,
+                VeiculoTransmissao = veiculo.VeiculoTransmissao == null ? null : new VeiculoTransmissaoViewModel
+                {
+                    Id = veiculo.VeiculoTransmissao.Id,
+                    Nome = veiculo.VeiculoTransmissao.Nome
                 },
                 VeiculoCor = new VeiculoCorViewModel
                 {
@@ -155,9 +175,8 @@ namespace CarCRM.Controllers
             ViewBag.veiculosTipo = _context.VeiculoTipos.ToList();
             ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.ToList();
             ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.ToList();
+            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.ToList();
 
-            //ViewData["VeiculoMarcaId"] = new SelectList(_context.veiculoMarcas, "Id", "Id");
-            //ViewData["VeiculoTipoId"] = new SelectList(_context.VeiculoTipos, "Id", "Id");
             return View(new VeiculoViewModel());
         }
 
@@ -168,14 +187,16 @@ namespace CarCRM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(VeiculoViewModel veiculoViewModel)
         {
-          
+
             var veiculo = new Veiculo
             {
                 VeiculoCorId = veiculoViewModel.VeiculoCorId,
                 KilometragemAtual = veiculoViewModel.KilometragemAtual,
                 Placa = veiculoViewModel.Placa,
+                Renavam = veiculoViewModel.Renavam,
                 VeiculoCombustivelId = veiculoViewModel.VeiculoCombustivelId,
                 VeiculoMotorizacaoId = veiculoViewModel.VeiculoMotorizacaoId,
+                VeiculoTransmissaoId = veiculoViewModel.VeiculoTransmissaoId,
                 AnoFabricacao = veiculoViewModel.AnoFabricacao,
                 AnoModelo = veiculoViewModel.AnoModelo,
                 VeiculoTipoId = veiculoViewModel.VeiculoTipoId,
@@ -183,7 +204,7 @@ namespace CarCRM.Controllers
                 VeiculoModeloId = veiculoViewModel.VeiculoModeloId,
                 Excluido = veiculoViewModel.Excluido
             };
-            
+
             if (ModelState.IsValid)
             {
                 _context.Add(veiculo);
@@ -197,6 +218,7 @@ namespace CarCRM.Controllers
             ViewBag.veiculosTipo = _context.VeiculoTipos.ToList();
             ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.ToList();
             ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.ToList();
+            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.ToList();
 
 
             return View(veiculoViewModel);
@@ -212,6 +234,7 @@ namespace CarCRM.Controllers
                 .Include(v => v.VeiculoCor)
                 .Include(v => v.VeiculoCombustivel)
                 .Include(v => v.VeiculoMotorizacao)
+                .Include(v => v.VeiculoTransmissao)
                 .FirstOrDefaultAsync(v => v.Id == id);
 
             if (id == null)
@@ -230,11 +253,13 @@ namespace CarCRM.Controllers
             ViewBag.veiculosTipo = _context.VeiculoTipos.ToList();
             ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.ToList();
             ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.ToList();
+            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.ToList();
 
-            var veiculoViewModel = new VeiculoViewModel 
+            var veiculoViewModel = new VeiculoViewModel
             {
                 Id = veiculo.Id,
                 Placa = veiculo.Placa,
+                Renavam = veiculo.Renavam,
                 KilometragemAtual = veiculo.KilometragemAtual,
                 VeiculoCombustivel = new VeiculoCombustivelViewModel
                 {
@@ -245,6 +270,11 @@ namespace CarCRM.Controllers
                 {
                     Id = veiculo.VeiculoMotorizacao.Id,
                     Nome = veiculo.VeiculoMotorizacao.Nome
+                },
+                VeiculoTransmissao = veiculo.VeiculoTransmissao == null ? null : new VeiculoTransmissaoViewModel
+                {
+                    Id = veiculo.VeiculoTransmissao.Id,
+                    Nome = veiculo.VeiculoTransmissao.Nome
                 },
                 VeiculoCor = new VeiculoCorViewModel
                 {
@@ -267,9 +297,15 @@ namespace CarCRM.Controllers
                 {
                     Id = veiculo.VeiculoModelo.Id,
                     Nome = veiculo.VeiculoModelo.Nome
-                }
-
-                //TODO: demais
+                },
+                VeiculoCorId = veiculo.VeiculoCorId,
+                VeiculoCombustivelId = veiculo.VeiculoCombustivelId,
+                VeiculoMotorizacaoId = veiculo.VeiculoMotorizacaoId,
+                VeiculoTransmissaoId = veiculo.VeiculoTransmissaoId,
+                VeiculoTipoId = veiculo.VeiculoTipoId,
+                VeiculoMarcaId = veiculo.VeiculoMarcaId,
+                VeiculoModeloId = veiculo.VeiculoModeloId,
+                Excluido = veiculo.Excluido
             };
 
             return View(veiculoViewModel);
@@ -301,8 +337,10 @@ namespace CarCRM.Controllers
                     veiculo.VeiculoCorId = veiculoViewModel.VeiculoCorId;
                     veiculo.KilometragemAtual = veiculoViewModel.KilometragemAtual;
                     veiculo.Placa = veiculoViewModel.Placa;
+                    veiculo.Renavam = veiculoViewModel.Renavam;
                     veiculo.VeiculoCombustivelId = veiculoViewModel.VeiculoCombustivelId;
                     veiculo.VeiculoMotorizacaoId = veiculoViewModel.VeiculoMotorizacaoId;
+                    veiculo.VeiculoTransmissaoId = veiculoViewModel.VeiculoTransmissaoId;
                     veiculo.AnoFabricacao = veiculoViewModel.AnoFabricacao;
                     veiculo.AnoModelo = veiculoViewModel.AnoModelo;
                     veiculo.VeiculoTipoId = veiculoViewModel.VeiculoTipoId;
@@ -328,6 +366,7 @@ namespace CarCRM.Controllers
             ViewBag.veiculosTipo = _context.VeiculoTipos.ToList();
             ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.ToList();
             ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.ToList();
+            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.ToList();
             return View(veiculoViewModel);
         }
 
@@ -346,6 +385,7 @@ namespace CarCRM.Controllers
                 .Include(v => v.VeiculoCor)
                 .Include(v => v.VeiculoCombustivel)
                 .Include(v => v.VeiculoMotorizacao)
+                .Include(v => v.VeiculoTransmissao)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (veiculo == null)
             {
@@ -356,6 +396,7 @@ namespace CarCRM.Controllers
             {
                 Id = veiculo.Id,
                 Placa = veiculo.Placa,
+                Renavam = veiculo.Renavam,
                 KilometragemAtual = veiculo.KilometragemAtual,
                 VeiculoCombustivel = new VeiculoCombustivelViewModel
                 {
@@ -366,6 +407,12 @@ namespace CarCRM.Controllers
                 {
                     Id = veiculo.VeiculoMotorizacao.Id,
                     Nome = veiculo.VeiculoMotorizacao.Nome
+                },
+                VeiculoTransmissaoId = veiculo.VeiculoTransmissaoId,
+                VeiculoTransmissao = veiculo.VeiculoTransmissao == null ? null : new VeiculoTransmissaoViewModel
+                {
+                    Id = veiculo.VeiculoTransmissao.Id,
+                    Nome = veiculo.VeiculoTransmissao.Nome
                 },
                 VeiculoCor = new VeiculoCorViewModel
                 {

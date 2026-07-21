@@ -15,7 +15,6 @@
             <th>Nome</th>
             <th>Data de Entrada</th>
             <th>Excluido</th>
-            <th>Criado Em</th>
             <th class="no-sort" data-priority="1">Ações</th>
         </tr>
     </thead>
@@ -30,9 +29,6 @@
             </td>
             <td>
                 @item.Excluido
-            </td>
-            <td>
-                @item.CriadoEm
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">

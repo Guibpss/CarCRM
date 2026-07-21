@@ -98,10 +98,10 @@ public class UsuariosController : Controller
     // GET: USUARIOS/Create
     public IActionResult Create()
     {
-        var usuario = new Usuario();
+        var usuarioViewModel = new UsuarioViewModel();
         var perfis = _context.Perfis.ToList();
         ViewBag.Perfis = perfis;
-        return View(usuario);
+        return View(usuarioViewModel);
     }
 
     // POST: USUARIOS/Create

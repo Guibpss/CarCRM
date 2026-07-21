@@ -10,6 +10,8 @@
         
         public string Placa { get; set; }//GDR4C69
 
+        public string Renavam { get; set; }
+
         public int VeiculoCombustivelId { get; set; }
 
         public VeiculoCombustivel VeiculoCombustivel { get; set; }
@@ -17,6 +19,10 @@
         public int VeiculoMotorizacaoId { get; set; }
 
         public VeiculoMotorizacao VeiculoMotorizacao { get; set; }
+
+        public int? VeiculoTransmissaoId { get; set; }
+
+        public VeiculoTransmissao? VeiculoTransmissao { get; set; }
 
         public int AnoFabricacao { get; set; }
 

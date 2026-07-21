@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarCRM.ViewModels
 {
-    public class VeiculoCorViewModel
+    public class VeiculoTransmissaoViewModel
     {
         public int Id { get; set; }
 

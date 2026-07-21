@@ -1,4 +1,5 @@
-﻿using CarCRM.Models;
+using CarCRM.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarCRM.ViewModels
 {
@@ -6,6 +7,7 @@ namespace CarCRM.ViewModels
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "O campo Nome é obrigatório")]
         public string Nome { get; set; }
         public int VeiculoMarcaId { get; set; }
 

@@ -13,40 +13,26 @@
     <thead>
         <tr>
             <th>Nome</th>
-            <th>Criado Em</th>
-            <th>Ativo</th>
-            <th>Perfil</th>
             <th>CPF</th>
             <th>RG</th>
             <th>Email</th>
             <th>Nascimento</th>
+            <th>Perfil</th>
+            <th>Ativo</th>
             <th class="no-sort" data-priority="1">Ações</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-            <th>Nome</th>
-            <th>Criado Em</th>
-            <th>Ativo</th>
-            <th>Perfil</th>
-            <th>CPF</th>
-            <th>RG</th>
-            <th>Email</th>
-            <th>Nascimento</th>
-            <th class="no-sort" data-priority="1"></th>
-        </tr>
-    </tfoot>
+
     <tbody>
     @foreach (var item in Model) {
             <tr>
                 <td>@item.Nome</td>
-                <td>@item.CriadoEm.ToString("dd/MM/yyyy HH:mm")</td>
-                <td>@(item.Ativo ? "Sim": "Não")</td>
-                <td>@item.Perfil?.Nome</td>
                 <td>@item.Pessoa.CPF</td>
                 <td>@item.Pessoa.RG</td>
                 <td>@item.Pessoa.Email</td>
                 <td>@item.Pessoa.DataNascimento.ToString("dd/MM/yyyy")</td>
+                <td>@item.Perfil?.Nome</td>
+                <td>@(item.Ativo ? "Sim": "Não")</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">
                         <i class="bi bi-pencil-square"></i></a>

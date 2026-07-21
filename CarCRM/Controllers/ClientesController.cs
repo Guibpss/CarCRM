@@ -1,8 +1,11 @@
 
+using AspNetCoreGeneratedDocument;
+using CarCRM.Data;
+using CarCRM.Models;
+using CarCRM.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CarCRM.Models;
-using CarCRM.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public class ClientesController : Controller
 {
@@ -16,12 +19,68 @@ public class ClientesController : Controller
     // GET: CLIENTES
     public async Task<IActionResult> Index()    
     {
-        var clientes = await _context.Clientes
+        var carCRMContext = _context.Clientes
             .Include(c => c.Pessoa)
             .ThenInclude(p => p.Telefones)
-            .ThenInclude(t => t.TelefoneTipo)
-            .ToListAsync();
-        return View(clientes);
+            .ThenInclude(t => t.TelefoneTipo);
+        var clientes = await carCRMContext.ToListAsync();
+
+        var clientesViewModel = clientes.Select(c =>
+        new ClienteViewModel
+        {
+            Id = c.Id,
+            CriadoEm = c.CriadoEm,
+            Excluido = c.Excluido,
+            PessoaId = c.PessoaId,
+            Pessoa = c.Pessoa is PessoaFisica
+                ? new PessoaFisicaViewModel
+                {
+                    Id = c.Pessoa.Id,
+                    Nome = c.Pessoa.Nome,
+                    Email = c.Pessoa.Email,
+                    CPF = ((PessoaFisica)c.Pessoa).CPF,
+                    RG = ((PessoaFisica)c.Pessoa).RG,
+                    DataNascimento = ((PessoaFisica)c.Pessoa).DataNascimento,
+                    Telefones = c.Pessoa.Telefones.Select(t =>
+                        new TelefoneViewModel
+                        {
+                            Id = t.Id,
+                            DDD = t.DDD,
+                            Numero = t.Numero,
+                            TelefoneTipoId = t.TelefoneTipoId,
+                            TelefoneTipo = new TelefoneTipoViewModel
+                            {
+                                Id = t.TelefoneTipo.Id,
+                                Nome = t.TelefoneTipo.Nome
+                            }
+                        }).ToList()
+                }
+                : (PessoaViewModel)new PessoaJuridicaViewModel
+                {
+                    Id = c.Pessoa.Id,
+                    Nome = c.Pessoa.Nome,
+                    Email = c.Pessoa.Email,
+                    CNPJ = ((PessoaJuridica)c.Pessoa).CNPJ,
+                    RazaoSocial = ((PessoaJuridica)c.Pessoa).RazaoSocial,
+                    NomeFantasia = ((PessoaJuridica)c.Pessoa).NomeFantasia,
+                    NomeInterno = ((PessoaJuridica)c.Pessoa).NomeInterno,
+                    Telefones = c.Pessoa.Telefones.Select(t =>
+                    new TelefoneViewModel
+                    {
+                        Id = t.Id,
+                        DDD = t.DDD,
+                        Numero = t.Numero,
+                        TelefoneTipoId = t.TelefoneTipoId,
+                        TelefoneTipo = new TelefoneTipoViewModel
+                        {
+                            Id = t.TelefoneTipo.Id,
+                            Nome = t.TelefoneTipo.Nome
+                        }
+                    }).ToList()
+                }
+        }).ToList();
+
+        return View(clientesViewModel);
     }
 
     // GET: CLIENTES/Details/5
@@ -37,12 +96,67 @@ public class ClientesController : Controller
             .ThenInclude(p => p.Telefones)
             .ThenInclude(t => t.TelefoneTipo)
             .FirstOrDefaultAsync(c => c.Id == id);
+
         if (cliente == null)
         {
             return NotFound();
         }
+
+        var clienteViewModel = new ClienteViewModel
+        {
+            Id = cliente.Id,
+            CriadoEm = cliente.CriadoEm,
+            Excluido = cliente.Excluido,
+            PessoaId = cliente.Pessoa.Id,
+            Pessoa = cliente.Pessoa is PessoaFisica 
+                ? new PessoaFisicaViewModel
+                {
+                    Id = cliente.Pessoa.Id,
+                    Nome = cliente.Pessoa.Nome,
+                    Email = cliente.Pessoa.Email,
+                    CPF = ((PessoaFisica)cliente.Pessoa).CPF,
+                    RG = ((PessoaFisica)cliente.Pessoa).RG,
+                    DataNascimento = ((PessoaFisica)cliente.Pessoa).DataNascimento,
+                    Telefones = cliente.Pessoa.Telefones.Select(t =>
+                        new TelefoneViewModel
+                        {
+                            Id = t.Id,
+                            DDD = t.DDD,
+                            Numero = t.Numero,
+                            TelefoneTipoId = t.TelefoneTipoId,
+                            TelefoneTipo = new TelefoneTipoViewModel
+                            {
+                                Id = t.TelefoneTipo.Id,
+                                Nome = t.TelefoneTipo.Nome
+                            }
+                        }).ToList()
+                }
+                : (PessoaViewModel)new PessoaJuridicaViewModel
+                {
+                    Id = cliente.Pessoa.Id,
+                    Nome = cliente.Pessoa.Nome,
+                    Email = cliente.Pessoa.Email,
+                    CNPJ = ((PessoaJuridica)cliente.Pessoa).CNPJ,
+                    RazaoSocial = ((PessoaJuridica)cliente.Pessoa).RazaoSocial,
+                    NomeFantasia = ((PessoaJuridica)cliente.Pessoa).NomeFantasia,
+                    NomeInterno = ((PessoaJuridica)cliente.Pessoa).NomeInterno,
+                    Telefones = cliente.Pessoa.Telefones.Select(t => 
+                        new TelefoneViewModel
+                        {
+                            Id = t.Id,
+                            DDD = t.DDD,
+                            Numero = t.Numero,
+                            TelefoneTipoId = t.TelefoneTipoId,
+                            TelefoneTipo = new TelefoneTipoViewModel
+                            {
+                                Id = t.TelefoneTipo.Id,
+                                Nome = t.TelefoneTipo.Nome
+                            }
+                        }).ToList()
+                }
+        };
         ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
-        return View(cliente);
+        return View(clienteViewModel);
     }
 
     // GET: CLIENTES/Create
@@ -51,7 +165,7 @@ public class ClientesController : Controller
         var cliente = new Cliente();
         var telefonesTipo = _context.TelefonesTipo.ToList();
         ViewBag.telefonesTipo = telefonesTipo;
-        return View(cliente);
+        return View(new ClienteViewModel());
     }
 
     // POST: CLIENTES/Create
@@ -59,66 +173,72 @@ public class ClientesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(string tipoPessoa, string nome, string email, string cpf, string rg, 
-    DateTime dataNascimento, string cnpj, string razaoSocial, string nomeFantasia, string nomeInterno, 
-    string ddd, string numero, bool excluido, int telefonetipoId )
+    public async Task<IActionResult> Create(ClienteViewModel clienteViewModel, string tipoPessoa)
     {
 
-        Pessoa pessoa = null;
+        Pessoa? pessoa;
 
         if (tipoPessoa == "pessoaFisica")
         {
             pessoa = new PessoaFisica
             {
-                Nome = nome,
-                Email = email,
-                CPF = cpf,
-                RG = rg,
-                DataNascimento = dataNascimento
-
+                Nome = clienteViewModel.Pessoa.Nome,
+                Email = clienteViewModel.Pessoa.Email,
+                CPF = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).CPF,
+                RG = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).RG,
+                DataNascimento = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).DataNascimento,
             };
         }
-        else if (tipoPessoa == "pessoaJuridica")
+        else
         {
             pessoa = new PessoaJuridica
             {
-                Nome = nome,
-                Email= email,
-                CNPJ = cnpj,
-                RazaoSocial = razaoSocial,
-                NomeFantasia = nomeFantasia,
-                NomeInterno = nomeInterno,
+                Nome = clienteViewModel.Pessoa.Nome,
+                Email = clienteViewModel.Pessoa.Email,
+                CNPJ = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).CNPJ,
+                RazaoSocial = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).RazaoSocial,
+                NomeFantasia = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).NomeFantasia,
+                NomeInterno = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).NomeInterno,
             };
         }
 
         var cliente = new Cliente
         {
             CriadoEm = DateTime.Now,
-            Excluido = excluido,
+            Excluido = clienteViewModel.Excluido,
             Pessoa = pessoa
         };
-    
+
+        if (ModelState.IsValid)
+        {
             _context.Add(cliente);
             await _context.SaveChangesAsync();
-
-        if (!string.IsNullOrWhiteSpace(numero))
-        {
-            var telefone = new Telefone
+            return RedirectToAction(nameof(Index));
+        }
+        
+        var telefone = clienteViewModel.Pessoa.Telefones.Select(t =>
+            new TelefoneViewModel
             {
-                DDD = ddd,
-                Numero = numero,
-                TelefoneTipoId = telefonetipoId,
-                PessoaId = pessoa.Id,
-            };
+                Id = t.Id,
+                DDD = t.DDD,
+                Numero = t.Numero,
+                TelefoneTipoId = t.TelefoneTipoId,
+                TelefoneTipo = new TelefoneTipoViewModel
+                {
+                    Id = t.TelefoneTipo.Id,
+                    Nome = t.TelefoneTipo.Nome
+                }
+            }).ToList();
 
+        if (ModelState.IsValid)
+        {
             _context.Add(telefone);
             await _context.SaveChangesAsync();
-        }
-          
-        return RedirectToAction(nameof(Index));
-
+            return RedirectToAction(nameof(Index));
+        }        
         ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
-        return View(cliente);
+
+        return View(clienteViewModel);
     }
 
 // GET: CLIENTES/Edit/5
@@ -134,12 +254,68 @@ public async Task<IActionResult> Edit(int? id)
             .ThenInclude(p => p.Telefones)
             .ThenInclude(t => t.TelefoneTipo)
             .FirstOrDefaultAsync(c => c.Id == id);
+
         if (cliente == null)
         {
             return NotFound();
         }
+
         ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
-        return View(cliente);
+
+        var clienteViewModel = new ClienteViewModel
+        {
+            Id = cliente.Id,
+            CriadoEm = cliente.CriadoEm,
+            Excluido = cliente.Excluido,
+            Pessoa = cliente.Pessoa is PessoaFisica
+                ? new PessoaFisicaViewModel
+                {
+                    Id = cliente.Pessoa.Id,
+                    Nome = cliente.Pessoa.Nome,
+                    Email = cliente.Pessoa.Email,
+                    CPF = ((PessoaFisica)cliente.Pessoa).CPF,
+                    RG = ((PessoaFisica)cliente.Pessoa).RG,
+                    DataNascimento = ((PessoaFisica)cliente.Pessoa).DataNascimento,
+                    Telefones = cliente.Pessoa.Telefones.Select(t =>
+                        new TelefoneViewModel
+                        {
+                            Id = t.Id,
+                            DDD = t.DDD,
+                            Numero = t.Numero,
+                            TelefoneTipoId = t.TelefoneTipoId,
+                            TelefoneTipo = new TelefoneTipoViewModel
+                            {
+                                Id = t.TelefoneTipo.Id,
+                                Nome = t.TelefoneTipo.Nome
+                            }
+                        }).ToList(),
+                }
+                : (PessoaViewModel)new PessoaJuridicaViewModel
+                {
+                    Id = cliente.Pessoa.Id,
+                    Nome = cliente.Pessoa.Nome,
+                    Email = cliente.Pessoa.Email,
+                    CNPJ = ((PessoaJuridica)cliente.Pessoa).CNPJ,
+                    RazaoSocial = ((PessoaJuridica)cliente.Pessoa).RazaoSocial,
+                    NomeFantasia = ((PessoaJuridica)cliente.Pessoa).RazaoSocial,
+                    NomeInterno = ((PessoaJuridica)cliente.Pessoa).NomeInterno,
+                    Telefones = cliente.Pessoa.Telefones.Select(t =>
+                        new TelefoneViewModel
+                        {
+                            Id = t.Id,
+                            DDD = t.DDD,
+                            Numero = t.Numero,
+                            TelefoneTipoId = t.TelefoneTipoId,
+                            TelefoneTipo = new TelefoneTipoViewModel
+                        {
+                            Id = t.TelefoneTipo.Id,
+                            Nome = t.TelefoneTipo.Nome
+                        }
+                    }).ToList()
+                }
+
+        };
+        return View(clienteViewModel);
     }
 
     // POST: CLIENTES/Edit/5
@@ -147,68 +323,79 @@ public async Task<IActionResult> Edit(int? id)
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, string tipoPessoa, string nome, string email, string cpf, string rg,
-    DateTime dataNascimento, string cnpj, string razaoSocial, string nomeFantasia, string nomeInterno,
-    string ddd, string numero, bool excluido, int telefonetipoId)
+    public async Task<IActionResult> Edit(int? id, ClienteViewModel clienteViewModel)
     {
-        var cliente = await _context.Clientes
-           .Include(c => c.Pessoa)
-           .ThenInclude(p => p.Telefones)
-           .ThenInclude(t => t.TelefoneTipo)
-           .FirstOrDefaultAsync(c => c.Id == id);
 
-        if (id != cliente?.Id)
+        if (id != clienteViewModel.Id)
         {
             return NotFound();
         }
 
-        cliente?.Pessoa.Nome = nome;
-        cliente?.Pessoa.Email = email;
-        cliente?.Pessoa.Excluido = excluido;
-
-        if (cliente?.Pessoa is PessoaFisica pf)
+        if (ModelState.IsValid)
         {
-            pf.CPF = cpf;
-            pf.RG = rg;
-            pf.DataNascimento = dataNascimento;
-
-        }
-
-        else if (cliente.Pessoa is PessoaJuridica pj) 
-        {
-            pj.CNPJ = cnpj;
-            pj.RazaoSocial = razaoSocial;
-            pj.NomeFantasia = nomeFantasia;
-            pj.NomeInterno = nomeInterno;
-        
-        }
-
-        var telefone = cliente.Pessoa.Telefones.FirstOrDefault();
-
-        if (telefone != null)
-        {
-            telefone.DDD = ddd;
-            telefone.Numero = numero;
-        }
-
-        else if (!string.IsNullOrWhiteSpace(numero))
-        {
-             cliente.Pessoa.Telefones.Add(new Telefone
+            try
             {
-                DDD = ddd,
-                Numero = numero,
-                TelefoneTipoId = telefonetipoId,
-                PessoaId = cliente.PessoaId
-            });
+                var cliente = await _context.Clientes
+                    .Include(c => c.Pessoa)
+                        .ThenInclude(p => p.Telefones)
+                    .FirstOrDefaultAsync(c => c.Id == id);
 
-           
+                if (cliente == null)
+                {
+                    return NotFound();
+                }
+
+                cliente.Excluido = clienteViewModel.Excluido;
+                cliente.Pessoa.Nome = clienteViewModel.Pessoa.Nome;
+                cliente.Pessoa.Email = clienteViewModel.Pessoa.Email;
+
+                if (cliente.Pessoa is PessoaFisica pf)
+                {
+                    pf.CPF = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).CPF;
+                    pf.RG = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).RG;
+                    pf.DataNascimento = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).DataNascimento;
+                }
+                else if (cliente.Pessoa is PessoaJuridica pj)
+                {
+                    pj.CNPJ = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).CNPJ;
+                    pj.RazaoSocial = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).RazaoSocial;
+                    pj.NomeFantasia = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).NomeFantasia;
+                    pj.NomeInterno = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).NomeInterno;
+                }
+
+                var telefoneViewModel = clienteViewModel.Pessoa.Telefones.FirstOrDefault();
+                var telefone = cliente.Pessoa.Telefones.FirstOrDefault();
+
+                if (telefone != null)
+                {
+                    telefone.DDD = telefoneViewModel.DDD;
+                    telefone.Numero = telefoneViewModel.Numero;
+                    telefone.TelefoneTipoId = telefoneViewModel.TelefoneTipoId;
+                }
+                else if (!string.IsNullOrWhiteSpace(telefoneViewModel?.Numero))
+                {
+                    cliente.Pessoa.Telefones.Add(new Telefone
+                    {
+                        DDD = telefoneViewModel.DDD,
+                        Numero = telefoneViewModel.Numero,
+                        TelefoneTipoId = telefoneViewModel.TelefoneTipoId,
+                        PessoaId = cliente.PessoaId
+                    });
+                }
+
                 _context.Update(cliente);
                 await _context.SaveChangesAsync();
-           
-            
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClienteExists(clienteViewModel.Id)) return NotFound();
+                else throw;
+            }
             return RedirectToAction(nameof(Index));
         }
-        return View(cliente);
+
+        ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+        return View(clienteViewModel);
     }
 
     // GET: CLIENTES/Delete/5
@@ -230,7 +417,61 @@ public async Task<IActionResult> Edit(int? id)
         }
 
         ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
-        return View(cliente);
+
+        var clienteViewModel = new ClienteViewModel
+        {
+            Id = cliente.Id,
+            CriadoEm = cliente.CriadoEm,
+            Excluido = cliente.Excluido,
+            Pessoa = cliente.Pessoa is PessoaFisica
+                ? new PessoaFisicaViewModel
+                {
+                    Id = cliente.Pessoa.Id,
+                    Nome = cliente.Pessoa.Nome,
+                    Email = cliente.Pessoa.Email,
+                    CPF = ((PessoaFisica)cliente.Pessoa).CPF,
+                    RG = ((PessoaFisica)cliente.Pessoa).RG,
+                    DataNascimento = ((PessoaFisica)cliente.Pessoa).DataNascimento,
+                    Telefones = cliente.Pessoa.Telefones.Select(t =>
+                        new TelefoneViewModel
+                        {
+                            Id = t.Id,
+                            DDD = t.DDD,
+                            Numero = t.Numero,
+                            TelefoneTipoId = t.TelefoneTipoId,
+                            TelefoneTipo = new TelefoneTipoViewModel
+                            {
+                                Id = t.TelefoneTipo.Id,
+                                Nome = t.TelefoneTipo.Nome
+
+                            }
+                        }).ToList()
+                }
+                : (PessoaViewModel)new PessoaJuridicaViewModel
+                {
+                    Id = cliente.Pessoa.Id,
+                    Nome = cliente.Pessoa.Nome,
+                    Email = cliente.Pessoa.Email,
+                    CNPJ = ((PessoaJuridica)cliente.Pessoa).CNPJ,
+                    RazaoSocial = ((PessoaJuridica)cliente.Pessoa).RazaoSocial,
+                    NomeFantasia = ((PessoaJuridica)cliente.Pessoa).NomeFantasia,
+                    NomeInterno = ((PessoaJuridica)cliente.Pessoa).NomeInterno,
+                    Telefones = cliente.Pessoa.Telefones.Select(t =>
+                        new TelefoneViewModel
+                        {
+                            Id = t.Id,
+                            DDD = t.DDD,
+                            Numero = t.Numero,
+                            TelefoneTipoId = t.TelefoneTipoId,
+                            TelefoneTipo = new TelefoneTipoViewModel
+                            {
+                                Id = t.TelefoneTipo.Id,
+                                Nome = t.TelefoneTipo.Nome
+                            }
+                        }).ToList()
+                }
+        };
+        return View(clienteViewModel);
     }
 
     // POST: CLIENTES/Delete/5

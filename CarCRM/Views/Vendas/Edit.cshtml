@@ -18,17 +18,6 @@
 
             </div>
             <div class="form-group">
-                <label asp-for="ValorVenda" class="control-label"></label>
-                <input asp-for="ValorVenda" class="form-control" />
-
-            </div>
-            <div class="form-group">
-                <label asp-for="Desconto" class="control-label"></label>
-                <input asp-for="Desconto" class="form-control" />
-
-            </div>
-           
-            <div class="form-group">
                 <label class="control-label">Cliente</label>
                 <select name="clienteId" class="form-control" required>
                     @foreach (var c in ViewBag.Clientes)
@@ -62,12 +51,12 @@
 
             <div class="form-group">
                 <label class="control-label">Valor da Venda</label>
-                <input name="valorVenda" type="number" step="0.01" value="@Model.ValorVenda" class="form-control" required />
+                <input name="valorVenda" type="text" inputmode="decimal" value="@Model.ValorVenda" class="form-control" required />
             </div>
 
             <div class="form-group">
                 <label class="control-label">Desconto</label>
-                <input name="desconto" type="number" step="0.01" value="@Model.Desconto" class="form-control" required />
+                <input name="desconto" type="text" inputmode="decimal" value="@Model.Desconto" class="form-control" required />
             </div>
            
             <div class="form-group">

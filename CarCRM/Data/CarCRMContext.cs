@@ -9,6 +9,7 @@ namespace CarCRM.Data
         public DbSet<CarCRM.Models.VeiculoCombustivel> VeiculoCombustivel { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoModelo> VeiculoModelo { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoCor> VeiculoCor { get; set; } = default!;
+        public DbSet<CarCRM.Models.VeiculoTransmissao> VeiculoTransmissao { get; set; } = default!;
         public DbSet<CarCRM.Models.FuncionarioCargo> FuncionarioCargo { get; set; } = default!;
         public CarCRMContext(DbContextOptions<CarCRMContext> options) : base(options) { }
 

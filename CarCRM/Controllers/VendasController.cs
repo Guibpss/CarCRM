@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarCRM.Models;
 using CarCRM.Data;
+using CarCRM.ViewModels;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 public class VendasController : Controller
 {
@@ -16,11 +18,54 @@ public class VendasController : Controller
     // GET: VENDAS
     public async Task<IActionResult> Index()    
     {
-        var vendas = _context.Vendas
-            .Include(v => v.Cliente).ThenInclude(c => c.Pessoa)
+        var carCRMContext = _context.Vendas
+            .Include(v => v.Cliente)
+                .ThenInclude(c => c.Pessoa)
             .Include(v => v.Vendedor)
             .Include(v => v.StatusVenda);
-        return View(await vendas.ToListAsync());
+        var vendas = await carCRMContext.ToListAsync();
+        var vendasViewModel = vendas.Select(v => 
+            new VendaViewModel
+            {
+                Id = v.Id,
+                CriadoEm = v.CriadoEm,
+                Excluido = v.Excluido,
+                DataVenda = v.DataVenda,
+                Desconto = v.Desconto,
+                ClienteId = v.ClienteId,
+                Cliente = new ClienteViewModel
+                {
+                    Id = v.Cliente.Id,
+                    PessoaId = v.Cliente.PessoaId,
+                    Pessoa = v.Cliente.Pessoa is PessoaFisica
+                        ? new PessoaFisicaViewModel
+                        {
+                            Id = v.Cliente.Pessoa.Id,
+                            Nome = v.Cliente.Pessoa.Nome,
+                            Email = v.Cliente.Pessoa.Email
+                        }
+                        : (PessoaViewModel)new PessoaJuridicaViewModel
+                        {
+                            Id = v.Cliente.Pessoa.Id,
+                            Nome = v.Cliente.Pessoa.Nome,
+                            Email = v.Cliente.Pessoa.Email
+                        }
+                },
+                VendedorId = v.VendedorId,
+                Vendedor = new UsuarioViewModel
+                {
+                    Id = v.Vendedor.Id,
+                    Nome = v.Vendedor.Nome
+                },
+                StatusVendaId = v.StatusVenda.Id,
+                StatusVenda = new StatusVendaViewModel
+                {
+                    Id = v.StatusVenda.Id,
+                    Nome = v.StatusVenda.Nome
+                }
+            }).ToList();
+
+        return View(vendasViewModel);
     }
 
     // GET: VENDAS/Details/5
@@ -32,7 +77,8 @@ public class VendasController : Controller
         }
 
         var venda = await _context.Vendas
-            .Include(v => v.Cliente).ThenInclude(c => c.Pessoa)
+            .Include(v => v.Cliente)
+                .ThenInclude(c => c.Pessoa)
             .Include(v => v.Vendedor)
             .Include(v => v.StatusVenda)
             .FirstOrDefaultAsync(v => v.Id == id);
@@ -42,14 +88,55 @@ public class VendasController : Controller
             return NotFound();
         }
 
-        return View(venda);
+        var vendaViewModel = new VendaViewModel
+        {
+            Id = venda.Id,
+            CriadoEm = venda.CriadoEm,
+            Excluido = venda.Excluido,
+            DataVenda = venda.DataVenda,
+            ValorVenda = venda.ValorVenda,
+            Desconto = venda.Desconto,
+            ClienteId = venda.ClienteId,
+            Cliente = new ClienteViewModel
+            {
+                Id = venda.Cliente.Id,
+                PessoaId = venda.Cliente.PessoaId,
+                Pessoa = venda.Cliente.Pessoa is PessoaFisica
+                    ? new PessoaFisicaViewModel
+                    {
+                        Id = venda.Cliente.Pessoa.Id,
+                        Nome = venda.Cliente.Pessoa.Nome,
+                        Email = venda.Cliente.Pessoa.Email
+                    }
+                    : (PessoaViewModel)new PessoaJuridicaViewModel
+                    {
+                        Id = venda.Cliente.Pessoa.Id,
+                        Nome = venda.Cliente.Pessoa.Nome,
+                        Email = venda.Cliente.Pessoa.Email
+                    }
+            },
+            VendedorId = venda.VendedorId,
+            Vendedor = new UsuarioViewModel
+            {
+                Id = venda.Vendedor.Id,
+                Nome = venda.Vendedor.Nome
+            },
+            StatusVendaId = venda.StatusVendaId,
+            StatusVenda = new StatusVendaViewModel
+            {
+                Id = venda.StatusVenda.Id,
+                Nome = venda.StatusVenda.Nome
+            }
+        };
+
+        return View(vendaViewModel);
     }
 
     // GET: VENDAS/Create
     public IActionResult Create()
     {
         CarregarDropdowns();
-        return View();
+        return View(new VendaViewModel());
     }
 
     // POST: VENDAS/Create
@@ -57,17 +144,19 @@ public class VendasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(DateTime dataVenda, float valorVenda, float desconto, int clienteId, int vendedorId, int statusVendaId)
+    public async Task<IActionResult> Create(VendaViewModel vendaViewModel)
     {
-        var venda = new Venda
-        {
-            DataVenda = dataVenda,
-            ValorVenda = valorVenda,
-            Desconto = desconto,
-            ClienteId = clienteId,
-            VendedorId = vendedorId,
-            StatusVendaId = statusVendaId
-        };
+
+            var venda = new Venda
+            {
+                DataVenda = vendaViewModel.DataVenda,
+                ValorVenda = vendaViewModel.ValorVenda,
+                Desconto = vendaViewModel.Desconto,
+                Excluido = vendaViewModel.Excluido,
+                ClienteId = vendaViewModel.ClienteId,
+                VendedorId = vendaViewModel.VendedorId,
+                StatusVendaId = vendaViewModel.StatusVendaId
+            };
 
         if (ModelState.IsValid)
         {
@@ -75,7 +164,9 @@ public class VendasController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(venda);
+            
+        CarregarDropdowns();
+        return View(vendaViewModel);
     }
 
     // GET: VENDAS/Edit/5
@@ -87,7 +178,8 @@ public class VendasController : Controller
         }
 
         var venda = await _context.Vendas
-                .Include(v => v.Cliente).ThenInclude(c => c.Pessoa)
+                .Include(v => v.Cliente)
+                    .ThenInclude(c => c.Pessoa)
                 .Include(v => v.Vendedor)
                 .Include(v => v.StatusVenda)
                 .FirstOrDefaultAsync(v => v.Id == id);
@@ -98,7 +190,49 @@ public class VendasController : Controller
         }
 
         CarregarDropdowns();
-        return View(venda);
+
+        var vendaViewModel = new VendaViewModel
+        {
+            DataVenda = venda.DataVenda,
+            ValorVenda = venda.ValorVenda,
+            Desconto = venda.Desconto,
+            Excluido = venda.Excluido,
+            CriadoEm = venda.CriadoEm,
+            ClienteId = venda.ClienteId,
+            Cliente = new ClienteViewModel
+            {
+                Id = venda.Cliente.Id,
+                PessoaId = venda.Cliente.PessoaId,
+                Pessoa = venda.Cliente.Pessoa is PessoaFisica
+                    ? new PessoaFisicaViewModel
+                    {
+                        Id = venda.Cliente.Pessoa.Id,
+                        Nome = venda.Cliente.Pessoa.Nome,
+                        Email = venda.Cliente.Pessoa.Email
+                    }
+                    : (PessoaViewModel)new PessoaJuridicaViewModel
+                    {
+                        Id = venda.Cliente.Pessoa.Id,
+                        Nome = venda.Cliente.Pessoa.Nome,
+                        Email = venda.Cliente.Pessoa.Email
+                    }
+
+            },
+
+            VendedorId = venda.VendedorId,
+            Vendedor = new UsuarioViewModel
+            {
+                Id = venda.Vendedor.Id,
+                Nome = venda.Vendedor.Nome
+            },
+            StatusVendaId = venda.StatusVendaId,
+            StatusVenda = new StatusVendaViewModel
+            {
+                Id = venda.StatusVenda.Id,
+                Nome = venda.StatusVenda.Nome
+            }
+        };
+        return View(vendaViewModel);
     }
 
     // POST: VENDAS/Edit/5
@@ -106,29 +240,42 @@ public class VendasController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, DateTime dataVenda, float valorVenda, float desconto, int clienteId, int vendedorId, int statusVendaId)
+    public async Task<IActionResult> Edit(int? id, VendaViewModel vendaViewModel)
     {
-        if (id != null)
+        if (id != vendaViewModel.Id)
         {
             return NotFound();
         }
 
-        var venda = await _context.Vendas.FindAsync(id);
-
-        if (venda == null)
+        if (ModelState.IsValid)
         {
-            return NotFound();
+            try
+            {
+                var venda = await _context.Vendas.FindAsync(id);
+
+                if (venda == null)
+                {
+                    return NotFound();
+                }
+
+                venda.DataVenda = vendaViewModel.DataVenda;
+                venda.ValorVenda = vendaViewModel.ValorVenda;
+                venda.Desconto = vendaViewModel.Desconto;
+                venda.ClienteId = vendaViewModel.ClienteId;
+                venda.VendedorId = vendaViewModel.VendedorId;
+                venda.StatusVendaId = vendaViewModel.StatusVendaId;
+
+                _context.Update(venda);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!VendaExists(vendaViewModel.Id)) return NotFound();
+                else throw;
+            }
         }
-
-        venda.DataVenda = dataVenda;
-        venda.ValorVenda = valorVenda;
-        venda.Desconto = desconto;
-        venda.ClienteId = clienteId;
-        venda.VendedorId = vendedorId;
-        venda.StatusVendaId = statusVendaId;
-
-        await _context.SaveChangesAsync();
-        return View(venda);
+        CarregarDropdowns();
+        return View(vendaViewModel);
     }
 
     // GET: VENDAS/Delete/5
@@ -140,7 +287,8 @@ public class VendasController : Controller
         }
 
         var venda = await _context.Vendas
-            .Include(v => v.Cliente).ThenInclude(c => c.Pessoa)
+            .Include(v => v.Cliente)
+                .ThenInclude(c => c.Pessoa)
             .Include(v => v.Vendedor)
             .Include(v => v.StatusVenda)
             .FirstOrDefaultAsync(v => v.Id == id);
@@ -150,7 +298,49 @@ public class VendasController : Controller
             return NotFound();
         }
 
-        return View(venda);
+        var vendaViewModel = new VendaViewModel
+        {
+            DataVenda = venda.DataVenda,
+            ValorVenda = venda.ValorVenda,
+            Desconto = venda.Desconto,
+            Excluido = venda.Excluido,
+            CriadoEm = venda.CriadoEm,
+            ClienteId = venda.ClienteId,
+            Cliente = new ClienteViewModel
+            {
+                Id = venda.Cliente.Id,
+                PessoaId = venda.Cliente.PessoaId,
+                Pessoa = venda.Cliente.Pessoa is PessoaFisica
+                   ? new PessoaFisicaViewModel
+                   {
+                       Id = venda.Cliente.Pessoa.Id,
+                       Nome = venda.Cliente.Pessoa.Nome,
+                       Email = venda.Cliente.Pessoa.Email
+                   }
+                   : (PessoaViewModel)new PessoaJuridicaViewModel
+                   {
+                       Id = venda.Cliente.Pessoa.Id,
+                       Nome = venda.Cliente.Pessoa.Nome,
+                       Email = venda.Cliente.Pessoa.Email
+                   }
+
+            },
+
+            VendedorId = venda.VendedorId,
+            Vendedor = new UsuarioViewModel
+            {
+                Id = venda.Vendedor.Id,
+                Nome = venda.Vendedor.Nome
+            },
+            StatusVendaId = venda.StatusVendaId,
+            StatusVenda = new StatusVendaViewModel
+            {
+                Id = venda.StatusVenda.Id,
+                Nome = venda.StatusVenda.Nome
+            }
+        };
+
+        return View(vendaViewModel);
     }
 
     // POST: VENDAS/Delete/5
@@ -176,7 +366,7 @@ public class VendasController : Controller
     private void CarregarDropdowns()
     {
         ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).ToList();
-        ViewBag.Vendedores = _context.Usuarios.ToList();
+        ViewBag.vendedores = _context.Usuarios.ToList();
         ViewBag.StatusVendas = _context.StatusVendas.ToList();
     }
 }

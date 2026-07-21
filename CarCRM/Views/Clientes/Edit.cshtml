@@ -14,7 +14,8 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <input type="hidden" name="id" value="@Model.Id" />        
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="tipoPessoa" value="@(pf != null ? "pessoaFisica" : "pessoaJuridica")" />
             <div class="form-group">
                 <label class="control-label">Nome</label>
                 <input name="nome" value="@Model.Pessoa.Nome" class="form-control" />

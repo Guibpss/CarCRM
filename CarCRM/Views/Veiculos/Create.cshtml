@@ -12,6 +12,31 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="form-group">
+                <label class="control-label">Placa</label>
+                <input name="placa" class="form-control" />
+
+            </div>
+            <div class="form-group">
+                <label class="control-label">Renavam</label>
+                <input name="renavam" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Marca</label>
+                @Html.DropDownList("veiculoMarcaId",
+                        new SelectList(ViewBag.veiculosMarca, "Id", "Nome"),
+                        "Selecione a Marca",
+                        new { @class = "form-control", id = "marcaSelect" })
+
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label class="control-label">Modelo</label>
+                    <select name="veiculoModeloId" id="modeloSelect" class="form-control">
+                        <option value="">Selecione a marca primeiro</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="control-label">Cor</label>
                 @Html.DropDownList("veiculoCorId",
                         new SelectList(ViewBag.veiculosCor, "Id", "Nome"),
@@ -20,11 +45,6 @@
             <div class="form-group">
                 <label class="control-label">Km</label>
                 <input name="kilometragemAtual" class="form-control" />
-
-            </div>
-            <div class="form-group">
-                <label class="control-label">Placa</label>
-                <input name="placa" class="form-control" />
 
             </div>
             <div class="form-group">
@@ -39,6 +59,13 @@
                         new SelectList(ViewBag.veiculosMotorizacao, "Id", "Nome"),
                         new { @class = "form-control" })
 
+            </div>
+            <div class="form-group">
+                <label class="control-label">Transmissão</label>
+                @Html.DropDownList("veiculoTransmissaoId",
+                        new SelectList(ViewBag.veiculosTransmissao, "Id", "Nome"),
+                        "Selecione a Transmissão",
+                        new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label class="control-label">Ano Fabricação</label>
@@ -57,22 +84,6 @@
                         "Selecione o Tipo",
                         new { @class = "form-control" })
 
-            </div>
-            <div class="form-group">
-                <label class="control-label">Marca</label>
-                @Html.DropDownList("veiculoMarcaId",
-                        new SelectList(ViewBag.veiculosMarca, "Id", "Nome"),
-                        "Selecione a Marca",
-                        new { @class = "form-control", id = "marcaSelect" })
-
-            </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <label class="control-label">Modelo</label>
-                    <select name="veiculoModeloId" id="modeloSelect" class="form-control">
-                        <option value="">Selecione a marca primeiro</option>
-                    </select>
-                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Criar" class="btn btn-primary" />
@@ -108,8 +119,8 @@
             } else {
                 $("#modeloSelect").empty();
                 $("#modeloSelect").append('<option value="">Selecione a marca primeiro</option>');
-            } 
-            
+            }
+
         });
       });
     </script>

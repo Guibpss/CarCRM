@@ -12,22 +12,33 @@
 <table id="veiculoListaId" class="table table-striped js-datatable">
     <thead>
         <tr>
+            <th>Placa</th>
+            <th>Renavam</th>
+            <th>Marca</th>
             <th>Cor</th>
             <th>Km</th>
-            <th>Placa</th>
             <th>Combustivel</th>
             <th>Motorização</th>
+            <th>Transmissão</th>
             <th>Ano Fabricação</th>
             <th>Ano Modelo</th>
             <th>Tipo</th>
-            <th>Marca</th>
             <th class="no-sort" data-priority="1">Ações</th>
-        </tr>    
+        </tr>
     </thead>
- 
+
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @item.Placa
+            </td>
+            <td>
+                @item.Renavam
+            </td>
+            <td>
+                @item.VeiculoMarca?.Nome
+            </td>
             <td>
                 @item.VeiculoCor?.Nome
             </td>
@@ -35,13 +46,13 @@
                 @item.KilometragemAtual
             </td>
             <td>
-                @item.Placa
-            </td>
-            <td>
                 @item.VeiculoCombustivel?.Nome
             </td>
             <td>
                 @item.VeiculoMotorizacao?.Nome
+            </td>
+            <td>
+                @item.VeiculoTransmissao?.Nome
             </td>
             <td>
                 @item.AnoFabricacao
@@ -51,9 +62,6 @@
             </td>
             <td>
                 @item.VeiculoTipo?.Nome
-            </td>
-            <td>
-                @item.VeiculoMarca?.Nome
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">

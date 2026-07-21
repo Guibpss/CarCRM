@@ -11,6 +11,30 @@
     <hr />
     <dl>
         <dt class = "col-sm-2">
+            Placa
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Placa
+        </dd>
+        <dt class = "col-sm-2">
+            Renavam
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Renavam
+        </dd>
+        <dt class = "col-sm-2">
+            Marca
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.VeiculoMarca.Nome
+        </dd>
+        <dt class="col-sm-2">
+            Modelo
+        </dt>
+        <dd class="col-sm-10">
+            @Model.VeiculoModelo.Nome
+        </dd>
+        <dt class = "col-sm-2">
             Cor
         </dt>
         <dd class = "col-sm-10">
@@ -23,12 +47,6 @@
             @Model.KilometragemAtual
         </dd>
         <dt class = "col-sm-2">
-            Placa
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.Placa
-        </dd>
-        <dt class = "col-sm-2">
             Combustível
         </dt>
         <dd class = "col-sm-10">
@@ -39,6 +57,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Model.VeiculoMotorizacao.Nome
+        </dd>
+        <dt class = "col-sm-2">
+            Transmissão
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.VeiculoTransmissao?.Nome
         </dd>
         <dt class = "col-sm-2">
             Ano Fabricação
@@ -57,18 +81,6 @@
         </dt>
         <dd class = "col-sm-10">
             @Model.VeiculoTipo.Nome
-        </dd>
-        <dt class = "col-sm-2">
-            Marca
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.VeiculoMarca.Nome
-        </dd>
-        <dt class="col-sm-2">
-            Modelo
-        </dt>
-        <dd class="col-sm-10">
-            @Model.VeiculoModelo.Nome
         </dd>
         <dt class = "col-sm-2">
             Criado Em
