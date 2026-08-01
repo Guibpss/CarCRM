@@ -117,7 +117,7 @@
                                     <i class="fas fa-user-circle fa-lg"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownAvatar">
-                                    <li><a class="dropdown-item" href="#">Meu perfil</a></li>
+                                    <li><a class="dropdown-item" href="~/Home/EditarPerfil">Meu perfil</a></li>
                                     <li><a class="dropdown-item" href="#">Configurações</a></li>
                                     <li><hr class="dropdown-divider" /></li>
                                     <li>
@@ -148,15 +148,12 @@
             <p class="copyright">Copyright © 2026 CarCRM. Todos os direitos reservados.</p>
         </footer>
     </div>
-    @* <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - CarCRM - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
-        </div>
-    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/datatables/datatables.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

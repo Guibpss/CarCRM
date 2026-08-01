@@ -1,62 +1,63 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarCRM.Models;
 using CarCRM.Data;
 using CarCRM.ViewModels;
+using Microsoft.AspNetCore.Http.HttpResults;
 
-public class StatusPagamentosController : Controller
-{
+public class VeiculoVersoesController : Controller
+ {
     private readonly CarCRMContext _context;
 
-    public StatusPagamentosController(CarCRMContext context)
+    public VeiculoVersoesController(CarCRMContext context)
     {
         _context = context;
     }
 
+    //GET
     public async Task<IActionResult> Index()
     {
-        return View(await _context.StatusPagamentos.ToListAsync());
+        return View(await _context.VeiculoVersao.ToListAsync());
     }
 
+    //GET/DETAILS
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
         {
             return NotFound();
+
         }
 
-        var statusPagamento = await _context.StatusPagamentos.FirstOrDefaultAsync(m => m.Id == id);
-
-        if (statusPagamento == null)
+        var veiculoversao = await _context.VeiculoVersao.FirstOrDefaultAsync(m => m.Id == id);
+        if (veiculoversao == null)
         {
-
             return NotFound();
         }
 
-        return View(statusPagamento);
-
+        return View(veiculoversao);
     }
 
-    public IActionResult Create ()
+    //GET/CREATE
+    public IActionResult Create()
     {
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(StatusPagamentoViewModel statuspagamento)
+    public async Task<IActionResult> Create(VeiculoVersãoViewModel veiculoversao)
     {
         if (ModelState.IsValid)
         {
-            _context.Add(statuspagamento);
+            _context.Add(veiculoversao);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-
         }
-        return View(statuspagamento);
+        return View(veiculoversao);
     }
 
-
+    //GET/EDIT
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -64,20 +65,19 @@ public class StatusPagamentosController : Controller
             return NotFound();
         }
 
-        var statuspagamento = await _context.StatusPagamentos.FindAsync(id);
-        if (statuspagamento == null)
+        var veiculoversao = await _context.VeiculoVersao.FindAsync(id);
+        if (veiculoversao == null)
         {
             return NotFound();
         }
-
-        return View(statuspagamento);
+        return View(veiculoversao);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, StatusPagamentoViewModel statuspagamento)
+    public async Task<IActionResult> Edit(int? id, VeiculoVersãoViewModel veiculoversao)
     {
-        if (id != statuspagamento.Id)
+        if (id != veiculoversao.Id)
         {
             return NotFound();
         }
@@ -86,12 +86,12 @@ public class StatusPagamentosController : Controller
         {
             try
             {
-                _context.Update(statuspagamento);
+                _context.Update(veiculoversao);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StatusPagamentoExists(statuspagamento.Id))
+                if (!VeiculoVersaoExists(veiculoversao.Id))
                 {
                     return NotFound();
                 }
@@ -99,46 +99,47 @@ public class StatusPagamentosController : Controller
                 {
                     throw;
                 }
-                
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(statuspagamento);
+        return View(veiculoversao);
     }
 
+    //GET/DELETE
     public async Task<IActionResult> Delete(int? id)
     {
-        if(id == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var statuspagamento = await _context.StatusPagamentos.FirstOrDefaultAsync(m => m.Id == id);
-        if (statuspagamento == null)
+        var veiculoversao = await _context.VeiculoVersao.FirstOrDefaultAsync(m => m.Id == id);
+        if (veiculoversao == null)
         {
             return NotFound();
-
         }
-        return View(statuspagamento);
+
+        return View(veiculoversao);
     }
 
+    //POST/DELETE
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var statuspagamento = await _context.StatusPagamentos.FindAsync(id);
-        if (statuspagamento != null)
+        var veiculoversao = await _context.VeiculoVersao.FindAsync(id);
+        if (veiculoversao != null)
         {
-            _context.StatusPagamentos.Remove(statuspagamento);
+            _context.VeiculoVersao.Remove(veiculoversao);
         }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-
-    private bool StatusPagamentoExists(int? id)
+    private bool VeiculoVersaoExists(int? id)
     {
-        return _context.StatusPagamentos.Any(e => e.Id == id);
+        return _context.VeiculoVersao.Any(e => e.Id == id);
     }
+
 }

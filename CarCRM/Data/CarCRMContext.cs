@@ -8,6 +8,7 @@ namespace CarCRM.Data
         public DbSet<CarCRM.Models.VeiculoMotorizacao> VeiculoMotorizacao { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoCombustivel> VeiculoCombustivel { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoModelo> VeiculoModelo { get; set; } = default!;
+        public DbSet<CarCRM.Models.VeiculoVersao> VeiculoVersao { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoCor> VeiculoCor { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoTransmissao> VeiculoTransmissao { get; set; } = default!;
         public DbSet<CarCRM.Models.FuncionarioCargo> FuncionarioCargo { get; set; } = default!;
@@ -53,6 +54,8 @@ namespace CarCRM.Data
         public DbSet<StatusVenda> StatusVendas { get; set; }
         public DbSet<Telefone> Telefones { get; set; }
         public DbSet<TelefoneTipo> TelefonesTipo { get; set; }
+        public DbSet<Servico> Servicos { get; set; }
+        public DbSet<ServicoTipo> ServicoTipos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Veiculo> Veiculos { get; set; }
         public DbSet<VeiculoMarca> veiculoMarcas { get; set; }

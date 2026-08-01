@@ -4,6 +4,7 @@ using CarCRM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarCRM.Migrations
 {
     [DbContext(typeof(CarCRMContext))]
-    partial class CarCRMContextModelSnapshot : ModelSnapshot
+    [Migration("20260801193841_addVeiculoVersao")]
+    partial class addVeiculoVersao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,53 +294,6 @@ namespace CarCRM.Migrations
                     b.ToTable("Pessoas", (string)null);
 
                     b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("CarCRM.Models.Servico", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ServicoTipoId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Valor")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("ServicoTipoId");
-
-                    b.ToTable("Servicos");
-                });
-
-            modelBuilder.Entity("CarCRM.Models.ServicoTipo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServicoTipos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.StatusComissao", b =>
@@ -917,25 +873,6 @@ namespace CarCRM.Migrations
                     b.Navigation("MetodoPagamento");
 
                     b.Navigation("StatusPagamento");
-                });
-
-            modelBuilder.Entity("CarCRM.Models.Servico", b =>
-                {
-                    b.HasOne("CarCRM.Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CarCRM.Models.ServicoTipo", "ServicoTipo")
-                        .WithMany()
-                        .HasForeignKey("ServicoTipoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("ServicoTipo");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Telefone", b =>

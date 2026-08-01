@@ -11,6 +11,11 @@ namespace CarCRM.Controllers
             return View();
         }
 
+        public IActionResult EditarPerfil()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

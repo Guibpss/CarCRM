@@ -10,7 +10,6 @@ namespace CarCRM.ViewModels
         [Required(ErrorMessage = "O campo RG é obrigatório")]
         public string RG { get; set; }
 
-        [Required(ErrorMessage = "O campo Data de Nascimento é obrigatório")]
         public DateTime DataNascimento { get; set; }
 
     }

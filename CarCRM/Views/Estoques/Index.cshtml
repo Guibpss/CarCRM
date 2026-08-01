@@ -28,7 +28,7 @@
                 @item.DataEntrada.ToString("dd/MM/yyyy")
             </td>
             <td>
-                @item.Excluido
+                @(item.Excluido ? "Sim" : "Não")
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" title="Editar">

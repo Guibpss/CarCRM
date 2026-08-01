@@ -162,7 +162,7 @@ public class ClientesController : Controller
     // GET: CLIENTES/Create
     public IActionResult Create()
     {
-        var cliente = new Cliente();
+        var clienteViewModel = new ClienteViewModel();
         var telefonesTipo = _context.TelefonesTipo.ToList();
         ViewBag.telefonesTipo = telefonesTipo;
         return View(new ClienteViewModel());
@@ -175,8 +175,20 @@ public class ClientesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(ClienteViewModel clienteViewModel, string tipoPessoa)
     {
+        if (clienteViewModel.Pessoa == null)
+        {
+            ModelState.AddModelError(string.Empty, "Informe os dados da pessoa.");
+            ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+            return View(clienteViewModel);
+        }
 
-        Pessoa? pessoa;
+        if (!ModelState.IsValid)
+        {
+            ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+            return View(clienteViewModel);
+        }
+
+        Pessoa pessoa;
 
         if (tipoPessoa == "pessoaFisica")
         {
@@ -184,9 +196,9 @@ public class ClientesController : Controller
             {
                 Nome = clienteViewModel.Pessoa.Nome,
                 Email = clienteViewModel.Pessoa.Email,
-                CPF = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).CPF,
-                RG = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).RG,
-                DataNascimento = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).DataNascimento,
+                CPF = clienteViewModel.CPF,
+                RG = clienteViewModel.RG,
+                DataNascimento = clienteViewModel.DataNascimento
             };
         }
         else
@@ -195,11 +207,23 @@ public class ClientesController : Controller
             {
                 Nome = clienteViewModel.Pessoa.Nome,
                 Email = clienteViewModel.Pessoa.Email,
-                CNPJ = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).CNPJ,
-                RazaoSocial = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).RazaoSocial,
-                NomeFantasia = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).NomeFantasia,
-                NomeInterno = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).NomeInterno,
+                CNPJ = clienteViewModel.CNPJ,
+                RazaoSocial = clienteViewModel.RazaoSocial,
+                NomeFantasia = clienteViewModel.NomeFantasia,
+                NomeInterno = clienteViewModel.NomeInterno,
             };
+        }
+
+        var telefoneViewModel = clienteViewModel.Pessoa.Telefones.FirstOrDefault();
+
+        if (telefoneViewModel != null && !string.IsNullOrWhiteSpace(telefoneViewModel.Numero))
+        {
+            pessoa.Telefones.Add(new Telefone
+            {
+                DDD = telefoneViewModel.DDD,
+                Numero = telefoneViewModel.Numero,
+                TelefoneTipoId = telefoneViewModel.TelefoneTipoId
+            });
         }
 
         var cliente = new Cliente
@@ -209,36 +233,10 @@ public class ClientesController : Controller
             Pessoa = pessoa
         };
 
-        if (ModelState.IsValid)
-        {
-            _context.Add(cliente);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        
-        var telefone = clienteViewModel.Pessoa.Telefones.Select(t =>
-            new TelefoneViewModel
-            {
-                Id = t.Id,
-                DDD = t.DDD,
-                Numero = t.Numero,
-                TelefoneTipoId = t.TelefoneTipoId,
-                TelefoneTipo = new TelefoneTipoViewModel
-                {
-                    Id = t.TelefoneTipo.Id,
-                    Nome = t.TelefoneTipo.Nome
-                }
-            }).ToList();
+        _context.Add(cliente);
+        await _context.SaveChangesAsync();
 
-        if (ModelState.IsValid)
-        {
-            _context.Add(telefone);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }        
-        ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
-
-        return View(clienteViewModel);
+        return RedirectToAction(nameof(Index));
     }
 
 // GET: CLIENTES/Edit/5
@@ -267,6 +265,7 @@ public async Task<IActionResult> Edit(int? id)
             Id = cliente.Id,
             CriadoEm = cliente.CriadoEm,
             Excluido = cliente.Excluido,
+            PessoaId = cliente.PessoaId,
             Pessoa = cliente.Pessoa is PessoaFisica
                 ? new PessoaFisicaViewModel
                 {
@@ -323,7 +322,7 @@ public async Task<IActionResult> Edit(int? id)
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, ClienteViewModel clienteViewModel)
+    public async Task<IActionResult> Edit(int? id, ClienteViewModel clienteViewModel, string tipoPessoa)
     {
 
         if (id != clienteViewModel.Id)
@@ -351,16 +350,16 @@ public async Task<IActionResult> Edit(int? id)
 
                 if (cliente.Pessoa is PessoaFisica pf)
                 {
-                    pf.CPF = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).CPF;
-                    pf.RG = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).RG;
-                    pf.DataNascimento = ((PessoaFisicaViewModel)clienteViewModel.Pessoa).DataNascimento;
+                    pf.CPF = clienteViewModel.CPF;
+                    pf.RG = clienteViewModel.RG;
+                    pf.DataNascimento = clienteViewModel.DataNascimento;
                 }
                 else if (cliente.Pessoa is PessoaJuridica pj)
                 {
-                    pj.CNPJ = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).CNPJ;
-                    pj.RazaoSocial = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).RazaoSocial;
-                    pj.NomeFantasia = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).NomeFantasia;
-                    pj.NomeInterno = ((PessoaJuridicaViewModel)clienteViewModel.Pessoa).NomeInterno;
+                    pj.CNPJ = clienteViewModel.CNPJ;
+                    pj.RazaoSocial = clienteViewModel.RazaoSocial;
+                    pj.NomeFantasia = clienteViewModel.NomeFantasia;
+                    pj.NomeInterno = clienteViewModel.NomeInterno;
                 }
 
                 var telefoneViewModel = clienteViewModel.Pessoa.Telefones.FirstOrDefault();
