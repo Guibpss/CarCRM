@@ -23,4 +23,9 @@
     <PackageReference Include="NuGet.Protocol" Version="7.6.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\StatusVendas\" />
+    <Folder Include="wwwroot\lib\jquery\jquery-mask\" />
+  </ItemGroup>
+
 </Project>

@@ -51,12 +51,12 @@
 
             <div class="form-group">
                 <label class="control-label">Valor da Venda</label>
-                <input name="valorVenda" type="text" inputmode="decimal" value="@Model.ValorVenda" class="form-control" required />
+                <input name="valorVenda" id="valorVenda" type="text" inputmode="decimal" value="@Model.ValorVenda.ToString("N2")" class="form-control" required />
             </div>
 
             <div class="form-group">
                 <label class="control-label">Desconto</label>
-                <input name="desconto" type="text" inputmode="decimal" value="@Model.Desconto" class="form-control" required />
+                <input name="desconto" id="desconto" type="text" inputmode="decimal" value="@Model.Desconto.ToString("N2")" class="form-control" required />
             </div>
            
             <div class="form-group">
@@ -71,5 +71,11 @@
 </div>
 
 @section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#valorVenda, #desconto').mask('#.##0,00', { reverse: true });
+        });
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -46,7 +46,7 @@ public class VeiculoVersoesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(VeiculoVersãoViewModel veiculoversao)
+    public async Task<IActionResult> Create(VeiculoVersaoViewModel veiculoversao)
     {
         if (ModelState.IsValid)
         {
@@ -75,7 +75,7 @@ public class VeiculoVersoesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, VeiculoVersãoViewModel veiculoversao)
+    public async Task<IActionResult> Edit(int? id, VeiculoVersaoViewModel veiculoversao)
     {
         if (id != veiculoversao.Id)
         {

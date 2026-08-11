@@ -1,0 +1,59 @@
+﻿@model CarCRM.ViewModels.ServicoViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Serviço</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input type="hidden" name="id" value="@Model.Id"/>
+            <div class="form-group">
+                <label class="control-label">Nome</label>
+                <input name="Nome" value="@Model.Nome" class="form-control" required/>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Valor</label>
+                <input name="Valor" id="Valor" type="text" value="@Model.Valor.ToString("N2")" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Serviço</label>
+                @Html.DropDownList("servicoTipoId",
+                    new SelectList(ViewBag.ServicoTipos, "Id", "Nome", Model.ServicoTipoId),
+                    new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Cliente</label>
+                @Html.DropDownList("clienteId",
+                    new SelectList(ViewBag.Clientes, "Id", "Pessoa.Nome", Model.ClienteId),
+                    new { @class = "form-control", required = "required" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#Valor').mask('#.##0,00', { reverse: true });
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

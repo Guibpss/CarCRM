@@ -891,7 +891,6 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\scop
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\40248rlqku-{0}-06z6avy0w9-06z6avy0w9.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\fjf28u6ojn-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\uliad0bloc-{0}-dlb3s3u3oj-dlb3s3u3oj.gz
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\s3c6ny80bq-{0}-rakiefvp86-rakiefvp86.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\8jkvzrdsv7-{0}-iqk9jp4sq1-iqk9jp4sq1.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\hwni3bjgb8-{0}-9dj1fd3lkt-9dj1fd3lkt.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\n76rbm9bam-{0}-tpwmbgngw8-tpwmbgngw8.gz
@@ -976,3 +975,6 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\refi
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.pdb
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.genruntimeconfig.cache
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\ref\CarCRM.dll
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\s3c6ny80bq-{0}-j73dc5ae50-j73dc5ae50.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\5o3fybpzel-{0}-cfhfv7jgpu-cfhfv7jgpu.gz

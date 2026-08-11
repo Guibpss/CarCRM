@@ -1,16 +1,15 @@
 @model CarCRM.ViewModels.StatusVendaViewModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Excluir</h1>
+<h1>Detalhes</h1>
 
-<h3>Tem certeza que deseja excluir?</h3>
 <div>
     <h4>Status de Venda</h4>
     <hr />
-    <dl>
+    <dl class="row">
         <dt class="col-sm-2">
             Nome
         </dt>
@@ -25,9 +24,8 @@
             @(Model.Ativo ? "Sim" : "Não")
         </dd>
     </dl>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Excluir" class="btn btn-danger" /> |
-        <a asp-action="Index">Voltar</a>
-    </form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="Index">Voltar</a>
 </div>

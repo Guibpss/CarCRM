@@ -1,2 +1,6 @@
-﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+@* Os scripts de validação passaram para o _Layout.cshtml, junto com o validation-pt-BR.js,
+   para garantir a ordem de carregamento (jquery.validate ANTES da tradução).
+
+   Este partial ficou vazio de propósito: recarregar o jquery.validate aqui redefiniria
+   $.validator.messages para o inglês e desfaria a tradução. Não apague o arquivo —
+   31 views ainda fazem RenderPartialAsync("_ValidationScriptsPartial"). *@

@@ -3,132 +3,285 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h1>Editar</h1>
-
-<h4>Veiculo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <div class="form-group">
-                <label class="control-label">Placa</label>
-                <input name="Placa" value="@Model.Placa" class="form-control" />
-
-            </div>
-            <div class="form-group">
-                <label class="control-label">Renavam</label>
-                <input name="Renavam" value="@Model.Renavam" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label class="control-label">Marca</label>
-                @Html.DropDownList("veiculoMarcaId",
-                        new SelectList(ViewBag.veiculosMarca, "Id", "Nome", Model.VeiculoMarcaId),
-                        new { @class = "form-control", id = "marcaSelect" })
-
-            </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <label class="control-label">Modelo</label>
-                    <select name="veiculoModeloId" id="modeloSelect" class="form-control">
-                        <option value="">Selecione a marca primeiro</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Cor</label>
-                @Html.DropDownList("veiculoCorId",
-                        new SelectList(ViewBag.veiculosCor, "Id", "Nome", Model.VeiculoCorId),
-                        new { @class = "form-control" })
-
-            </div>
-            <div class="form-group">
-                <label class="control-label">Km</label>
-                <input name="KilometragemAtual" value="@Model.KilometragemAtual" class="form-control" />
-
-            </div>
-            <div class="form-group">
-                <label class="control-label">Combustível</label>
-                @Html.DropDownList("VeiculoCombustivelId",
-                        new SelectList(ViewBag.veiculosCombustivel, "Id", "Nome", Model.VeiculoCombustivelId),
-                        new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <label class="control-label">Motorização</label>
-                @Html.DropDownList("VeiculoMotorizacaoId",
-                        new SelectList(ViewBag.veiculosMotorizacao, "Id", "Nome", Model.VeiculoMotorizacaoId),
-                        new { @class = "form-control" })
-
-            </div>
-            <div class="form-group">
-                <label class="control-label">Transmissão</label>
-                @Html.DropDownList("veiculoTransmissaoId",
-                        new SelectList(ViewBag.veiculosTransmissao, "Id", "Nome", Model.VeiculoTransmissaoId),
-                        "Selecione a Transmissão",
-                        new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <label class="control-label">Ano Fabricação</label>
-                <input name="AnoFabricacao" value="@Model.AnoFabricacao" class="form-control" />
-
-            </div>
-            <div class="form-group">
-                <label class="control-label">Ano Modelo</label>
-                <input name="AnoModelo" value="@Model.AnoModelo" class="form-control" />
-
-            </div>
-            <div class="form-group">
-                <label class="control-label">Tipo</label>
-                @Html.DropDownList("veiculoTipoId",
-                        new SelectList(ViewBag.veiculosTipo, "Id", "Nome", Model.VeiculoTipoId),
-                        new { @class = "form-control" })
-
-            </div>
-            <div class="form-group form-check">
-                <label class="control-label">Excluído</label>
-                <input name="excluido" type="checkbox" value="true" class="form-check-input" @(Model.Excluido ? "Checked" : "") />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Voltar</a>
-</div>
-
-@section Scripts {
-   <script>
-        $(document).ready(function () {
-        var modeloAtual = '@Model.VeiculoModeloId';
-
-    function carregarModelos(marcaId, selecionado) {
-        $("#modeloSelect").empty();
-        if (!marcaId) {
-            $("#modeloSelect").append('<option value="">Selecione a marca primeiro</option>');
-            return;
-        }
-        $.getJSON('@Url.Action("ModelosPorMarca", "Veiculos")', { marcaId: marcaId }, function (modelos) {
-            $("#modeloSelect").append('<option value="">Selecione o modelo</option>');
-            $.each(modelos, function (i, modelo) {
-                var sel = (modelo.id == selecionado) ? ' selected' : '';
-                $("#modeloSelect").append('<option value="' + modelo.id + '"' + sel + '>' + modelo.nome + '</option>');
-            });
-        });
+<style>
+    body {
+        background: #f4f6f9;
     }
 
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
 
-    carregarModelos($("#marcaSelect").val(), modeloAtual);
+    .card {
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
 
-    $("#marcaSelect").change(function () {
-        carregarModelos($(this).val(), null);
-    });
-});
+    .card-header {
+        background: white;
+        border-bottom: 1px solid #ececec;
+        padding: 20px 30px;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        font-weight: 600;
+    }
+
+    .info-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2f3640;
+    }
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+        background: #0d6efd15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #0d6efd;
+        margin-right: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+</style>
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <div>
+            <h2 class="page-title">
+                <i class="fa-solid fa-car"></i>
+                Editar Veículo
+            </h2>
+
+            <small class="text-muted">
+                Edição dos dados de veículo
+            </small>
+        </div>
+
+        <div>
+            <button type="submit" form="VeiculoEditar" class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Salvar
+            </button>
+
+            <a class="btn btn-secondary" asp-action="Index">
+                <i class="fa-solid fa-x"></i>
+                Cancelar
+            </a>
+        </div>
+     </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="section-title">
+
+                    <div class="icon-box">
+                        <i class="fa-solid fa-car"></i>
+                    </div>
+
+                    Dados do Veiculo
+
+                </div>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="Edit" id="VeiculoEditar">
+                    <div class="row g-4">
+                        <input type="hidden" name="id" value="@Model.Id" />
+     
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Placa</label>
+                                <input name="Placa" value="@Model.Placa" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Renavam</label>
+                                <input name="Renavam" value="@Model.Renavam" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Marca</label>
+                                @Html.DropDownList("veiculoMarcaId",
+                                        new SelectList(ViewBag.veiculosMarca, "Id", "Nome", Model.VeiculoMarcaId),
+                                        new { @class = "form-control", id = "marcaSelect" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                 <label class="info-label">Modelo</label>
+                                    <select name="veiculoModeloId" id="modeloSelect" class="form-control">
+                                        <option value="">Selecione a marca primeiro</option>
+                                    </select>
+                            </div>
+                        </div>
+          
+                        <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="info-label">Versão</label>
+                                    <select name="veiculoVersaoId" id="versaoSelect" class="form-control">
+                                        <option value="">Selecione o modelo primeiro</option>
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Cor</label>
+                                @Html.DropDownList("veiculoCorId",
+                                        new SelectList(ViewBag.veiculosCor, "Id", "Nome", Model.VeiculoCorId),
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Km</label>
+                                <input name="KilometragemAtual" value="@Model.KilometragemAtual" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Combustível</label>
+                                @Html.DropDownList("VeiculoCombustivelId",
+                                        new SelectList(ViewBag.veiculosCombustivel, "Id", "Nome", Model.VeiculoCombustivelId),
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Motorização</label>
+                                @Html.DropDownList("VeiculoMotorizacaoId",
+                                        new SelectList(ViewBag.veiculosMotorizacao, "Id", "Nome", Model.VeiculoMotorizacaoId),
+                                        new { @class = "form-control" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Transmissão</label>
+                                @Html.DropDownList("veiculoTransmissaoId",
+                                        new SelectList(ViewBag.veiculosTransmissao, "Id", "Nome", Model.VeiculoTransmissaoId),
+                                        "Selecione a Transmissão",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Ano Fabricação</label>
+                                <input name="AnoFabricacao" value="@Model.AnoFabricacao" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Ano Modelo</label>
+                                <input name="AnoModelo" value="@Model.AnoModelo" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Tipo</label>
+                                @Html.DropDownList("veiculoTipoId",
+                                        new SelectList(ViewBag.veiculosTipo, "Id", "Nome", Model.VeiculoTipoId),
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@section Scripts {
+        <script>
+                $(document).ready(function() {
+                    var modeloAtual = '@Model.VeiculoModeloId';
+                    var versaoAtual = '@Model.VeiculoVersaoId';
+
+                    function carregarModelos(marcaId, selecionado) {
+                        $("#modeloSelect").empty();
+                        if (!marcaId) {
+                            $("#modeloSelect").append('<option value="">Selecione a marca primeiro</option>');
+                            return;
+                        }
+                        $.getJSON('@Url.Action("ModelosPorMarca", "Veiculos")', { marcaId: marcaId }, function(modelos) {
+                            $("#modeloSelect").append('<option value="">Selecione o modelo</option>');
+                            $.each(modelos, function(i, modelo) {
+                                var sel = (modelo.id == selecionado) ? ' selected' : '';
+                                $("#modeloSelect").append('<option value="' + modelo.id + '"' + sel + '>' + modelo.nome + '</option>');
+                            });
+                        });
+                    }
+
+                    function carregarVersoes(modeloId, selecionado) {
+                        $("#versaoSelect").empty();
+                        if (!modeloId) {
+                            $("#versaoSelect").append('<option value="">Selecione o modelo primeiro</option>');
+                            return;
+                        }
+                        $.getJSON('@Url.Action("VersaoPorModelos", "Veiculos")', { modeloId: modeloId }, function(versao) {
+                            $("#versaoSelect").append('<option value="">Selecione o modelo</option>');
+                            $.each(versao, function(i, versao) {
+                                var sel = (versao.id == selecionado) ? ' selected' : '';
+                                $("#versaoSelect").append('<option value="' + versao.id + '"' + sel + '>' + versao.nome + '</option>');
+                            });
+                        });
+                    }
 
 
- </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+                    carregarModelos($("#marcaSelect").val(), modeloAtual);
+
+                    carregarVersoes(modeloAtual, versaoAtual);
+
+                    $("#marcaSelect").change(function() {
+                        carregarModelos($(this).val(), null);
+                    });
+
+                    $("#modeloSelect").change(function() {
+                        carregarVersoes($(this).val(), null);
+                    });
+                });
+
+
+        </script>
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
 }

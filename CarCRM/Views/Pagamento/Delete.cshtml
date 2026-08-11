@@ -1,98 +1,158 @@
-@model CarCRM.Models.Pagamento
+@model CarCRM.ViewModels.PagamentoViewModel
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<style>
+    body {
+        background: #f4f6f9;
+    }
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>CarCRM.Models.Pagamento</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Valor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Valor)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Parcelas)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Parcelas)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataVencimento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataVencimento)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataPagamento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataPagamento)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusPagamentoId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusPagamentoId)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusPagamento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusPagamento)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MetodoPagamentoId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MetodoPagamentoId)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MetodoPagamento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MetodoPagamento)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CriadoEm)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CriadoEm)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Excluido)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Excluido)
-        </dd>
-    </dl>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .card {
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
+
+    .card-header {
+        background: white;
+        border-bottom: 1px solid #ececec;
+        padding: 20px 30px;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        font-weight: 600;
+    }
+
+    .info-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2f3640;
+    }
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+        background: #0d6efd15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #0d6efd;
+        margin-right: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <div>
+            <h2 class="page-title">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                Excluir Pagamento
+            </h2>
+
+            <small class="text-muted">
+                Exclusão dos dados do pagamento
+            </small>
+        </div>
+
+        <div>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa-solid fa-trash-can"></i>
+                    Excluir
+                </button>
+
+                <a class="btn btn-secondary" asp-action="Index">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Voltar
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+
+                Dados do Pagamento
+
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <div class="col-md-3">
+                    <div class="info-label">Valor</div>
+                    <div class="info-value">R$ @String.Format("{0:N2}", Model.Valor)</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Parcelas</div>
+                    <div class="info-value">@Model.Parcelas</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Data Vencimento</div>
+                    <div class="info-value">@Model.DataVencimento.ToString("dd/MM/yyyy")</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Data Pagamento</div>
+                    <div class="info-value">@Model.DataPagamento.ToString("dd/MM/yyyy")</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Método de Pagamento</div>
+                    <div class="info-value">@Model.MetodoPagamento?.Nome</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Status</div>
+                    <div class="info-value">@Model.StatusPagamento?.Nome</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 </div>

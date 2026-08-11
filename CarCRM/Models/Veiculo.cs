@@ -38,5 +38,7 @@
         public int VeiculoModeloId { get; set; }
 
         public VeiculoModelo VeiculoModelo { get; set; }
+        public int VeiculoVersaoId { get; set; }
+        public VeiculoVersao VeiculoVersao { get; set; }
     }
 }

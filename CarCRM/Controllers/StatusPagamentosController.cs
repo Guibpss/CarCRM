@@ -15,7 +15,14 @@ public class StatusPagamentosController : Controller
 
     public async Task<IActionResult> Index()
     {
-        return View(await _context.StatusPagamentos.ToListAsync());
+        var statusPagamentos = await _context.StatusPagamentos.ToListAsync();
+        var statusPagamentosViewModel = statusPagamentos.Select(s => new StatusPagamentoViewModel
+        {
+            Id = s.Id,
+            Nome = s.Nome,
+            Ativo = s.Ativo
+        }).ToList();
+        return View(statusPagamentosViewModel);
     }
 
     public async Task<IActionResult> Details(int? id)
@@ -33,7 +40,14 @@ public class StatusPagamentosController : Controller
             return NotFound();
         }
 
-        return View(statusPagamento);
+        var statusPagamentoViewModel = new StatusPagamentoViewModel
+        {
+            Id = statusPagamento.Id,
+            Nome = statusPagamento.Nome,
+            Ativo = statusPagamento.Ativo
+        };
+
+        return View(statusPagamentoViewModel);
 
     }
 
@@ -44,16 +58,22 @@ public class StatusPagamentosController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(StatusPagamentoViewModel statuspagamento)
+    public async Task<IActionResult> Create(StatusPagamentoViewModel statusPagamentoViewModel)
     {
         if (ModelState.IsValid)
         {
+            var statuspagamento = new StatusPagamento
+            {
+                Nome = statusPagamentoViewModel.Nome,
+                Ativo = statusPagamentoViewModel.Ativo
+            };
+
             _context.Add(statuspagamento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
         }
-        return View(statuspagamento);
+        return View(statusPagamentoViewModel);
     }
 
 
@@ -70,14 +90,21 @@ public class StatusPagamentosController : Controller
             return NotFound();
         }
 
-        return View(statuspagamento);
+        var statusPagamentoViewModel = new StatusPagamentoViewModel
+        {
+            Id = statuspagamento.Id,
+            Nome = statuspagamento.Nome,
+            Ativo = statuspagamento.Ativo
+        };
+
+        return View(statusPagamentoViewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, StatusPagamentoViewModel statuspagamento)
+    public async Task<IActionResult> Edit(int? id, StatusPagamentoViewModel statusPagamentoViewModel)
     {
-        if (id != statuspagamento.Id)
+        if (id != statusPagamentoViewModel.Id)
         {
             return NotFound();
         }
@@ -86,12 +113,23 @@ public class StatusPagamentosController : Controller
         {
             try
             {
+                var statuspagamento = await _context.StatusPagamentos
+                    .FirstOrDefaultAsync(m => m.Id == id);
+
+                if (statuspagamento == null)
+                {
+                    return NotFound();
+                }
+
+                statuspagamento.Nome = statusPagamentoViewModel.Nome;
+                statuspagamento.Ativo = statusPagamentoViewModel.Ativo;
+
                 _context.Update(statuspagamento);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StatusPagamentoExists(statuspagamento.Id))
+                if (!StatusPagamentoExists(statusPagamentoViewModel.Id))
                 {
                     return NotFound();
                 }
@@ -103,7 +141,7 @@ public class StatusPagamentosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(statuspagamento);
+        return View(statusPagamentoViewModel);
     }
 
     public async Task<IActionResult> Delete(int? id)
@@ -119,7 +157,14 @@ public class StatusPagamentosController : Controller
             return NotFound();
 
         }
-        return View(statuspagamento);
+
+        var statusPagamentoViewModel = new StatusPagamentoViewModel
+        {
+            Id = statuspagamento.Id,
+            Nome = statuspagamento.Nome,
+            Ativo = statuspagamento.Ativo
+        };
+        return View(statusPagamentoViewModel);
     }
 
     [HttpPost, ActionName("Delete")]

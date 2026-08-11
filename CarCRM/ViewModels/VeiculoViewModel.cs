@@ -46,5 +46,7 @@ namespace CarCRM.ViewModels
         public int VeiculoModeloId { get; set; }
 
         public VeiculoModeloViewModel? VeiculoModelo { get; set; }
+        public int VeiculoVersaoId { get; set; }
+        public VeiculoVersaoViewModel? VeiculoVersao { get; set; }
     }
 }

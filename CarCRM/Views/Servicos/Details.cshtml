@@ -1,0 +1,45 @@
+﻿@model CarCRM.ViewModels.ServicoViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Serviço</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Nome
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Nome
+        </dd>
+
+        <dt class="col-sm-2">
+            Valor
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Valor.ToString("C")
+        </dd>
+
+        <dt class="col-sm-2">
+            Serviço
+        </dt>
+        <dd class="col-sm-10">
+            @Model.ServicoTipo?.Nome
+        </dd>
+
+        <dt class="col-sm-2">
+            Cliente
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Cliente?.Pessoa?.Nome
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="Index">Voltar</a>
+</div>

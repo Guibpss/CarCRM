@@ -561,6 +561,9 @@ namespace CarCRM.Migrations
                     b.Property<int?>("VeiculoTransmissaoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("VeiculoVersaoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("VeiculoCombustivelId");
@@ -576,6 +579,8 @@ namespace CarCRM.Migrations
                     b.HasIndex("VeiculoTipoId");
 
                     b.HasIndex("VeiculoTransmissaoId");
+
+                    b.HasIndex("VeiculoVersaoId");
 
                     b.ToTable("Veiculos");
                 });
@@ -1018,6 +1023,12 @@ namespace CarCRM.Migrations
                         .WithMany()
                         .HasForeignKey("VeiculoTransmissaoId");
 
+                    b.HasOne("CarCRM.Models.VeiculoVersao", "VeiculoVersao")
+                        .WithMany()
+                        .HasForeignKey("VeiculoVersaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("VeiculoCombustivel");
 
                     b.Navigation("VeiculoCor");
@@ -1031,6 +1042,8 @@ namespace CarCRM.Migrations
                     b.Navigation("VeiculoTipo");
 
                     b.Navigation("VeiculoTransmissao");
+
+                    b.Navigation("VeiculoVersao");
                 });
 
             modelBuilder.Entity("CarCRM.Models.VeiculoModelo", b =>

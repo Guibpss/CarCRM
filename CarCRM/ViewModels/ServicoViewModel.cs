@@ -12,10 +12,10 @@ namespace CarCRM.ViewModels
 
         public int ServicoTipoId { get; set; }
 
-        public ServicoTipoViewModel ServicoTipo { get; set; }
+        public ServicoTipoViewModel? ServicoTipo { get; set; }
 
         public int ClienteId { get; set; }
 
-        public ClienteViewModel Cliente { get; set; }
+        public ClienteViewModel? Cliente { get; set; }
     }
 }

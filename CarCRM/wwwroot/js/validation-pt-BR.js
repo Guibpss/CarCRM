@@ -16,3 +16,10 @@
     max: $.validator.format("Informe um valor menor ou igual a {0}."),
     min: $.validator.format("Informe um valor maior ou igual a {0}.")
 });
+
+// A regra "number" padrao do jQuery Validate so aceita o formato ingles (1,234.56).
+// Campos decimais renderizados por asp-for geram data-val-number, entao valores
+// mascarados em pt-BR (1.234,56) seriam recusados e o submit era cancelado em silencio.
+$.validator.methods.number = function (value, element) {
+    return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:\.\d{3})+)(?:,\d+)?$/.test(value);
+};

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CarCRM.Models;
 using CarCRM.Data;
+using CarCRM.ViewModels;
 
 public class StatusVendasController : Controller
 {
@@ -14,9 +15,18 @@ public class StatusVendasController : Controller
     }
 
     // GET: STATUSVENDAS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
-        return View(await _context.StatusVendas.ToListAsync());
+        var statusVendas = await _context.StatusVendas.ToListAsync();
+
+        var statusVendasViewModel = statusVendas.Select(s => new StatusVendaViewModel
+        {
+            Id = s.Id,
+            Nome = s.Nome,
+            Ativo = s.Ativo
+        }).ToList();
+
+        return View(statusVendasViewModel);
     }
 
     // GET: STATUSVENDAS/Details/5
@@ -34,29 +44,40 @@ public class StatusVendasController : Controller
             return NotFound();
         }
 
-        return View(statusvenda);
+        var statusVendaViewModel = new StatusVendaViewModel
+        {
+            Id = statusvenda.Id,
+            Nome = statusvenda.Nome,
+            Ativo = statusvenda.Ativo
+        };
+
+        return View(statusVendaViewModel);
     }
 
     // GET: STATUSVENDAS/Create
     public IActionResult Create()
     {
-        return View();
+        return View(new StatusVendaViewModel());
     }
 
     // POST: STATUSVENDAS/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Nome,Ativo")] StatusVenda statusvenda)
+    public async Task<IActionResult> Create(StatusVendaViewModel statusVendaViewModel)
     {
         if (ModelState.IsValid)
         {
+            var statusvenda = new StatusVenda
+            {
+                Nome = statusVendaViewModel.Nome,
+                Ativo = statusVendaViewModel.Ativo
+            };
+
             _context.Add(statusvenda);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(statusvenda);
+        return View(statusVendaViewModel);
     }
 
     // GET: STATUSVENDAS/Edit/5
@@ -72,17 +93,23 @@ public class StatusVendasController : Controller
         {
             return NotFound();
         }
-        return View(statusvenda);
+
+        var statusVendaViewModel = new StatusVendaViewModel
+        {
+            Id = statusvenda.Id,
+            Nome = statusvenda.Nome,
+            Ativo = statusvenda.Ativo
+        };
+
+        return View(statusVendaViewModel);
     }
 
     // POST: STATUSVENDAS/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Nome,Ativo")] StatusVenda statusvenda)
+    public async Task<IActionResult> Edit(int? id, StatusVendaViewModel statusVendaViewModel)
     {
-        if (id != statusvenda.Id)
+        if (id != statusVendaViewModel.Id)
         {
             return NotFound();
         }
@@ -91,12 +118,21 @@ public class StatusVendasController : Controller
         {
             try
             {
-                _context.Update(statusvenda);
+                var statusvenda = await _context.StatusVendas.FindAsync(id);
+
+                if (statusvenda == null)
+                {
+                    return NotFound();
+                }
+
+                statusvenda.Nome = statusVendaViewModel.Nome;
+                statusvenda.Ativo = statusVendaViewModel.Ativo;
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StatusVendaExists(statusvenda.Id))
+                if (!StatusVendaExists(statusVendaViewModel.Id))
                 {
                     return NotFound();
                 }
@@ -107,7 +143,7 @@ public class StatusVendasController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(statusvenda);
+        return View(statusVendaViewModel);
     }
 
     // GET: STATUSVENDAS/Delete/5
@@ -125,7 +161,14 @@ public class StatusVendasController : Controller
             return NotFound();
         }
 
-        return View(statusvenda);
+        var statusVendaViewModel = new StatusVendaViewModel
+        {
+            Id = statusvenda.Id,
+            Nome = statusvenda.Nome,
+            Ativo = statusvenda.Ativo
+        };
+
+        return View(statusVendaViewModel);
     }
 
     // POST: STATUSVENDAS/Delete/5
