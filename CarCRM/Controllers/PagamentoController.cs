@@ -93,8 +93,8 @@ public class PagamentoController : Controller
     public IActionResult Create()
     {
         var pagamentoViewModel = new PagamentoViewModel();
-        var statusPagamento = _context.StatusPagamentos.ToList();
-        var metodoPagamento = _context.MetodosPagamento.ToList();
+        var statusPagamento = _context.StatusPagamentos.OrderBy(p => p.Nome).ToList();
+        var metodoPagamento = _context.MetodosPagamento.OrderBy(p => p.Nome).ToList();
         ViewBag.StatusPagamento = statusPagamento;
         ViewBag.MetodoPagamento = metodoPagamento;
         return View(pagamentoViewModel);
@@ -121,8 +121,8 @@ public class PagamentoController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewBag.StatusPagamento = _context.StatusPagamentos.ToList();
-        ViewBag.MetodoPagamento = _context.MetodosPagamento.ToList();
+        ViewBag.StatusPagamento = _context.StatusPagamentos.OrderBy(p => p.Nome).ToList();
+        ViewBag.MetodoPagamento = _context.MetodosPagamento.OrderBy(p => p.Nome).ToList();
         return View(pagamentoViewModel);
     }
 
@@ -144,8 +144,8 @@ public class PagamentoController : Controller
             return NotFound();
         }
 
-        ViewBag.StatusPagamento = _context.StatusPagamentos.ToList();
-        ViewBag.MetodoPagamento = _context.MetodosPagamento.ToList();
+        ViewBag.StatusPagamento = _context.StatusPagamentos.OrderBy(p => p.Nome).ToList();
+        ViewBag.MetodoPagamento = _context.MetodosPagamento.OrderBy(p => p.Nome).ToList();
 
         var pagamentoViewModel = new PagamentoViewModel
         {
@@ -209,8 +209,8 @@ public class PagamentoController : Controller
             return RedirectToAction(nameof(Index));
 
         }
-        ViewBag.StatusPagamento = _context.StatusPagamentos.ToList();
-        ViewBag.MetodoPagamento = _context.MetodosPagamento.ToList();
+        ViewBag.StatusPagamento = _context.StatusPagamentos.OrderBy(p => p.Nome).ToList();
+        ViewBag.MetodoPagamento = _context.MetodosPagamento.OrderBy(p => p.Nome).ToList();
         return View(pagamentoViewModel);
     }
 

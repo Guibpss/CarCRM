@@ -141,10 +141,10 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 d-none" id="campoDataPagamento">
                         <div class="form-group">
                             <label class="info-label">Data Pagamento</label>
-                            <input name="DataPagamento" type="date" class="form-control" />
+                            <input name="DataPagamento" id="DataPagamento" type="date" class="form-control" />
                         </div>
                     </div>
 
@@ -181,6 +181,16 @@
     <script>
         $(document).ready(function() {
             $('#Valor').mask('#.##0,00', { reverse: true });
+            var ID_PAGO = 1;
+
+            function alternarDataPagamento() {
+                var esconder = $("#StatusPagamentoId").val() == ID_PAGO;
+                $("#campoDataPagamento").toggleClass('d-none', !esconder);
+                $("#DataPagamento").prop('disabled', !esconder);
+            }
+            
+            alternarDataPagamento();
+            $('#StatusPagamentoId').on('change', alternarDataPagamento);
         });
     </script>
 

@@ -116,114 +116,132 @@
         <div class="card-body">
 
             <form asp-action="Create" id="VeiculoCreate">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none d-md-block"></div>
+
                 <div class="row g-4">
                     <div class="col-lg-3">
                         <div class="form-group">
-                            <label class="info-label">Placa</label>
-                            <input name="placa" class="form-control" />
+                            <label asp-for="Placa" class="info-label">Placa</label>
+                            <input asp-for="Placa" class="form-control" maxlength="7" />
+                            <span asp-validation-for="Placa" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-lg-3">
                         <div class="form-group">
-                            <label class="info-label">Renavam</label>
-                            <input name="renavam" class="form-control" />
+                            <label asp-for="Renavam" class="info-label">Renavam</label>
+                            <input asp-for="Renavam" class="form-control" maxlength="11" />
+                            <span asp-validation-for="Renavam" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-lg-3">
                         <div class="form-group">
-                            <label class="info-label">Marca</label>
-                            @Html.DropDownList("veiculoMarcaId",
-                                    new SelectList(ViewBag.veiculosMarca, "Id", "Nome"),
-                                    "Selecione a Marca",
-                                    new { @class = "form-select", id = "marcaSelect" })
+                            <label asp-for="VeiculoMarcaId" class="info-label">Marca</label>
+                            <select asp-for="VeiculoMarcaId" id="marcaSelect" class="form-select"
+                                asp-items="@( new SelectList(ViewBag.veiculosMarca, "Id", "Nome"))">
+                            <option value="">Selecione a Marca</option>
+                            </select>
+                            <span asp-validation-for="VeiculoMarcaId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-lg-3">
                         <div class="form-group">
-                            <label class="info-label">Modelo</label>
-                            <select name="veiculoModeloId" id="modeloSelect" class="form-select">
+                            <label asp-for="VeiculoModeloId" class="info-label">Modelo</label>
+                            <select asp-for="VeiculoModeloId" id="modeloSelect" class="form-select">
                                 <option value="">Selecione a marca primeiro</option>
                             </select>
+                            <span asp-validation-for="VeiculoModeloId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="info-label">Versão</label>
-                            <select name="veiculoVersaoId" id="versaoSelect" class="form-control">
+                            <label asp-for="VeiculoVersaoId" class="info-label">Versão</label>
+                            <select asp-for="VeiculoVersaoId" id="versaoSelect" class="form-control">
                                 <option value="">Selecione o modelo primeiro</option>
                             </select>
+                            <span asp-validation-for="VeiculoVersaoId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="info-label">Cor</label>
-                            @Html.DropDownList("veiculoCorId",
-                                    new SelectList(ViewBag.veiculosCor, "Id", "Nome"),
-                                    new { @class = "form-control" })
+                            <label asp-for="VeiculoCorId" class="info-label">Cor</label>
+                            <select asp-for="VeiculoCorId" class="form-select"
+                                    asp-items="@( new SelectList(ViewBag.veiculosCor, "Id", "Nome"))">
+                                <option value="">Selecione a Cor</option>
+                            </select>
+                            <span asp-validation-for="VeiculoCorId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="info-label">Km</label>
-                            <input name="kilometragemAtual" class="form-control" />
+                            <label asp-for="KilometragemAtual" class="info-label">Km</label>
+                            <input asp-for="KilometragemAtual" type="number" class="form-control" />
+                            <span asp-validation-for="KilometragemAtual" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="info-label">Combustível</label>
-                            @Html.DropDownList("VeiculoCombustivelId",
-                                    new SelectList(ViewBag.veiculosCombustivel, "Id", "Nome"),
-                                    new { @class = "form-control" })
+                            <label asp-for="VeiculoCombustivelId" class="info-label">Combustível</label>
+                            <select asp-for="VeiculoCombustivelId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.veiculosCombustivel, "Id", "Nome"))">
+                                <option value="">Selecione o Combustível</option>
+                            </select>
+                            <span asp-validation-for="VeiculoCombustivelId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label class="info-label">Motorização</label>
-                            @Html.DropDownList("VeiculoMotorizacaoId",
-                                    new SelectList(ViewBag.veiculosMotorizacao, "Id", "Nome"),
-                                    new { @class = "form-control" })
+                            <label asp-for="VeiculoMotorizacaoId" class="info-label">Motorização</label>
+                            <select asp-for="VeiculoMotorizacaoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.veiculosMotorizacao, "Id", "Nome"))">
+                                <option value="">Selecione a Motorização</option>
+                            </select>
+                            <span asp-validation-for="VeiculoMotorizacaoId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label class="info-label">Transmissão</label>
-                            @Html.DropDownList("veiculoTransmissaoId",
-                                    new SelectList(ViewBag.veiculosTransmissao, "Id", "Nome"),
-                                    "Selecione a Transmissão",
-                                    new { @class = "form-control" })
+                            <label asp-for="VeiculoTransmissaoId" class="info-label">Transmissão</label>
+                            <select asp-for="VeiculoTransmissaoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.veiculosTransmissao, "Id", "Nome"))">
+                                <option value="">Selecione a Transmissão</option>
+                            </select>
+                            <span asp-validation-for="VeiculoTransmissaoId" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label class="info-label">Ano Fabricação</label>
-                            <input name="anoFabricacao" type="number" min="1900" max="2100" class="form-control" />
+                            <label asp-for="AnoFabricacao" class="info-label">Ano Fabricação</label>
+                            <input asp-for="AnoFabricacao" type="number" class="form-control" />
+                            <span asp-validation-for="AnoFabricacao" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label class="info-label">Ano Modelo</label>
-                            <input name="anoModelo" type="number" min="1900" max="2100" class="form-control" />
+                                <label asp-for="AnoModelo" class="info-label">Ano Modelo</label>
+                                <input asp-for="AnoModelo" type="number" class="form-control" />
+                                <span asp-validation-for="AnoModelo" class="text-danger"></span>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label class="info-label">Tipo</label>
-                            @Html.DropDownList("veiculoTipoId",
-                                    new SelectList(ViewBag.veiculosTipo, "Id", "Nome"),
-                                    "Selecione o Tipo",
-                                    new { @class = "form-control" })
+                                <label asp-for="VeiculoTipoId" class="info-label">Tipo</label>
+                                <select asp-for="VeiculoTipoId" class="form-select"
+                                        asp-items="@(new SelectList(ViewBag.veiculosTipo, "Id", "Nome"))">
+                                    <option value="">Selecione o Tipo</option>
+                                </select>
+                                <span asp-validation-for="VeiculoTipoId" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -291,7 +309,4 @@
         });
     </script>
 
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 }

@@ -195,3 +195,420 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="pagamentoModal" tabindex="-1" aria-labelledby="pagamentoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pagamentoModalLabel">Adicionar Pagamento</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form asp-action="Create" id="PagamentoCreate">
+                <div class="row g-3">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="info-label">Valor</label>
+                            <input name="Valor" id="Valor" type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="info-label">Parcelas</label>
+                            <input name="Parcelas" id="Parcelas" type="number" min="1" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="info-label">Data Vencimento</label>
+                            <input name="DataVencimento" id="DataVencimento" type="date" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-none" id="campoDataPagamento">
+                        <div class="form-group">
+                            <label class="info-label">Data Pagamento</label>
+                            <input name="DataPagamento" id="DataPagamento" type="date" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="info-label">Método de Pagamento</label>
+                            @Html.DropDownList("MetodoPagamentoId",
+                                    new SelectList(ViewBag.MetodoPagamento, "Id", "Nome"),
+                                    "Selecione",
+                                    new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="info-label">Status</label>
+                            @Html.DropDownList("StatusPagamentoId",
+                                    new SelectList(ViewBag.StatusPagamento, "Id", "Nome"),
+                                    "Selecione",
+                                    new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="adicionarPagamento()">Adicionar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="page-title">
+                <i class="fa-solid fa-money-bill-wave text-primary"></i>
+                Pagamentos do Veículo
+            </h2>
+
+            <small class="text-muted">
+                Gerencie todos os pagamentos para este veículo
+            </small>
+
+        </div>
+
+        <div>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pagamentoModal">
+                <i class="fa-solid fa-plus"></i> 
+                Adicionar Pagamento 
+            </button>
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                </div>
+
+                Pagamentos Cadastrados
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <table id="pagamentoListaId" class="table table-hover align-middle js-datatable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Valor</th>
+                        <th>Parcelas</th>
+                        <th>Vencimento</th>
+                        <th>Pagamento</th>
+                        <th>Método</th>
+                        <th>Status</th>
+                        <th class="text-center no-sort" data-priority="1">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.Pagamentos)
+                    {
+                        <tr>
+                            <td>
+                                <span class="fw-semibold">
+                                    R$ @String.Format("{0:N2}", item.Valor)
+                                </span>
+                            </td>
+
+                            <td>
+                                @item.Parcelas
+                            </td>
+
+                            <td>
+                                @item.DataVencimento.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                @item.DataPagamento.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                @item.MetodoPagamento?.Nome
+                            </td>
+
+                            <td>
+                                <span class="badge bg-primary">
+                                    @item.StatusPagamento?.Nome
+                                </span>
+                            </td>
+
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-1 flex-nowrap">
+
+                                    <a href="#"                                                          
+                                       class="btn btn-outline-warning btn-sm btn-editar-pagamento"
+                                       data-bs-toggle="modal" 
+                                       data-bs-target="#pagamentoModalEdit"
+                                       data-id="@item.Id"
+                                       data-valor="@item.Valor.ToString("N2")"
+                                       data-parcelas="@item.Parcelas"
+                                       data-vencimento="@item.DataVencimento.ToString("yyyy-MM-dd")"
+                                       data-pagamento="@item.DataPagamento.ToString("yyyy-MM-dd")"
+                                       data-metodo="@item.MetodoPagamentoId"
+                                       data-status="@item.StatusPagamentoId"
+                                       title="Editar">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+
+                                    <button type="button"
+                                        class="btn btn-outline-danger btn-sm btn-excluir-pagamento"
+                                        data-id="@item.Id"
+                                        title="Excluir">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="pagamentoModalEdit" tabindex="-1" aria-labelledby="pagamentoModalLabelEdit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pagamentoModalLabelEdit">Editar Pagamento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card-body">
+
+                <form asp-action="Edit" id="PagamentoEditar">
+                    <input type="hidden" id="edit_Id" />
+
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="info-label">Valor</label>
+                                <input name="Valor" id="edit_Valor" type="text" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="info-label">Parcelas</label>
+                                <input name="Parcelas" id="edit_Parcelas" type="number" min="1" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="info-label">Data Vencimento</label>
+                                <input name="DataVencimento" id="edit_DataVencimento" type="date" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 d-none" id="edit_campoDataPagamento">
+                            <div class="form-group">
+                                <label class="info-label">Data Pagamento</label>
+                                <input name="DataPagamento" id="edit_DataPagamento" type="date" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="info-label">Método de Pagamento</label>
+                                @Html.DropDownList("edit_MetodoPagamentoId",
+                                        new SelectList(ViewBag.MetodoPagamento, "Id", "Nome"),
+                                        "Selecione",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("edit_StatusPagamentoId",
+                                        new SelectList(ViewBag.StatusPagamento, "Id", "Nome"),
+                                        "Selecione",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="editarPagamento()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pagamentoModalDelete" tabindex="-1" aria-labelledby="pagamentoModalLabelDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pagamentoModalLabelDelete">Confirmar Exclusão?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center"> 
+
+                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;"> 
+                    </i>
+
+                    <h5 class="mt-3">
+                        Tem certeza que deseja excluir este pagamento?
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Essa ação não poderá ser desfeita!
+                    </p>
+
+                </div>                
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                <form id="pagamentoDeleteForm" asp-action="ExcluirPagamento" method="post">
+                    <input type="hidden" id="pagamentoDeleteId" name="id"/>
+                    <input type="hidden" name="veiculoId" value="@Model.Id"/>
+
+                    <button type="submit" class="btn btn-danger" id="pagamentoDeleteButton">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Excluir
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+        var ID_PAGO = 1;
+
+        function alternarDataPagamento() {
+            var pago = $("#StatusPagamentoId").val() == ID_PAGO;
+            $("#campoDataPagamento").toggleClass('d-none', !pago);
+            $("#DataPagamento").prop('disabled', !pago);
+        }
+
+        function alternarDataPagamentoEdit() {
+            var pago = $("#edit_StatusPagamentoId").val() == ID_PAGO;
+            $("#edit_campoDataPagamento").toggleClass('d-none', !pago);
+            $("#edit_DataPagamento").prop('disabled', !pago);
+        }
+
+        $(document).ready(function() {
+            $('#Valor').mask('#.##0,00', { reverse: true });
+            $('#edit_Valor').mask('#.##0,00', { reverse: true });
+           
+            alternarDataPagamento();
+            $('#StatusPagamentoId').on('change', alternarDataPagamento);
+            $('#edit_StatusPagamentoId').on('change', alternarDataPagamentoEdit);
+
+          
+
+        });
+
+    function adicionarPagamento(){
+        var pagamento = 
+        { 
+            VeiculoId : '@Model.Id',
+            Valor : $("#Valor").val(), 
+            Parcelas : $("#Parcelas").val(), 
+            DataVencimento : $("#DataVencimento").val(), 
+            StatusPagamentoId :  $("#StatusPagamentoId").val(),
+            MetodoPagamentoId : $("#MetodoPagamentoId").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/Veiculos/AdicionarPagamento",
+            data: pagamento,
+            success: function (retorno) {
+                
+                if(retorno.Sucesso){
+                    // alert(retorno.Mensagem);
+                    
+                    $("#Valor").val('');
+                    $("#pagamentoModal").modal('hide');
+                    location.reload();
+                }
+                else{
+                    alert("Erro: " + retorno.Mensagem);
+                }
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        });
+
+    }
+
+        function editarPagamento() {
+            var pagamento =
+            {
+                Id: $("#edit_Id").val(),
+                VeiculoId: '@Model.Id',
+                Valor: $("#edit_Valor").val(),
+                Parcelas: $("#edit_Parcelas").val(),
+                DataVencimento: $("#edit_DataVencimento").val(),
+                DataPagamento: $("#edit_DataPagamento").val(),
+                StatusPagamentoId: $("#edit_StatusPagamentoId").val(),
+                MetodoPagamentoId: $("#edit_MetodoPagamentoId").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Veiculos/EditarPagamento",
+                data: pagamento,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        // alert(retorno.Mensagem);
+                        $("#edit_Valor").val('');
+                        $("#pagamentoModalEditar").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+
+        }
+
+</script>
+}

@@ -94,8 +94,8 @@ public class ServicosController : Controller
     public IActionResult Create()
     {
         var servicoViewModel = new ServicoViewModel();
-        var servicoTipos = _context.ServicoTipos.ToList();
-        var clientes = _context.Clientes.Include(c => c.Pessoa).ToList();
+        var servicoTipos = _context.ServicoTipos.OrderBy(x => x.Nome).ToList();
+        var clientes = _context.Clientes.Include(c => c.Pessoa).OrderBy(x => x.Pessoa.Nome).ToList();
         ViewBag.Clientes = clientes;
         ViewBag.ServicoTipos = servicoTipos;
         return View(servicoViewModel);
@@ -121,8 +121,8 @@ public class ServicosController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewBag.ServicoTipos = _context.ServicoTipos.ToList();
-        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).ToList();
+        ViewBag.ServicoTipos = _context.ServicoTipos.OrderBy(x => x.Nome).ToList();
+        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).OrderBy(x => x.Pessoa.Nome).ToList();
         return View(servicoViewModel);
     }
 
@@ -146,8 +146,8 @@ public class ServicosController : Controller
             return NotFound();
         }
 
-        ViewBag.ServicoTipos = _context.ServicoTipos.ToList();
-        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).ToList();
+        ViewBag.ServicoTipos = _context.ServicoTipos.OrderBy(x => x.Nome).ToList();
+        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).OrderBy(x => x.Pessoa.Nome).ToList();
 
         var servicoViewModel = new ServicoViewModel
         {
@@ -209,8 +209,8 @@ public class ServicosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        ViewBag.ServicoTipos = _context.ServicoTipos.ToList();
-        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).ToList();
+        ViewBag.ServicoTipos = _context.ServicoTipos.OrderBy(x => x.Nome).ToList();
+        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).OrderBy(x => x.Pessoa.Nome).ToList();
         return View(servicoViewModel);
     }
 

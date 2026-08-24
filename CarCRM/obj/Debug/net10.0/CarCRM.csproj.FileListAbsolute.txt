@@ -975,6 +975,6 @@ C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\refi
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.pdb
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\CarCRM.genruntimeconfig.cache
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\ref\CarCRM.dll
-C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\s3c6ny80bq-{0}-j73dc5ae50-j73dc5ae50.gz
 C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\compressed\5o3fybpzel-{0}-cfhfv7jgpu-cfhfv7jgpu.gz
+C:\Users\guilherme.santos\Documents\ESTUDOS\CarCRM\CarCRM\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

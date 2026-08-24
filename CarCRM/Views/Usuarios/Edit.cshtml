@@ -4,61 +4,218 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Editar</h1>
+<style>
+    body {
+        background: #f4f6f9;
+    }
 
-<h4>Usuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <div class="form-group">
-                <label class="control-label">Nome</label>
-                <input name="Nome" value="@Model.Nome" class="form-control"  />
-            </div>
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
 
-            <div class="form-group">
-                <label class="control-label">CPF</label>
-                <input name="cpf" value="@Model.Pessoa.CPF" class="form-control" disabled />
-            </div>
+    .card {
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
 
-            <div class="form-group">
-                <label class="control-label">RG</label>
-                <input name="rg" value="@Model.Pessoa.RG" class="form-control" disabled />
-            </div>
+    .card-header {
+        background: white;
+        border-bottom: 1px solid #ececec;
+        padding: 20px 30px;
+    }
 
-            <div class="form-group">
-                <label class="control-label">Data de Nascimento</label>
-                <input name="dataNascimento" value="@Model.Pessoa.DataNascimento.ToString("dd/MM/yyyy")" class="form-control" />
-            </div>
-            
-            <div class="form-group">
-                <label class="control-label">Email</label>
-                <input name="email" value="@Model.Pessoa.Email" class="form-control" disabled />
-            </div>
+    .card-body {
+        padding: 30px;
+    }
 
-            <div class="form-group">
-                <label class="control-label">Ativo</label>
-                <input name="Ativo" type="checkbox" value="true" class="form-check-input" @(Model.Ativo ? "checked" : "") />
-            </div>
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        font-weight: 600;
+    }
 
-            <div class="form-group">
-                <label class="control-label">Perfil</label>
-                @Html.DropDownList("perfilId",
-                    new SelectList(ViewBag.Perfis, "Id", "Nome", Model.PerfilId),
-                    new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
-            </div>
-        </form>
+    .info-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2f3640;
+    }
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+        background: #0d6efd15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #0d6efd;
+        margin-right: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <div>
+            <h2 class="page-title">
+                <i class="fa-solid fa-users-gear"></i>
+                Editar Usuário
+            </h2>
+
+            <small class="text-muted">
+                Edição dos dados cadastrais
+            </small>
+        </div>
+
+        <div>
+
+            <button type="submit" form="UsuarioEditar" class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Salvar
+            </button>
+
+            <a class="btn btn-secondary" asp-action="Index">
+                <i class="fa-solid fa-x"></i>
+                Cancelar
+            </a>
+
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Voltar</a>
+    <form asp-action="Edit" id="UsuarioEditar">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="Pessoa.Nome" id="pessoaNome" value="@Model.Pessoa?.Nome" />
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <div class="section-title">
+
+                    <div class="icon-box">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+
+                    Dados do Usuário
+
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-4">
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label asp-for="Nome" class="info-label">Nome</label>
+                            <input asp-for="Nome" class="form-control" maxlength="120" required />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label asp-for="Pessoa.Email" class="info-label">Email</label>
+                            <input asp-for="Pessoa.Email" type="email" class="form-control" readonly />
+                            <span asp-validation-for="Pessoa.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label asp-for="PerfilId" class="info-label">Perfil</label>
+                            <select asp-for="PerfilId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Perfis, "Id", "Nome"))">
+                                <option value="">Selecione o Perfil</option>
+                            </select>
+                            <span asp-validation-for="PerfilId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="Pessoa.CPF" class="info-label">CPF</label>
+                            <input asp-for="Pessoa.CPF" class="form-control" readonly />
+                            <span asp-validation-for="Pessoa.CPF" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="Pessoa.RG" class="info-label">RG</label>
+                            <input asp-for="Pessoa.RG" class="form-control" readonly />
+                            <span asp-validation-for="Pessoa.RG" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="Pessoa.DataNascimento" class="info-label">Data de Nascimento</label>
+                            <input asp-for="Pessoa.DataNascimento" type="date" class="form-control" required />
+                            <span asp-validation-for="Pessoa.DataNascimento" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="Ativo" class="info-label">Ativo</label>
+                            <div class="form-check form-switch mt-2">
+                                <input asp-for="Ativo" class="form-check-input" role="switch" />
+                            </div>
+                            <span asp-validation-for="Ativo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label class="info-label">Criado Em</label>
+                            <input class="form-control" value="@Model.CriadoEm.ToString("dd/MM/yyyy")" readonly />
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(function () {
+
+            // O controller usa UsuarioViewModel.Nome tanto para o usuário quanto para a pessoa,
+            // então o campo visível espelha o valor em Pessoa.Nome (que é obrigatório na ViewModel).
+            $("#Nome").on("input", function () {
+                $("#pessoaNome").val($(this).val());
+            }).trigger("input");
+
+        });
+    </script>
+
 }

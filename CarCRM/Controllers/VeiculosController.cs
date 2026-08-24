@@ -9,6 +9,7 @@ using CarCRM.Data;
 using CarCRM.Models;
 using CarCRM.ViewModels;
 using NuGet.ProjectModel;
+using Newtonsoft.Json;
 
 namespace CarCRM.Controllers
 {
@@ -94,6 +95,11 @@ namespace CarCRM.Controllers
         // GET: Veiculos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var statusPagamento = _context.StatusPagamentos.OrderBy(p => p.Nome).ToList();
+            var metodoPagamento = _context.MetodosPagamento.OrderBy(p => p.Nome).ToList();
+            ViewBag.StatusPagamento = statusPagamento;
+            ViewBag.MetodoPagamento = metodoPagamento;
+
             if (id == null)
             {
                 return NotFound();
@@ -113,6 +119,13 @@ namespace CarCRM.Controllers
             {
                 return NotFound();
             }
+
+            var pagamentos = await _context.Pagamentos
+                .Include(p => p.MetodoPagamento)
+                .Include(p => p.StatusPagamento)
+                .Where(p => p.VeiculoId == id)
+                .OrderBy(p => p.DataVencimento)
+                .ToListAsync();
 
             var veiculoViewModel = new VeiculoViewModel
             {
@@ -165,9 +178,29 @@ namespace CarCRM.Controllers
                 },
                 CriadoEm = veiculo.CriadoEm,
                 Excluido = veiculo.Excluido,
-
-
+                Pagamentos = pagamentos.Select(p => new PagamentoViewModel
+                {
+                    Id = p.Id,
+                    Valor = p.Valor,
+                    Parcelas = p.Parcelas,
+                    DataVencimento = p.DataVencimento,
+                    DataPagamento = p.DataPagamento,
+                    MetodoPagamentoId = p.MetodoPagamentoId,
+                    MetodoPagamento = new MetodoPagamentoViewModel
+                    {
+                        Id = p.MetodoPagamento.Id,
+                        Nome = p.MetodoPagamento.Nome,
+                    },
+                    StatusPagamentoId = p.StatusPagamentoId,
+                    StatusPagamento = new StatusPagamentoViewModel
+                    {
+                        Id = p.StatusPagamento.Id,
+                        Nome = p.StatusPagamento.Nome,
+                    }
+                }).ToList()
             };
+
+
 
             return View(veiculoViewModel);
 
@@ -199,14 +232,14 @@ namespace CarCRM.Controllers
         public IActionResult Create()
         {
             var veiculo = new Veiculo();
-            ViewBag.veiculosCor = _context.VeiculoCor.ToList();
-            ViewBag.veiculosMarca = _context.veiculoMarcas.ToList();
-            ViewBag.veiculosModelo = _context.VeiculoModelo.ToList();
-            ViewBag.veiculosVersao = _context.VeiculoVersao.ToList();
-            ViewBag.veiculosTipo = _context.VeiculoTipos.ToList();
-            ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.ToList();
-            ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.ToList();
-            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.ToList();
+            ViewBag.veiculosCor = _context.VeiculoCor.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosMarca = _context.veiculoMarcas.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosModelo = _context.VeiculoModelo.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosVersao = _context.VeiculoVersao.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosTipo = _context.VeiculoTipos.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.OrderBy(x => x.Nome).ToList();
 
             return View(new VeiculoViewModel());
         }
@@ -218,42 +251,39 @@ namespace CarCRM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(VeiculoViewModel veiculoViewModel)
         {
-
-            var veiculo = new Veiculo
-            {
-                VeiculoCorId = veiculoViewModel.VeiculoCorId,
-                KilometragemAtual = veiculoViewModel.KilometragemAtual,
-                Placa = veiculoViewModel.Placa,
-                Renavam = veiculoViewModel.Renavam,
-                VeiculoCombustivelId = veiculoViewModel.VeiculoCombustivelId,
-                VeiculoMotorizacaoId = veiculoViewModel.VeiculoMotorizacaoId,
-                VeiculoTransmissaoId = veiculoViewModel.VeiculoTransmissaoId,
-                AnoFabricacao = veiculoViewModel.AnoFabricacao,
-                AnoModelo = veiculoViewModel.AnoModelo,
-                VeiculoTipoId = veiculoViewModel.VeiculoTipoId,
-                VeiculoMarcaId = veiculoViewModel.VeiculoMarcaId,
-                VeiculoModeloId = veiculoViewModel.VeiculoModeloId,
-                VeiculoVersaoId = veiculoViewModel.VeiculoVersaoId,
-                Excluido = veiculoViewModel.Excluido
-            };
-
             if (ModelState.IsValid)
             {
+                var veiculo = new Veiculo
+                {
+                    VeiculoCorId = veiculoViewModel.VeiculoCorId,
+                    KilometragemAtual = veiculoViewModel.KilometragemAtual,
+                    Placa = veiculoViewModel.Placa,
+                    Renavam = veiculoViewModel.Renavam,
+                    VeiculoCombustivelId = veiculoViewModel.VeiculoCombustivelId,
+                    VeiculoMotorizacaoId = veiculoViewModel.VeiculoMotorizacaoId,
+                    VeiculoTransmissaoId = veiculoViewModel.VeiculoTransmissaoId,
+                    AnoFabricacao = veiculoViewModel.AnoFabricacao,
+                    AnoModelo = veiculoViewModel.AnoModelo,
+                    VeiculoTipoId = veiculoViewModel.VeiculoTipoId,
+                    VeiculoMarcaId = veiculoViewModel.VeiculoMarcaId,
+                    VeiculoModeloId = veiculoViewModel.VeiculoModeloId,
+                    VeiculoVersaoId = veiculoViewModel.VeiculoVersaoId,
+                    Excluido = veiculoViewModel.Excluido
+                };
+
                 _context.Add(veiculo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.veiculosCor = _context.VeiculoCor.ToList();
-            ViewBag.veiculosMarca = _context.veiculoMarcas.ToList();
-            ViewBag.veiculosModelo = _context.VeiculoModelo.ToList();
-            ViewBag.veiculosVersao = _context.VeiculoVersao.ToList();
-            ViewBag.veiculosTipo = _context.VeiculoTipos.ToList();
-            ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.ToList();
-            ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.ToList();
-            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.ToList();
-
-
+            ViewBag.veiculosCor = _context.VeiculoCor.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosMarca = _context.veiculoMarcas.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosModelo = _context.VeiculoModelo.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosVersao = _context.VeiculoVersao.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosTipo = _context.VeiculoTipos.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.OrderBy(x => x.Nome).ToList();
             return View(veiculoViewModel);
         }
 
@@ -281,14 +311,14 @@ namespace CarCRM.Controllers
                 return NotFound();
             }
 
-            ViewBag.veiculosCor = _context.VeiculoCor.ToList();
-            ViewBag.veiculosMarca = _context.veiculoMarcas.ToList();
-            ViewBag.veiculosModelo = _context.VeiculoModelo.ToList();
-            ViewBag.veiculosVersao = _context.VeiculoVersao.ToList();
-            ViewBag.veiculosTipo = _context.VeiculoTipos.ToList();
-            ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.ToList();
-            ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.ToList();
-            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.ToList();
+            ViewBag.veiculosCor = _context.VeiculoCor.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosMarca = _context.veiculoMarcas.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosModelo = _context.VeiculoModelo.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosVersao = _context.VeiculoVersao.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosTipo = _context.VeiculoTipos.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.OrderBy(x => x.Nome).ToList();
 
             var veiculoViewModel = new VeiculoViewModel
             {
@@ -402,14 +432,14 @@ namespace CarCRM.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-            ViewBag.veiculosCor = _context.VeiculoCor.ToList();
-            ViewBag.veiculosMarca = _context.veiculoMarcas.ToList();
-            ViewBag.veiculosModelo = _context.VeiculoModelo.ToList();
-            ViewBag.veiculosVersao = _context.VeiculoVersao.ToList();
-            ViewBag.veiculosTipo = _context.VeiculoTipos.ToList();
-            ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.ToList();
-            ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.ToList();
-            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.ToList();
+            ViewBag.veiculosCor = _context.VeiculoCor.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosMarca = _context.veiculoMarcas.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosModelo = _context.VeiculoModelo.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosVersao = _context.VeiculoVersao.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosTipo = _context.VeiculoTipos.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosCombustivel = _context.VeiculoCombustivel.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosMotorizacao = _context.VeiculoMotorizacao.OrderBy(x => x.Nome).ToList();
+            ViewBag.veiculosTransmissao = _context.VeiculoTransmissao.OrderBy(x => x.Nome).ToList();
             return View(veiculoViewModel);
         }
 
@@ -513,6 +543,95 @@ namespace CarCRM.Controllers
         private bool VeiculoExists(int id)
         {
             return _context.Veiculos.Any(e => e.Id == id);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdicionarPagamento(PagamentoViewModel pagamentoViewModel)
+        {
+            if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor e método de pagamento" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var pagamento = new Pagamento();
+            pagamento.VeiculoId = pagamentoViewModel.VeiculoId;
+            pagamento.Valor = pagamentoViewModel.Valor;
+            pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
+            pagamento.DataPagamento = pagamentoViewModel.DataPagamento;
+            pagamento.Parcelas = pagamentoViewModel.Parcelas;
+            pagamento.MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId;
+            pagamento.StatusPagamentoId = pagamentoViewModel.StatusPagamentoId;
+            pagamento.CriadoEm = DateTime.Now;
+
+            _context.Pagamentos.Add(pagamento);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento cadastrado com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarPagamento(PagamentoViewModel pagamentoViewModel)
+        {
+            if (pagamentoViewModel.Id == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Pagamento Inválido." };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor e método de pagamento" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+
+            var pagamento = await _context.Pagamentos.FirstOrDefaultAsync(p => p.Id == pagamentoViewModel.Id);
+
+            if (pagamento == null)
+            {
+                var erroNaoEncontrado = new { Sucesso = false, Mensagem = "Pagamento não encontrado." };
+                return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
+            }
+
+            pagamento.VeiculoId = pagamentoViewModel.VeiculoId;
+            pagamento.Valor = pagamentoViewModel.Valor;
+            pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
+            pagamento.DataPagamento = pagamentoViewModel.DataPagamento;
+            pagamento.Parcelas = pagamentoViewModel.Parcelas;
+            pagamento.MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId;
+            pagamento.StatusPagamentoId = pagamentoViewModel.StatusPagamentoId;
+
+            _context.Update(pagamento);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento cadastrado com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExcluirPagamento(int? id, int veiculoId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pagamento = await _context.Pagamentos.FindAsync(id);
+
+            if (pagamento == null)
+            {
+                return NotFound();
+            }
+
+            _context.Pagamentos.Remove(pagamento);
+            _context.SaveChangesAsync();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento excluído com sucesso!" };
+            return RedirectToAction("Details", new { id = veiculoId });
         }
     }
 }

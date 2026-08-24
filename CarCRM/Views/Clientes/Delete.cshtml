@@ -2,122 +2,235 @@
 
 @{
     ViewData["Title"] = "Delete";
+
     var pf = Model.Pessoa as CarCRM.ViewModels.PessoaFisicaViewModel;
     var pj = Model.Pessoa as CarCRM.ViewModels.PessoaJuridicaViewModel;
     var telefone = Model.Pessoa?.Telefones?.FirstOrDefault();
 }
 
-<h1>Excluir</h1>
+<style>
+    body {
+        background: #f4f6f9;
+    }
 
-<h3>Tem certeza que deseja excluir?</h3>
-<div>
-    <h4>Cliente</h4>
-    <hr />
-    <dl>
-        <dt class = "col-sm-2">
-            Nome
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.Pessoa.Nome
-        </dd>
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
 
-        <dt class = "col-sm-2">
-            Email
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.Pessoa.Email
-        </dd>
-        <div class="row" style="display:@(pf != null ? "block" : "none");">
-            <dt class="col-sm-2">
-                CPF
-            </dt>
-            <dd class="col-sm-10">
-                @pf?.CPF
-            </dd>
-            <dt class="col-sm-2">
-                RG
-            </dt>
-            <dd class="col-sm-10">
-                @pf?.RG
-            </dd>
-            <dt class="col-sm-2">
-                Data de Nascimento
-            </dt>
-            <dd class="col-sm-10">
-                @pf?.DataNascimento.ToString("dd/MM/yyyy")
-            </dd>
-        </div>
-        <div cite="row" style="display:@(pj != null ? "block" : "none");">
-            <dt class="col-sm-2">
-                CNPJ
-            </dt>
-            <dd class="col-sm-10">
-                @pj?.CNPJ
-            </dd>
-            <dt class="col-sm-2">
-                Razão Social
-            </dt>
-            <dd class="col-sm-10">
-                @pj?.RazaoSocial
-            </dd>
-            <dt class="col-sm-2">
-                Nome Fantasia
-            </dt>
-            <dd class="col-sm-10">
-                @pj?.NomeFantasia
-            </dd>
-            <dt class="col-sm-2">
-                Nome Interno
-            </dt>
-            <dd class="col-sm-10">
-                @pj?.NomeInterno
-            </dd>
-        </div>
-        <dt class="col-sm-2">
-            Excluido
-        </dt>
-        <dd class="col-sm-10">
-            @(Model.Excluido ? "Sim" : "Não")
-        </dd>
+    .card {
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
+
+    .card-header {
+        background: white;
+        border-bottom: 1px solid #ececec;
+        padding: 20px 30px;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        font-weight: 600;
+    }
+
+    .info-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2f3640;
+    }
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+        background: #0d6efd15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #0d6efd;
+        margin-right: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
         <div>
-            <br />
-            <h4>Telefone</h4>
-            <hr />
-            <div style="display: flex; align-items:flex-end; gap: 10px;" >
-                <div>
-                    <label class="control-label">Tipo</label>
-                    @Html.DropDownList("telefonetipoId",
-                    new SelectList(ViewBag.telefonesTipo, "Id", "Nome", telefone?.TelefoneTipoId),
-                    new { @class = "form-control", disabled = "disabled" })
+            <h2 class="page-title">
+                <i class="fa-solid fa-users"></i>
+                Excluir Cliente
+            </h2>
+
+            <small class="text-muted">
+                Exclusão dos dados do cliente
+            </small>
+        </div>
+
+        <div>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+
+                <button class="btn btn-danger">
+                    <i class="fa-solid fa-trash-can"></i>
+                    Excluir
+                </button>
+
+                <a class="btn btn-secondary" asp-action="Index">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Voltar
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-user-tie"></i>
                 </div>
+
+                Dados do Cliente
+
             </div>
         </div>
-        <div style="width: 80px;">
-            <dt class="col-sm-2">
-                DDD
-            </dt>
-            <dd class="col-sm-10">
-                @telefone?.DDD
-            </dd>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <div class="col-md-3">
+                    <div class="info-label">Tipo de Pessoa</div>
+                    <div class="info-value">@(pf != null ? "Pessoa Física" : "Pessoa Jurídica")</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Nome</div>
+                    <div class="info-value">@Model.Pessoa?.Nome</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">@Model.Pessoa?.Email</div>
+                </div>
+
+                @if (pf != null)
+                {
+                    <div class="col-md-3">
+                        <div class="info-label">CPF</div>
+                        <div class="info-value">@pf.CPF</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">RG</div>
+                        <div class="info-value">@pf.RG</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Data de Nascimento</div>
+                        <div class="info-value">@pf.DataNascimento.ToString("dd/MM/yyyy")</div>
+                    </div>
+                }
+
+                @if (pj != null)
+                {
+                    <div class="col-md-3">
+                        <div class="info-label">CNPJ</div>
+                        <div class="info-value">@pj.CNPJ</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Razão Social</div>
+                        <div class="info-value">@pj.RazaoSocial</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Nome Fantasia</div>
+                        <div class="info-value">@pj.NomeFantasia</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Nome Interno</div>
+                        <div class="info-value">@pj.NomeInterno</div>
+                    </div>
+                }
+
+                <div class="col-md-3">
+                    <div class="info-label">Criado Em</div>
+                    <div class="info-value">@Model.CriadoEm.ToString("dd/MM/yyyy")</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Excluido</div>
+                    <div class="info-value">@(Model.Excluido ? "Sim" : "Não")</div>
+                </div>
+
+            </div>
+
         </div>
-        <div style="flex: 1px;">
-            <dt class="col-sm-2">
-                Número
-            </dt>
-            <dd class="col-sm-10">
-                @telefone?.Numero
-            </dd>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+
+                Telefone
+
+            </div>
         </div>
-        <dt class = "col-sm-2">
-            Criado Em
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.CriadoEm.ToString("dd/MM/yyyy")
-        </dd>
-    </dl>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Excluir" class="btn btn-danger" /> | 
-        <a asp-action="Index">Voltar</a>
-    </form>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <div class="col-md-3">
+                    <div class="info-label">Tipo</div>
+                    <div class="info-value">@telefone?.TelefoneTipo?.Nome</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">DDD</div>
+                    <div class="info-value">@telefone?.DDD</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Número</div>
+                    <div class="info-value">@telefone?.Numero</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
 </div>

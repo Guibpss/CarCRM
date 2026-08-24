@@ -365,8 +365,8 @@ public class VendasController : Controller
 
     private void CarregarDropdowns()
     {
-        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).ToList();
-        ViewBag.vendedores = _context.Usuarios.ToList();
-        ViewBag.StatusVendas = _context.StatusVendas.ToList();
+        ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).OrderBy(p => p.Pessoa.Nome).ToList();
+        ViewBag.vendedores = _context.Usuarios.OrderBy(p => p.Nome).ToList();
+        ViewBag.StatusVendas = _context.StatusVendas.OrderBy(p => p.Nome).ToList();
     }
 }

@@ -4,63 +4,169 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Detalhes</h1>
+<style>
+    body {
+        background: #f4f6f9;
+    }
 
-<div>
-    <h4>Venda</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            Data
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.DataVenda.ToString("dd/MM/yyyy")
-        </dd>
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
 
-        <dt class = "col-sm-2">
-            Cliente
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.Cliente?.Pessoa?.Nome
-        </dd>
+    .card {
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
 
-        <dt class="col-sm-2">
-            Vendedor
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Vendedor?.Nome
-        </dd>
+    .card-header {
+        background: white;
+        border-bottom: 1px solid #ececec;
+        padding: 20px 30px;
+    }
 
-        <dt class = "col-sm-2">
-            Status
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.StatusVenda?.Nome
-        </dd>
+    .card-body {
+        padding: 30px;
+    }
 
-        <dt class = "col-sm-2">
-            Valor da Venda
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.ValorVenda.ToString("C")
-        </dd>
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        font-weight: 600;
+    }
 
-        <dt class="col-sm-2">
-            Desconto
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Desconto.ToString("C")
-        </dd>
+    .info-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2f3640;
+    }
 
-        <dt class="col-sm-2">
-            Valor Final
-        </dt>
-        <dd class="col-sm-10">
-            @Model.ValorFinal.ToString("C")
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
-    <a asp-action="Index">Voltar</a>
+    .icon-box {
+        width: 42px;
+        height: 42px;
+        background: #0d6efd15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #0d6efd;
+        margin-right: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <div>
+            <h2 class="page-title">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                Visualizar Venda
+            </h2>
+
+            <small class="text-muted">
+                Visualização dos dados da venda
+            </small>
+        </div>
+
+        <div>
+
+            <a class="btn btn-success" asp-action="Edit" asp-route-id="@Model?.Id">
+                <i class="fa-solid fa-pencil"></i>
+                Editar
+            </a>
+
+            <a class="btn btn-secondary" asp-action="Index">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar
+            </a>
+
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+
+                Dados da Venda
+
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <div class="col-md-3">
+                    <div class="info-label">Data da Venda</div>
+                    <div class="info-value">@Model.DataVenda.ToString("dd/MM/yyyy")</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Cliente</div>
+                    <div class="info-value">@Model.Cliente?.Pessoa?.Nome</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Vendedor</div>
+                    <div class="info-value">@Model.Vendedor?.Nome</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Status</div>
+                    <div class="info-value">@Model.StatusVenda?.Nome</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Valor da Venda</div>
+                    <div class="info-value">R$ @String.Format("{0:N2}", Model.ValorVenda)</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Desconto</div>
+                    <div class="info-value">R$ @String.Format("{0:N2}", Model.Desconto)</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Valor Final</div>
+                    <div class="info-value">R$ @String.Format("{0:N2}", Model.ValorFinal)</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Criado Em</div>
+                    <div class="info-value">@Model.CriadoEm.ToString("dd/MM/yyyy")</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Excluido</div>
+                    <div class="info-value">@(Model.Excluido ? "Sim" : "Não")</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
 </div>

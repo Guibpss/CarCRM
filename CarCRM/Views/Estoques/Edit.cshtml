@@ -4,40 +4,166 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Editar</h1>
+<style>
+    body {
+        background: #f4f6f9;
+    }
 
-<h4>Estoque</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <input type="hidden" name="id" value="@Model.Id" />
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
 
-            <div class="form-group">
-                <label class="control-label">Nome</label>
-                <input name="nome" value="@Model.Nome" class="form-control" />
-            </div>
+    .card {
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
 
-            <div class="form-group">
-                <label class="control-label">Data de Entrada</label>
-                <input name="dataEntrada" value="@Model.DataEntrada.ToString("dd/MM/yyyy")" class="form-control" />
-            </div>
+    .card-header {
+        background: white;
+        border-bottom: 1px solid #ececec;
+        padding: 20px 30px;
+    }
 
-            <div class="form-group">
-                <label class="control-label">Excluido</label>
-                <input name="excluido" type="checkbox" value="true" class="form-check-input" @(Model.Excluido ? "checked" : "") />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
-            </div>
-        </form>
+    .card-body {
+        padding: 30px;
+    }
+
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        font-weight: 600;
+    }
+
+    .info-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2f3640;
+    }
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+        background: #0d6efd15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #0d6efd;
+        margin-right: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <div>
+            <h2 class="page-title">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                Editar Estoque
+            </h2>
+
+            <small class="text-muted">
+                Edição dos dados do estoque
+            </small>
+        </div>
+
+        <div>
+
+            <button type="submit" form="EstoqueEditar" class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Salvar
+            </button>
+
+            <a class="btn btn-secondary" asp-action="Index">
+                <i class="fa-solid fa-x"></i>
+                Cancelar
+            </a>
+
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Voltar</a>
-</div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="section-title">
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+                <div class="icon-box">
+                    <i class="fa-solid fa-box"></i>
+                </div>
+
+                Dados do Estoque
+
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit" id="EstoqueEditar">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input type="hidden" name="id" value="@Model.Id" />
+
+                <div class="row g-4">
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label asp-for="Nome" class="info-label">Nome</label>
+                            <input asp-for="Nome" class="form-control" maxlength="120" required />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="DataEntrada" class="info-label">Data de Entrada</label>
+                            <input asp-for="DataEntrada" type="date" class="form-control" required />
+                            <span asp-validation-for="DataEntrada" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="Excluido" class="info-label">Excluido</label>
+                            <div class="form-check form-switch mt-2">
+                                <input asp-for="Excluido" class="form-check-input" role="switch" />
+                            </div>
+                            <span asp-validation-for="Excluido" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label class="info-label">Criado Em</label>
+                            <input class="form-control" value="@Model.CriadoEm.ToString("dd/MM/yyyy")" readonly />
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

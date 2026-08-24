@@ -99,7 +99,7 @@ public class UsuariosController : Controller
     public IActionResult Create()
     {
         var usuarioViewModel = new UsuarioViewModel();
-        var perfis = _context.Perfis.ToList();
+        var perfis = _context.Perfis.OrderBy(p => p.Nome).ToList();
         ViewBag.Perfis = perfis;
         return View(usuarioViewModel);
     }
@@ -138,7 +138,7 @@ public class UsuariosController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewBag.Perfis = _context.Perfis.ToList();
+        ViewBag.Perfis = _context.Perfis.OrderBy(p => p.Nome).ToList();
         return View(usuarioViewModel);
     }
 
@@ -160,7 +160,7 @@ public class UsuariosController : Controller
             return NotFound();
         }
 
-        ViewBag.Perfis = _context.Perfis.ToList();
+        ViewBag.Perfis = _context.Perfis.OrderBy(p => p.Nome).ToList();
 
         var usuarioViewModel = new UsuarioViewModel
         {

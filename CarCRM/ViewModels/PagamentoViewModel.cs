@@ -19,5 +19,7 @@ namespace CarCRM.ViewModels
         public int MetodoPagamentoId { get; set; }
 
         public MetodoPagamentoViewModel? MetodoPagamento { get; set; }
+        public int VeiculoId { get; set; }
+        public Veiculo? Veiculo { get; set; }
     }
 }

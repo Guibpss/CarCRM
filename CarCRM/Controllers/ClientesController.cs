@@ -155,7 +155,7 @@ public class ClientesController : Controller
                         }).ToList()
                 }
         };
-        ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+        ViewBag.telefonesTipo = _context.TelefonesTipo.OrderBy(p => p.Nome).ToList();
         return View(clienteViewModel);
     }
 
@@ -163,7 +163,7 @@ public class ClientesController : Controller
     public IActionResult Create()
     {
         var clienteViewModel = new ClienteViewModel();
-        var telefonesTipo = _context.TelefonesTipo.ToList();
+        var telefonesTipo = _context.TelefonesTipo.OrderBy(p => p.Nome).ToList();
         ViewBag.telefonesTipo = telefonesTipo;
         return View(new ClienteViewModel());
     }
@@ -178,13 +178,13 @@ public class ClientesController : Controller
         if (clienteViewModel.Pessoa == null)
         {
             ModelState.AddModelError(string.Empty, "Informe os dados da pessoa.");
-            ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+            ViewBag.telefonesTipo = _context.TelefonesTipo.OrderBy(p => p.Nome).ToList();
             return View(clienteViewModel);
         }
 
         if (!ModelState.IsValid)
         {
-            ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+            ViewBag.telefonesTipo = _context.TelefonesTipo.OrderBy(p => p.Nome).ToList();
             return View(clienteViewModel);
         }
 
@@ -258,7 +258,7 @@ public async Task<IActionResult> Edit(int? id)
             return NotFound();
         }
 
-        ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+        ViewBag.telefonesTipo = _context.TelefonesTipo.OrderBy(p => p.Nome).ToList();
 
         var clienteViewModel = new ClienteViewModel
         {
@@ -393,7 +393,7 @@ public async Task<IActionResult> Edit(int? id)
             return RedirectToAction(nameof(Index));
         }
 
-        ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+        ViewBag.telefonesTipo = _context.TelefonesTipo.OrderBy(p => p.Nome).ToList();
         return View(clienteViewModel);
     }
 
@@ -415,7 +415,7 @@ public async Task<IActionResult> Edit(int? id)
             return NotFound();
         }
 
-        ViewBag.telefonesTipo = _context.TelefonesTipo.ToList();
+        ViewBag.telefonesTipo = _context.TelefonesTipo.OrderBy(p => p.Nome).ToList();
 
         var clienteViewModel = new ClienteViewModel
         {

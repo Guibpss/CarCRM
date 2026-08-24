@@ -1,62 +1,183 @@
-﻿@model CarCRM.ViewModels.ServicoViewModel
+@model CarCRM.ViewModels.ServicoViewModel
 
 @{
-
     ViewData["Title"] = "Create";
 }
 
-<h1>Criar</h1>
-<h4>Serviço</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<style>
+    body {
+        background: #f4f6f9;
+    }
 
-            <div class="form-group">
-                <label class="control-label">Nome</label>
-                <input name="Nome" class="form-control" required/>
-            </div>
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
 
-            <div class="form-group">
-                <label class="control-label">Valor</label>
-                <input name="Valor" id="Valor" type="text" class="form-control" required/>
-            </div>
+    .card {
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
 
-            <div class="form-group">
-                <label class="control-label">Serviço</label>
-                @Html.DropDownList("servicoTipoId",
-                    new SelectList(ViewBag.ServicoTipos, "Id", "Nome"),
-                    "Selecione o Serviço",
-                    new { @class = "form-control" , required = "required"})
-            </div>
+    .card-header {
+        background: white;
+        border-bottom: 1px solid #ececec;
+        padding: 20px 30px;
+    }
 
-            <div class="form-group">
-                <label class="control-label">Cliente</label>
-                @Html.DropDownList("clienteId",
-                    new SelectList(ViewBag.Clientes, "Id", "Pessoa.Nome"),
-                    "Selecione o Cliente",
-                    new { @class = "form-control", required = "required" })
-            </div>
+    .card-body {
+        padding: 30px;
+    }
 
-            <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary"/>
-            </div>
-        </form>
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        font-weight: 600;
+    }
+
+    .info-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2f3640;
+    }
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+        background: #0d6efd15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #0d6efd;
+        margin-right: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <div>
+            <h2 class="page-title">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                Cadastrar Serviço
+            </h2>
+
+            <small class="text-muted">
+                Criação dos dados do serviço
+            </small>
+        </div>
+
+        <div>
+
+            <button type="submit" form="ServicoCreate" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i>
+                Criar
+            </button>
+
+            <a class="btn btn-secondary" asp-action="Index">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar
+            </a>
+
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Voltar</a>
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-wrench"></i>
+                </div>
+
+                Dados do Serviço
+
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" id="ServicoCreate">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-4">
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label asp-for="Nome" class="info-label">Nome</label>
+                            <input asp-for="Nome" class="form-control" maxlength="120" required />
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label class="info-label">Valor</label>
+                            <input name="Valor" id="Valor" type="text" inputmode="decimal"
+                                   placeholder="Ex.: 1.500,00" class="form-control" required />
+                            <span asp-validation-for="Valor" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="ServicoTipoId" class="info-label">Tipo de Serviço</label>
+                            <select asp-for="ServicoTipoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.ServicoTipos, "Id", "Nome"))">
+                                <option value="">Selecione o Tipo de Serviço</option>
+                            </select>
+                            <span asp-validation-for="ServicoTipoId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="ClienteId" class="info-label">Cliente</label>
+                            <select asp-for="ClienteId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Clientes, "Id", "Pessoa.Nome"))">
+                                <option value="">Selecione o Cliente</option>
+                            </select>
+                            <span asp-validation-for="ClienteId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
 </div>
 
 @section Scripts {
+
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#Valor').mask('#.##0,00', { reverse: true });
         });
     </script>
 
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 }

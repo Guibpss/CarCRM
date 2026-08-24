@@ -12,35 +12,35 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarCRM.styles.css" asp-append-version="true" />
     <style>
-        .footer-basic {
-        padding: 10px 0;
-        background-color: #f8f9fa;
-        color: white;
-        }
+            .footer-basic {
+                padding: 10px 0;
+                background-color: #f8f9fa;
+                color: white;
+            }
 
-        .footer-basic .copyright {
-        margin-top: 15px;
-        text-align: center;
-        font-size: 13px;
-        color: black;
-        margin-bottom: 0;
-        }
+                .footer-basic .copyright {
+                    margin-top: 15px;
+                    text-align: center;
+                    font-size: 13px;
+                    color: black;
+                    margin-bottom: 0;
+                }
 
-        .navbar-dark .nav-item .nav-link {
-        color: #fff;
-        }
+            .navbar-dark .nav-item .nav-link {
+                color: #fff;
+            }
 
-        .navbar-dark .nav-item .nav-link:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-        border-radius: 0.25rem;
-        color: #fff;
-        }
+                .navbar-dark .nav-item .nav-link:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    transition: all 0.3s ease;
+                    border-radius: 0.25rem;
+                    color: #fff;
+                }
 
-        .fa-li {
-        position: relative;
-        left: 0;
-        }
+            .fa-li {
+                position: relative;
+                left: 0;
+            }
     </style>
 </head>
 <body>
@@ -60,52 +60,45 @@
                 <!-- Collapsible wrapper -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left links -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        @{
-                            var isLogin = ViewContext.RouteData.Values["controller"]?.ToString() == "Home"
-                                       && ViewContext.RouteData.Values["action"]?.ToString() == "Index";
+                    @{
+                        var isLogin = ViewContext.RouteData.Values["controller"]?.ToString() == "Home"
+                                   && ViewContext.RouteData.Values["action"]?.ToString() == "Index";
+                    }
 
-                            if (!isLogin)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuário</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Perfils" asp-action="Index">Perfil</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Cargos" asp-action="Index">Cargo</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Clientes" asp-action="Index">Cliente</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Estoques" asp-action="Index">Estoque</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Veiculos" asp-action="Index">Veiculo</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Vendas" asp-action="Index">Venda</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Servicos" asp-action="Index">Serviço</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="StatusPagamentos" asp-action="Index">Status de Pagamento</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="MetodoPagamento" asp-action="Index">Metodo de Pagamento</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Pagamento" asp-action="Index">Pagamento</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="StatusVendas" asp-action="Index">Status de Vendas</a>
-                                </li>
-                            }
+                    <!-- Left links -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        @if (!isLogin)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="menuCadastros" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">Cadastros</a>
+                                <ul class="dropdown-menu" aria-labelledby="menuCadastros">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuário</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Clientes" asp-action="Index">Cliente</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="menuOperacoes" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">Operações</a>
+                                <ul class="dropdown-menu" aria-labelledby="menuOperacoes">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Estoques" asp-action="Index">Estoque</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Veiculos" asp-action="Index">Veículo</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Vendas" asp-action="Index">Venda</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Servicos" asp-action="Index">Serviço</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="menuPagamentos" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">Pagamentos</a>
+                                <ul class="dropdown-menu" aria-labelledby="menuPagamentos">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Pagamento" asp-action="Index">Pagamento</a></li>
+                                </ul>
+                            </li>
                         }
                     </ul>
+                    <!-- Left links -->
                     <!-- Left links -->
                     <!-- Right elements -->
                     @if (!isLogin)
@@ -148,7 +141,7 @@
             </div>
         </nav>
         <!-- Navbar -->
-        
+
     </header>
     <div class="container">
 
@@ -171,8 +164,8 @@
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/validation-pt-BR.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    
 
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
