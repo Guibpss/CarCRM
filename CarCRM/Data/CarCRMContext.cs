@@ -38,17 +38,21 @@ namespace CarCRM.Data
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<Comissao> Comissoes { get; set; }
+        public DbSet<Compra> Compras { get; set; }
         public DbSet<Estoque> Estoques { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<FornecedorTipo> FornecedorTipos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<MetodoPagamento> MetodosPagamento { get; set; }
         public DbSet<Pagamento> Pagamentos { get; set; }
+        public DbSet<PagamentoVenda> PagamentoVendas { get; set; }
+        public DbSet<PagamentoCompra> PagamentoCompras { get; set; }
         public DbSet<Perfil> Perfis {  get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<PessoaFisica> PessoasFisica { get; set; }
         public DbSet<PessoaJuridica> PessoasJuridica { get; set; }
         public DbSet<StatusComissao> StatusComissoes { get; set; }
+        public DbSet<StatusCompra> StatusCompras { get; set; }
         public DbSet<StatusEstoque> StatusEstoques { get; set; }
         public DbSet<StatusPagamento> StatusPagamentos { get; set; }
         public DbSet<StatusVenda> StatusVendas { get; set; }

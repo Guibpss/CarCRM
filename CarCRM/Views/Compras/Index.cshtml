@@ -1,0 +1,197 @@
+﻿@model IEnumerable<CarCRM.ViewModels.CompraViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .card {
+        border: 0;
+        border-radius: 18px;
+    }
+
+    .card-header {
+        background: #fff;
+        border-bottom: 1px solid #eee;
+        padding: 20px 30px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .icon-box {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0d6efd15;
+        color: #0d6efd;
+    }
+
+    .table th {
+        font-size: 13px;
+        text-transform: uppercase;
+        color: #888;
+        border-top: none;
+    }
+
+    .table td {
+        padding: 18px;
+        vertical-align: middle;
+    }
+
+    .table tbody tr:hover {
+        background: #f8fbff;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+    }
+</style>
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="page-title">
+                <i class="fa-solid fa-file-invoice-dollar text-primary"></i>
+                Compras
+            </h2>
+
+            <small class="text-muted">
+                Gerencie todas as compras cadastradas.
+            </small>
+
+        </div>
+
+        <div>
+
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i>
+                Nova Compra
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+
+                Compras Cadastradas
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <table id="compraListaId" class="table table-hover align-middle js-datatable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Data</th>
+                        <th>Vendedor</th>
+                        <th>Veiculo Placa</th>
+                        <th>Valor</th>
+                        <th>Desconto</th>
+                        <th>Valor Final</th>
+                        <th>Status</th>
+                        <th class="text-center no-sort" data-priority="1">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="fw-semibold">
+                                    @item.DataCompra.ToString("dd/MM/yyyy")
+                                </span>
+                            </td>
+
+                            <td>
+                                @item.Vendedor.Nome
+                            </td>
+
+                            <td>
+                                @item.Veiculo.Placa
+                            </td>
+
+                            <td>
+                                R$ @String.Format("{0:N2}", item.ValorCompra)
+                            </td>
+
+                            <td>
+                                R$ @String.Format("{0:N2}", item.Desconto)
+                            </td>
+                               
+                            <td>
+                                <span class="fw-semibold">
+                                    R$ @String.Format("{0:N2}", item.ValorFinal)
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="badge bg-primary">
+                                    @item.StatusCompra.Nome
+                                </span>
+                            </td>
+
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-1 flex-nowrap">
+                                    <a asp-action="Details"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-primary btn-sm"
+                                       title="Detalhes">
+                                       <i class="fa-solid fa-eye"></i>
+                                    </a>
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-warning btn-sm"
+                                       title="Editar">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-danger btn-sm"
+                                       title="Excluir">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

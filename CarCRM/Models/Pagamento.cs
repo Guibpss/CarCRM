@@ -17,7 +17,6 @@
         public int MetodoPagamentoId { get; set; }
 
         public MetodoPagamento? MetodoPagamento { get; set; }
-        public int VeiculoId { get; set; }
-        public Veiculo? Veiculo { get; set; }
+       
     }
 }

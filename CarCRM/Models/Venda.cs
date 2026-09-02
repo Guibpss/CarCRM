@@ -12,13 +12,9 @@
 
         public Cliente Cliente { get; set; }
 
-        public int VendedorId { get; set; }
+        public int VeiculoId { get; set; }
 
-        public Usuario Vendedor { get; set; }
-
-        //public int FuncionarioId { get; set; }
-
-        //public Funcionario Funcionario { get; set; }
+        public Veiculo Veiculo { get; set; }
 
         public int StatusVendaId { get; set; }
         
@@ -31,5 +27,7 @@
                 return ValorVenda - Desconto;
             } 
         }
+
+        public virtual ICollection<Pagamento>? Pagamentos { get; set; }
     }
 }

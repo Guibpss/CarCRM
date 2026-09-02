@@ -154,12 +154,12 @@
 
                     <div class="col-lg-3">
                         <div class="form-group">
-                            <label asp-for="VendedorId" class="info-label">Vendedor</label>
-                            <select asp-for="VendedorId" class="form-select"
-                                    asp-items="@(new SelectList(ViewBag.vendedores, "Id", "Nome"))">
-                                <option value="">Selecione o Vendedor</option>
+                            <label asp-for="VeiculoId" class="info-label">Veiculo</label>
+                            <select asp-for="VeiculoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.veiculos, "Id", "Placa"))">
+                                <option value="">Selecione o Veiculo</option>
                             </select>
-                            <span asp-validation-for="VendedorId" class="text-danger"></span>
+                            <span asp-validation-for="VeiculoId" class="text-danger"></span>
                         </div>
                     </div>
 

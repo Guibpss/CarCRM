@@ -1,4 +1,4 @@
-﻿
+﻿@model CarCRM.ViewModels.PerfilViewModel
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -89,7 +89,7 @@
 					<hr>
 				</div>
 				<!-- INÍCIO do formulário -->
-				<form class="file-upload">
+				<form class="file-upload" asp-action="EditarPerfil" asp-controller="Home" enctype="multipart/form-data" method="post">
 					<div class="row mb-4 gx-5">
 						<!-- Dados de contato -->
 						<div class="col-xxl-8 mb-5 mb-xxl-0">
@@ -157,10 +157,11 @@
 									<div class="text-center">
 										<!-- Envio da imagem -->
 										<div class="square position-relative display-2 mb-3">
-											<i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i>
+											@* <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i> *@
+										<img width="200" height="200" id="imgUsuario" src="" />
 										</div>
 										<!-- Botões -->
-										<input type="file" id="customFile" name="file" hidden="">
+										<input type="file" id="customFile" name="FotoPerfil" hidden="">
 										<label class="btn btn-success-soft btn-block" for="customFile">Enviar</label>
 										<button type="button" class="btn btn-danger-soft">Remover</button>
 										<!-- Texto de apoio -->
@@ -172,7 +173,7 @@
 					</div> <!-- FIM da row -->		
 					<!-- Botões de ação -->
 					<div class="gap-3 d-md-flex justify-content-md-start text-start">
-						<button type="button" class="btn btn-primary">Atualizar perfil</button>
+						<button type="submit" class="btn btn-primary">Atualizar perfil</button>
 					</div>
 				</form> <!-- FIM do formulário -->
 			</div>

@@ -58,6 +58,9 @@ namespace CarCRM.ViewModels
         [Range(1, int.MaxValue, ErrorMessage = "Selecione a Versão")]
         public int VeiculoVersaoId { get; set; }
         public VeiculoVersaoViewModel? VeiculoVersao { get; set; }
-        public List<PagamentoViewModel> Pagamentos { get; set; } = new();
+        public CompraViewModel? Compra { get; set; } = new();
+        public VendaViewModel? Venda { get; set; } = new();
+        public List<PagamentoViewModel>? PagamentosCompra { get; set; } = new();
+        public List<PagamentoViewModel>? PagamentosVenda { get; set; } = new();
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -100,6 +100,17 @@ namespace CarCRM.Controllers
             ViewBag.StatusPagamento = statusPagamento;
             ViewBag.MetodoPagamento = metodoPagamento;
 
+            ViewBag.vendedores = _context.Usuarios.OrderBy(c => c.Nome).ToList();
+            ViewBag.veiculos = _context.Veiculos.ToList();
+            ViewBag.statuscompras = _context.StatusCompras.OrderBy(c => c.Nome).ToList();
+
+            ViewBag.clientes = _context.Clientes
+                .Include(c => c.Pessoa)
+                .OrderBy(c => c.Pessoa.Nome)
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Pessoa.Nome })
+                .ToList();
+            ViewBag.statusvendas = _context.StatusVendas.OrderBy(s => s.Nome).ToList();
+
             if (id == null)
             {
                 return NotFound();
@@ -120,13 +131,21 @@ namespace CarCRM.Controllers
                 return NotFound();
             }
 
-            var pagamentos = await _context.Pagamentos
-                .Include(p => p.MetodoPagamento)
-                .Include(p => p.StatusPagamento)
-                .Where(p => p.VeiculoId == id)
-                .OrderBy(p => p.DataVencimento)
-                .ToListAsync();
+            var compra = _context.Compras
+                .Include(c => c.Vendedor)
+                .Include(c => c.StatusCompra)
+                .Include(c => c.Pagamentos)
+                .Where(c => c.VeiculoId == id)
+                .FirstOrDefault();
 
+            var venda = _context.Vendas
+                .Include(v => v.Cliente)
+                    .ThenInclude(c => c.Pessoa)
+                .Include(v => v.StatusVenda)
+                .Include(v => v.Pagamentos)
+                .Where(v => v.VeiculoId == id)
+                .FirstOrDefault();
+            
             var veiculoViewModel = new VeiculoViewModel
             {
                 Id = veiculo.Id,
@@ -177,8 +196,40 @@ namespace CarCRM.Controllers
                     Nome = veiculo.VeiculoVersao.Nome
                 },
                 CriadoEm = veiculo.CriadoEm,
-                Excluido = veiculo.Excluido,
-                Pagamentos = pagamentos.Select(p => new PagamentoViewModel
+                Excluido = veiculo.Excluido,                                
+            };
+
+            if(compra != null)
+            {
+                veiculoViewModel.Compra = new CompraViewModel
+                {
+                    Id = compra.Id,
+                    CriadoEm = compra.CriadoEm,
+                    Excluido = compra.Excluido,
+                    DataCompra = compra.DataCompra,
+                    ValorCompra = compra.ValorCompra,
+                    Desconto = compra.Desconto,
+                    VendedorId = compra.VendedorId,
+                    Vendedor = new UsuarioViewModel
+                    {
+                        Id = compra.Vendedor.Id,
+                        Nome = compra.Vendedor.Nome,
+                    },
+                    VeiculoId = compra.VeiculoId,
+                    Veiculo = new VeiculoViewModel
+                    {
+                        Id = compra.Veiculo.Id,
+                        Placa = compra.Veiculo.Placa,
+                    },
+                    StatusCompraId = compra.StatusCompraId,
+                    StatusCompra = new StatusCompraViewModel
+                    {
+                        Id = compra.StatusCompra.Id,
+                        Nome = compra.StatusCompra.Nome,
+                    }
+                };
+
+                veiculoViewModel.PagamentosCompra = compra.Pagamentos == null ? null : compra.Pagamentos.Select(p => new PagamentoViewModel
                 {
                     Id = p.Id,
                     Valor = p.Valor,
@@ -197,9 +248,66 @@ namespace CarCRM.Controllers
                         Id = p.StatusPagamento.Id,
                         Nome = p.StatusPagamento.Nome,
                     }
-                }).ToList()
-            };
+                }).ToList();
+            }
 
+            if(venda != null)
+            {
+                veiculoViewModel.Venda = new VendaViewModel
+                {
+                    Id = venda.Id,
+                    CriadoEm = venda.CriadoEm,
+                    Excluido = venda.Excluido,
+                    DataVenda = venda.DataVenda,
+                    ValorVenda = venda.ValorVenda,
+                    Desconto = venda.Desconto,
+                    ClienteId = venda.ClienteId,
+                    Cliente = new ClienteViewModel
+                    {
+                        Id = venda.Cliente.Id,
+                        PessoaId = venda.Cliente.PessoaId,
+                        Pessoa = new PessoaViewModel
+                        {
+                            Id = venda.Cliente.Pessoa.Id,
+                            Nome = venda.Cliente.Pessoa.Nome,
+                            Email = venda.Cliente.Pessoa.Email,
+                        }
+                    },
+                    VeiculoId = venda.VeiculoId,
+                    Veiculo = new VeiculoViewModel
+                    {
+                        Id = veiculo.Id,
+                        Placa = veiculo.Placa,
+                    },
+                    StatusVendaId = venda.StatusVendaId,
+                    StatusVenda = new StatusVendaViewModel
+                    {
+                        Id = venda.StatusVenda.Id,
+                        Nome = venda.StatusVenda.Nome,
+                    }
+                };
+
+                veiculoViewModel.PagamentosVenda = venda.Pagamentos == null ? null : venda.Pagamentos.Select(p => new PagamentoViewModel
+                {
+                    Id = p.Id,
+                    Valor = p.Valor,
+                    Parcelas = p.Parcelas,
+                    DataVencimento = p.DataVencimento,
+                    DataPagamento = p.DataPagamento,
+                    MetodoPagamentoId = p.MetodoPagamentoId,
+                    MetodoPagamento = new MetodoPagamentoViewModel
+                    {
+                        Id = p.MetodoPagamento.Id,
+                        Nome = p.MetodoPagamento.Nome,
+                    },
+                    StatusPagamentoId = p.StatusPagamentoId,
+                    StatusPagamento = new StatusPagamentoViewModel
+                    {
+                        Id = p.StatusPagamento.Id,
+                        Nome = p.StatusPagamento.Nome,
+                    }
+                }).ToList();
+            }
 
 
             return View(veiculoViewModel);
@@ -544,8 +652,8 @@ namespace CarCRM.Controllers
         {
             return _context.Veiculos.Any(e => e.Id == id);
         }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult AdicionarPagamento(PagamentoViewModel pagamentoViewModel)
         {
             if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
@@ -555,7 +663,7 @@ namespace CarCRM.Controllers
             }
 
             var pagamento = new Pagamento();
-            pagamento.VeiculoId = pagamentoViewModel.VeiculoId;
+            //pagamento.VeiculoId = pagamentoViewModel.VeiculoId;
             pagamento.Valor = pagamentoViewModel.Valor;
             pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
             pagamento.DataPagamento = pagamentoViewModel.DataPagamento;
@@ -571,9 +679,112 @@ namespace CarCRM.Controllers
             return Content(JsonConvert.SerializeObject(retorno), "application/json");
         }
 
+        public IActionResult AdicionarPagamentoCompra(PagamentoViewModel pagamentoViewModel)
+        {
+            if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor e método de pagamento" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var pagamento = new Pagamento();
+            pagamento.Valor = pagamentoViewModel.Valor;
+            pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
+            pagamento.DataPagamento = pagamentoViewModel.DataPagamento;
+            pagamento.Parcelas = pagamentoViewModel.Parcelas;
+            pagamento.MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId;
+            pagamento.StatusPagamentoId = pagamentoViewModel.StatusPagamentoId;
+            pagamento.CriadoEm = DateTime.Now;
+
+            _context.Pagamentos.Add(pagamento);
+            _context.SaveChanges();
+
+            var compra = _context.Compras.Where(c => c.VeiculoId == pagamentoViewModel.VeiculoId).FirstOrDefault();
+            var pagamentoCompra = new PagamentoCompra();
+            pagamentoCompra.CompraId = compra.Id;
+            pagamentoCompra.PagamentoId = pagamento.Id;
+            _context.PagamentoCompras.Add(pagamentoCompra);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento cadastrado com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        public IActionResult AdicionarCompra(CompraViewModel compraViewModel)
+        {
+            if (compraViewModel.ValorCompra == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var compra = new Compra();
+            compra.VeiculoId = compraViewModel.VeiculoId;
+            compra.DataCompra = compraViewModel.DataCompra;
+            compra.VendedorId = compraViewModel.VendedorId;
+            compra.StatusCompraId = compraViewModel.StatusCompraId;
+            compra.ValorCompra = compraViewModel.ValorCompra;
+            compra.Desconto = compraViewModel.Desconto;
+            compra.CriadoEm = DateTime.Now;
+
+            _context.Compras.Add(compra);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Compra cadastrada com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        public IActionResult ConsultarPagamentoPorId(int id)
+        {
+            var pagamento = _context.Pagamentos.Find(id);
+            if (pagamento == null)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Não foi possível localizar o pagamento" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var resultado = new
+            {
+                Id = pagamento.Id,
+                Valor = pagamento.Valor,
+                Parcelas = pagamento.Parcelas,
+                DataVencimento = pagamento.DataVencimento.ToString("yyyy-MM-dd"),
+                DataPagamento = pagamento.DataPagamento == default
+            ? "" : pagamento.DataPagamento.ToString("yyyy-MM-dd"),
+                StatusPagamentoId = pagamento.StatusPagamentoId,
+                MetodoPagamentoId = pagamento.MetodoPagamentoId
+            };
+
+            var retorno = new { Sucesso = true, Resultado = resultado };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        public IActionResult ConsultarCompraPorId(int id)
+        {
+            var compra = _context.Compras.Find(id);
+            if (compra == null)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Não foi possível localizar a compra" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var resultado = new
+            {
+                Id = compra.Id,
+                DataCompra = compra.DataCompra.ToString("yyyy-MM-dd"),
+                VeiculoId = compra.VeiculoId,
+                VendedorId = compra.VendedorId,
+                StatusCompraId = compra.StatusCompraId,
+                ValorCompra = compra.ValorCompra
+            };
+
+            var retorno = new { Sucesso = true, Resultado = resultado };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> EditarPagamento(PagamentoViewModel pagamentoViewModel)
         {
             if (pagamentoViewModel.Id == 0)
@@ -597,7 +808,7 @@ namespace CarCRM.Controllers
                 return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
             }
 
-            pagamento.VeiculoId = pagamentoViewModel.VeiculoId;
+            //pagamento.VeiculoId = pagamentoViewModel.VeiculoId;
             pagamento.Valor = pagamentoViewModel.Valor;
             pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
             pagamento.DataPagamento = pagamentoViewModel.DataPagamento;
@@ -611,8 +822,45 @@ namespace CarCRM.Controllers
             var retorno = new { Sucesso = true, Mensagem = "Pagamento cadastrado com sucesso!" };
             return Content(JsonConvert.SerializeObject(retorno), "application/json");
         }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarCompra(CompraViewModel compraViewModel)
+        {
+            if (compraViewModel.Id == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Compra Inválida." };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            if (compraViewModel.ValorCompra == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor da compra" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+
+            var compra = await _context.Compras.FirstOrDefaultAsync(p => p.Id == compraViewModel.Id);
+
+            if (compra == null)
+            {
+                var erroNaoEncontrado = new { Sucesso = false, Mensagem = "Compra não encontrada." };
+                return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
+            }
+
+            compra.DataCompra = compraViewModel.DataCompra;
+            compra.VendedorId = compraViewModel.VendedorId;
+            compra.StatusCompraId = compraViewModel.StatusCompraId;
+            compra.ValorCompra = compraViewModel.ValorCompra;
+            compra.Desconto = compraViewModel.Desconto;
+
+            _context.Update(compra);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Compra editada com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> ExcluirPagamento(int? id, int veiculoId)
         {
             if (id == null)
@@ -631,6 +879,134 @@ namespace CarCRM.Controllers
             _context.SaveChangesAsync();
 
             var retorno = new { Sucesso = true, Mensagem = "Pagamento excluído com sucesso!" };
+            return RedirectToAction("Details", new { id = veiculoId });
+        }
+
+        public async Task<IActionResult> ExcluirCompra(int? id, int veiculoId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var compra = await _context.Compras.FindAsync(id);
+
+            if (compra == null)
+            {
+                return NotFound();
+            }
+
+            _context.Compras.Remove(compra);
+            _context.SaveChangesAsync();
+
+            var retorno = new { Sucesso = true, Mensagem = "Compra excluída com sucesso!" };
+            return RedirectToAction("Details", new { id = veiculoId });
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarVenda(VendaViewModel vendaViewModel)
+        {
+            if (vendaViewModel.ValorVenda == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var venda = new Venda();
+            venda.VeiculoId = vendaViewModel.VeiculoId;
+            venda.DataVenda = vendaViewModel.DataVenda;
+            venda.ClienteId = vendaViewModel.ClienteId;
+            venda.StatusVendaId = vendaViewModel.StatusVendaId;
+            venda.ValorVenda = vendaViewModel.ValorVenda;
+            venda.Desconto = vendaViewModel.Desconto;
+            venda.CriadoEm = DateTime.Now;
+
+            _context.Vendas.Add(venda);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Venda cadastrada com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        public IActionResult ConsultarVendaPorId(int id)
+        {
+            var venda = _context.Vendas.Find(id);
+            if (venda == null)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Não foi possível localizar a venda" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var resultado = new
+            {
+                Id = venda.Id,
+                DataVenda = venda.DataVenda.ToString("yyyy-MM-dd"),
+                VeiculoId = venda.VeiculoId,
+                ClienteId = venda.ClienteId,
+                StatusVendaId = venda.StatusVendaId,
+                ValorVenda = venda.ValorVenda.ToString("N2"),
+                Desconto = venda.Desconto.ToString("N2")
+            };
+
+            var retorno = new { Sucesso = true, Resultado = resultado };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditarVenda(VendaViewModel vendaViewModel)
+        {
+            if (vendaViewModel.Id == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Venda Inválida." };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            if (vendaViewModel.ValorVenda == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor da venda" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var venda = await _context.Vendas.FirstOrDefaultAsync(v => v.Id == vendaViewModel.Id);
+
+            if (venda == null)
+            {
+                var erroNaoEncontrado = new { Sucesso = false, Mensagem = "Venda não encontrada." };
+                return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
+            }
+
+            venda.VeiculoId = vendaViewModel.VeiculoId;
+            venda.DataVenda = vendaViewModel.DataVenda;
+            venda.ClienteId = vendaViewModel.ClienteId;
+            venda.StatusVendaId = vendaViewModel.StatusVendaId;
+            venda.ValorVenda = vendaViewModel.ValorVenda;
+            venda.Desconto = vendaViewModel.Desconto;
+
+            _context.Update(venda);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Venda editada com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExcluirVenda(int? id, int veiculoId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var venda = await _context.Vendas.FindAsync(id);
+
+            if (venda == null)
+            {
+                return NotFound();
+            }
+
+            _context.Vendas.Remove(venda);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction("Details", new { id = veiculoId });
         }
     }

@@ -8,5 +8,6 @@ namespace CarCRM.ViewModels
 
         [Required(ErrorMessage = "O campo Nome é obrigatório")]
         public string Nome { get; set; }
+        public IFormFile FotoPerfil { get; set; }
     }
 }

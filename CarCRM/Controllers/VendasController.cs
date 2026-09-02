@@ -21,7 +21,7 @@ public class VendasController : Controller
         var carCRMContext = _context.Vendas
             .Include(v => v.Cliente)
                 .ThenInclude(c => c.Pessoa)
-            .Include(v => v.Vendedor)
+            .Include(v => v.Veiculo)
             .Include(v => v.StatusVenda);
         var vendas = await carCRMContext.ToListAsync();
         var vendasViewModel = vendas.Select(v => 
@@ -51,11 +51,11 @@ public class VendasController : Controller
                             Email = v.Cliente.Pessoa.Email
                         }
                 },
-                VendedorId = v.VendedorId,
-                Vendedor = new UsuarioViewModel
+                VeiculoId = v.VeiculoId,
+                Veiculo = new VeiculoViewModel
                 {
-                    Id = v.Vendedor.Id,
-                    Nome = v.Vendedor.Nome
+                    Id = v.Veiculo.Id,
+                    Placa = v.Veiculo.Placa
                 },
                 StatusVendaId = v.StatusVenda.Id,
                 StatusVenda = new StatusVendaViewModel
@@ -79,7 +79,7 @@ public class VendasController : Controller
         var venda = await _context.Vendas
             .Include(v => v.Cliente)
                 .ThenInclude(c => c.Pessoa)
-            .Include(v => v.Vendedor)
+            .Include(v => v.Veiculo)
             .Include(v => v.StatusVenda)
             .FirstOrDefaultAsync(v => v.Id == id);
 
@@ -115,11 +115,11 @@ public class VendasController : Controller
                         Email = venda.Cliente.Pessoa.Email
                     }
             },
-            VendedorId = venda.VendedorId,
-            Vendedor = new UsuarioViewModel
+            VeiculoId = venda.VeiculoId,
+            Veiculo = new VeiculoViewModel
             {
-                Id = venda.Vendedor.Id,
-                Nome = venda.Vendedor.Nome
+                Id = venda.Veiculo.Id,
+                Placa = venda.Veiculo.Placa
             },
             StatusVendaId = venda.StatusVendaId,
             StatusVenda = new StatusVendaViewModel
@@ -154,7 +154,7 @@ public class VendasController : Controller
                 Desconto = vendaViewModel.Desconto,
                 Excluido = vendaViewModel.Excluido,
                 ClienteId = vendaViewModel.ClienteId,
-                VendedorId = vendaViewModel.VendedorId,
+                VeiculoId = vendaViewModel.VeiculoId,
                 StatusVendaId = vendaViewModel.StatusVendaId
             };
 
@@ -180,7 +180,7 @@ public class VendasController : Controller
         var venda = await _context.Vendas
                 .Include(v => v.Cliente)
                     .ThenInclude(c => c.Pessoa)
-                .Include(v => v.Vendedor)
+                .Include(v => v.Veiculo)
                 .Include(v => v.StatusVenda)
                 .FirstOrDefaultAsync(v => v.Id == id);
 
@@ -193,6 +193,7 @@ public class VendasController : Controller
 
         var vendaViewModel = new VendaViewModel
         {
+            Id = venda.Id,
             DataVenda = venda.DataVenda,
             ValorVenda = venda.ValorVenda,
             Desconto = venda.Desconto,
@@ -219,11 +220,11 @@ public class VendasController : Controller
 
             },
 
-            VendedorId = venda.VendedorId,
-            Vendedor = new UsuarioViewModel
+            VeiculoId = venda.VeiculoId,
+            Veiculo = new VeiculoViewModel
             {
-                Id = venda.Vendedor.Id,
-                Nome = venda.Vendedor.Nome
+                Id = venda.Veiculo.Id,
+                Placa = venda.Veiculo.Placa
             },
             StatusVendaId = venda.StatusVendaId,
             StatusVenda = new StatusVendaViewModel
@@ -262,7 +263,7 @@ public class VendasController : Controller
                 venda.ValorVenda = vendaViewModel.ValorVenda;
                 venda.Desconto = vendaViewModel.Desconto;
                 venda.ClienteId = vendaViewModel.ClienteId;
-                venda.VendedorId = vendaViewModel.VendedorId;
+                venda.VeiculoId = vendaViewModel.VeiculoId;
                 venda.StatusVendaId = vendaViewModel.StatusVendaId;
 
                 _context.Update(venda);
@@ -273,6 +274,7 @@ public class VendasController : Controller
                 if (!VendaExists(vendaViewModel.Id)) return NotFound();
                 else throw;
             }
+            return RedirectToAction(nameof(Index));
         }
         CarregarDropdowns();
         return View(vendaViewModel);
@@ -289,7 +291,7 @@ public class VendasController : Controller
         var venda = await _context.Vendas
             .Include(v => v.Cliente)
                 .ThenInclude(c => c.Pessoa)
-            .Include(v => v.Vendedor)
+            .Include(v => v.Veiculo)
             .Include(v => v.StatusVenda)
             .FirstOrDefaultAsync(v => v.Id == id);
 
@@ -326,11 +328,11 @@ public class VendasController : Controller
 
             },
 
-            VendedorId = venda.VendedorId,
-            Vendedor = new UsuarioViewModel
+            VeiculoId = venda.VeiculoId,
+            Veiculo = new VeiculoViewModel
             {
-                Id = venda.Vendedor.Id,
-                Nome = venda.Vendedor.Nome
+                Id = venda.Veiculo.Id,
+                Placa = venda.Veiculo.Placa
             },
             StatusVendaId = venda.StatusVendaId,
             StatusVenda = new StatusVendaViewModel
@@ -366,7 +368,7 @@ public class VendasController : Controller
     private void CarregarDropdowns()
     {
         ViewBag.Clientes = _context.Clientes.Include(c => c.Pessoa).OrderBy(p => p.Pessoa.Nome).ToList();
-        ViewBag.vendedores = _context.Usuarios.OrderBy(p => p.Nome).ToList();
+        ViewBag.veiculos = _context.Veiculos.ToList();
         ViewBag.StatusVendas = _context.StatusVendas.OrderBy(p => p.Nome).ToList();
     }
 }

@@ -108,6 +108,7 @@ public class PagamentoController : Controller
         {
             var pagamento = new Pagamento
             {
+
                 Valor = pagamentoViewModel.Valor,
                 Parcelas = pagamentoViewModel.Parcelas,
                 DataVencimento = pagamentoViewModel.DataVencimento,

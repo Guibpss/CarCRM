@@ -1,10 +1,50 @@
-@model CarCRM.ViewModels.VeiculoViewModel
+﻿@model CarCRM.ViewModels.VeiculoViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <style>
+    .carousel {
+        margin: 2rem 10px;
+    }
+
+    .carousel-inner {
+        width: 74%;
+        margin: auto;
+    }
+
+    .carousel-item {
+        width: 100%;
+        height: 400px;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .img1 {
+        background-image: url("https://images.unsplash.com/photo-1426604966848-d7adac402bff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    }
+
+    .img2 {
+        background-image: url("https://images.unsplash.com/photo-1524684463181-5857e5b6f856?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    }
+
+    .img3 {
+        background-image: url("https://plus.unsplash.com/premium_photo-1676385777209-1d435cc69c5a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    }
+
+    .carousel-indicators {
+        bottom: -3rem;
+    }
+
+        .carousel-indicators button {
+            background-color: black !important;
+            border-radius: 50%;
+            width: 0.5rem !important;
+            height: 0.5rem !important;
+            display: block;
+        }
+
     body {
         background: #f4f6f9;
     }
@@ -71,7 +111,34 @@
         padding: 8px 14px;
     }
 </style>
-<div class="container py-5">
+<section class="car">
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active img1">
+            </div>
+            <div class="carousel-item img2">
+            </div>
+            <div class="carousel-item img3">
+            </div>
+        </div>
+
+        <button class="carousel-control-prev  text-dark display-6" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <i class="bi bi-arrow-left-circle"></i>
+        </button>
+        <button class="carousel-control-next text-dark display-6" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <i class="bi bi-arrow-right-circle"></i>
+        </button>
+    </div>
+
+</section>
+
+<div class="container py-4">
 
     <div class="d-flex justify-content-between mb-4">
 
@@ -196,75 +263,615 @@
     </div>
 </div>
 
-<div class="modal fade" id="pagamentoModal" tabindex="-1" aria-labelledby="pagamentoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-                <h1 class="modal-title fs-5" id="pagamentoModalLabel">Adicionar Pagamento</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form asp-action="Create" id="PagamentoCreate">
-                <div class="row g-3">
+<div class="container-fluid py-5">
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="info-label">Valor</label>
-                            <input name="Valor" id="Valor" type="text" class="form-control" />
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="page-title">
+                <i class="fa-solid fa-file-invoice-dollar text-primary"></i>
+                Compras
+            </h2>
+
+            <small class="text-muted">
+                Gerencie todas as compras cadastradas.
+            </small>
+
+        </div>
+
+        @if (Model.Compra != null)
+        {
+            <div>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#compraModal">
+                    <i class="fa-solid fa-plus"></i>
+                    Adicionar Compra
+                </button>
+            </div>
+        }
+
+       
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+
+                Compras Cadastradas
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <table id="compraListaId" class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Data</th>
+                        <th>Vendedor</th>
+                        <th>Valor</th>
+                        <th>Desconto</th>
+                        <th>Valor Final</th>
+                        <th>Status</th>
+                        <th class="text-center no-sort" data-priority="1">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <span class="fw-semibold">
+                                @Model.Compra?.DataCompra.ToString("dd/MM/yyyy")
+                            </span>
+                        </td>
+
+                        <td>
+                            @Model.Compra?.Vendedor?.Nome
+                        </td>
+
+                        <td>
+                            R$ @String.Format("{0:N2}", @Model.Compra?.ValorCompra)
+                        </td>
+
+                        <td>
+                            R$ @String.Format("{0:N2}", @Model.Compra?.Desconto)
+                        </td>
+
+                        <td>
+                            <span class="fw-semibold">
+                                R$ @String.Format("{0:N2}", @Model.Compra?.ValorFinal)
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge bg-primary">
+                                @Model.Compra?.StatusCompra?.Nome
+                            </span>
+                        </td>
+
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-1 flex-nowrap">
+
+                                <a href="#"
+                                   class="btn btn-outline-warning btn-sm btn-editar-compra"
+                                   data-bs-toggle="modal-edit-compra"
+                                   data-bs-target="#compraModalEdit"
+                                   data-id="@Model?.Compra?.Id"
+                                   title="Editar">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+
+                                <button type="button"
+                                        class="btn btn-outline-danger btn-sm btn-excluir-compra"
+                                        data-id="@Model?.Compra?.Id"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#compraModalDelete"
+                                        title="Excluir">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="compraModal" tabindex="-1" aria-labelledby="compraModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="compraModalLabel">Adicionar Compra</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" id="CompraCreate">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-4">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Data da Compra</label>
+                                <input name="DataCompra" id="DataCompra" type="date" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Vendedor</label>
+                                @Html.DropDownList("VendedorId",
+                                      new SelectList(ViewBag.vendedores, "Id", "Nome"),
+                                        "Selecione",
+                                      new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("StatusCompraId",
+                                      new SelectList(ViewBag.statuscompras, "Id", "Nome"),
+                                        "Selecione",
+                                      new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Valor da Compra</label>
+                                <input name="ValorCompra" id="ValorCompra" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 15.000,50" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Desconto</label>
+                                <input name="Desconto" id="Desconto" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="adicionarCompra()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="compraModalEdit" tabindex="-1" aria-labelledby="compraModalLabelEdit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="compraModalLabelEdit">Editar Compra</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card-body">
+
+                <form asp-action="Edit" id="CompraEditar">
+                    <input type="hidden" id="CompraEdit_Id" />
+
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="info-label">Data da Compra</label>
+                                <input name="DataCompra" id="CompraEdit_Data" type="date" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="info-label">Vendedor</label>
+                                @Html.DropDownList("edit_VendedorId",
+                                        new SelectList(ViewBag.vendedores, "Id", "Nome"),
+                                        "Selecione",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("edit_StatusCompraId",
+                                        new SelectList(ViewBag.statuscompras, "Id", "Nome"),
+                                        "Selecione",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="info-label">Valor da Compra</label>
+                                <input name="ValorCompra" id="Edit_ValorCompra" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 15.000,50" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="info-label">Desconto</label>
+                                <input name="Desconto" id="Edit_Desconto" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
+                            </div>
                         </div>
                     </div>
+                </form>
+            </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="info-label">Parcelas</label>
-                            <input name="Parcelas" id="Parcelas" type="number" min="1" class="form-control" />
-                        </div>
-                    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="editarCompra()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="info-label">Data Vencimento</label>
-                            <input name="DataVencimento" id="DataVencimento" type="date" class="form-control" />
-                        </div>
-                    </div>
+<div class="modal fade" id="compraModalDelete" tabindex="-1" aria-labelledby="compraModalLabelDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-                    <div class="col-md-4 d-none" id="campoDataPagamento">
-                        <div class="form-group">
-                            <label class="info-label">Data Pagamento</label>
-                            <input name="DataPagamento" id="DataPagamento" type="date" class="form-control" />
-                        </div>
-                    </div>
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="compraModalLabelDelete">Confirmar Exclusão?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label class="info-label">Método de Pagamento</label>
-                            @Html.DropDownList("MetodoPagamentoId",
-                                    new SelectList(ViewBag.MetodoPagamento, "Id", "Nome"),
-                                    "Selecione",
-                                    new { @class = "form-control" })
-                        </div>
-                    </div>
+            <div class="modal-body">
+                <div class="text-center">
 
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label class="info-label">Status</label>
-                            @Html.DropDownList("StatusPagamentoId",
-                                    new SelectList(ViewBag.StatusPagamento, "Id", "Nome"),
-                                    "Selecione",
-                                    new { @class = "form-control" })
-                        </div>
-                    </div>
+                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;">
+                    </i>
+
+                    <h5 class="mt-3">
+                        Tem certeza que deseja excluir esta compra?
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Essa ação não poderá ser desfeita!
+                    </p>
 
                 </div>
-            </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary" onclick="adicionarPagamento()">Adicionar</button>
-      </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                <form id="compraDeleteForm" asp-action="ExcluirCompra" method="post">
+                    <input type="hidden" id="compraDeleteId" name="id" />
+                    <input type="hidden" name="veiculoId" value="@Model.Id" />
+
+                    <button type="submit" class="btn btn-danger" name="compra_delete" id="compraDeleteButton">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Excluir
+                    </button>
+
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
+
+
+<div class="container-fluid py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="page-title">
+                <i class="fa-solid fa-tags text-primary"></i>
+                Vendas
+            </h2>
+
+            <small class="text-muted">
+                Gerencie todas as vendas cadastradas.
+            </small>
+
+        </div>
+
+        @if (Model.Compra != null)
+        {
+            <div>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vendaModal">
+                    <i class="fa-solid fa-plus"></i>
+                    Adicionar Venda
+                </button>
+            </div>
+        }
+
+       
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-cash-register"></i>
+                </div>
+
+                Vendas Cadastradas
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <table id="vendaListaId" class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Valor</th>
+                        <th>Desconto</th>
+                        <th>Valor Final</th>
+                        <th>Status</th>
+                        <th class="text-center no-sort" data-priority="1">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="fw-semibold">
+                                @Model.Venda.DataVenda.ToString("dd/MM/yyyy")
+                            </span>
+                        </td>
+
+                        <td>
+                            @Model.Venda.Cliente?.Pessoa?.Nome
+                        </td>
+
+                        <td>
+                            R$ @String.Format("{0:N2}", Model.Venda.ValorVenda)
+                        </td>
+
+                        <td>
+                            R$ @String.Format("{0:N2}", Model.Venda.Desconto)
+                        </td>
+
+                        <td>
+                            <span class="fw-semibold">
+                                R$ @String.Format("{0:N2}", Model.Venda.ValorFinal)
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge bg-primary">
+                                @Model.Venda.StatusVenda?.Nome
+                            </span>
+                        </td>
+
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-1 flex-nowrap">
+
+                                <a href="#"
+                                   class="btn btn-outline-warning btn-sm btn-editar-venda"
+                                   data-bs-toggle="modal-edit-venda"
+                                   data-bs-target="#vendaModalEdit"
+                                   data-id="@Model.Venda.Id"
+                                   title="Editar">
+                                    <i class="fa-solid fa-pen"></i>
+                                </a>
+
+                                <button type="button"
+                                        class="btn btn-outline-danger btn-sm btn-excluir-venda"
+                                        data-id="@Model.Venda.Id"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#vendaModalDelete"
+                                        title="Excluir">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="vendaModal" tabindex="-1" aria-labelledby="vendaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="vendaModalLabel">Adicionar Venda</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" id="VendaCreate">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-4">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Data da Venda</label>
+                                <input name="DataVenda" id="DataVenda" type="date" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Cliente</label>
+                                @Html.DropDownList("ClienteId",
+                                      (List<SelectListItem>)ViewBag.clientes,
+                                        "Selecione",
+                                      new { @class = "form-select" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("StatusVendaId",
+                                      new SelectList(ViewBag.statusvendas, "Id", "Nome"),
+                                        "Selecione",
+                                      new { @class = "form-select" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Valor da Venda</label>
+                                <input name="ValorVenda" id="ValorVenda" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 15.000,50" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Desconto</label>
+                                <input name="Desconto" id="DescontoVenda" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="adicionarVenda()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="vendaModalEdit" tabindex="-1" aria-labelledby="vendaModalLabelEdit" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="vendaModalLabelEdit">Editar Venda</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form asp-action="Edit" id="VendaEditar">
+                    <input type="hidden" id="VendaEdit_Id" />
+
+                    <div class="row g-4">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Data da Venda</label>
+                                <input name="DataVenda" id="VendaEdit_Data" type="date" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Cliente</label>
+                                @Html.DropDownList("edit_ClienteId",
+                                      (List<SelectListItem>)ViewBag.clientes,
+                                        "Selecione",
+                                      new { @class = "form-select" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("edit_StatusVendaId",
+                                      new SelectList(ViewBag.statusvendas, "Id", "Nome"),
+                                        "Selecione",
+                                      new { @class = "form-select" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Valor da Venda</label>
+                                <input name="ValorVenda" id="Edit_ValorVenda" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 15.000,50" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Desconto</label>
+                                <input name="Desconto" id="Edit_DescontoVenda" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="editarVenda()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="vendaModalDelete" tabindex="-1" aria-labelledby="vendaModalLabelDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="vendaModalLabelDelete">Confirmar Exclusão?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center">
+
+                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;">
+                    </i>
+
+                    <h5 class="mt-3">
+                        Tem certeza que deseja excluir esta venda?
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Essa ação não poderá ser desfeita!
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                <form id="vendaDeleteForm" asp-action="ExcluirVenda" method="post">
+                    <input type="hidden" id="vendaDeleteId" name="id" />
+                    <input type="hidden" name="veiculoId" value="@Model.Id" />
+
+                    <button type="submit" class="btn btn-danger" name="venda_delete" id="vendaDeleteButton">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Excluir
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="container-fluid">
 
@@ -285,8 +892,8 @@
 
         <div>
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pagamentoModal">
-                <i class="fa-solid fa-plus"></i> 
-                Adicionar Pagamento 
+                <i class="fa-solid fa-plus"></i>
+                Adicionar Pagamento
             </button>
         </div>
 
@@ -324,7 +931,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var item in Model.Pagamentos)
+                    @foreach (var item in Model.PagamentosCompra)
                     {
                         <tr>
                             <td>
@@ -350,33 +957,69 @@
                             </td>
 
                             <td>
-                                <span class="badge bg-primary">
-                                    @item.StatusPagamento?.Nome
-                                </span>
+                                @if (item.StatusPagamentoId == 1)
+                                {
+                                    <span class="badge bg-success">
+                                        @item.StatusPagamento?.Nome
+                                    </span>
+
+                                }
+                                else if (item.StatusPagamentoId == 2)
+                                {
+                                    <span class="badge bg-primary">
+                                        @item.StatusPagamento?.Nome
+                                    </span>
+                                }
+                                else if (item.StatusPagamentoId == 3)
+                                {
+                                    <span class="badge bg-warning">
+                                        @item.StatusPagamento?.Nome
+                                    </span>
+                                }
+                                else if (item.StatusPagamentoId == 4)
+                                {
+                                    <span class="badge bg-secondary">
+                                        @item.StatusPagamento?.Nome
+                                    </span>
+                                }
+                                else if (item.StatusPagamentoId == 5)
+                                {
+                                    <span class="badge bg-info">
+                                        @item.StatusPagamento?.Nome
+                                    </span>
+                                }
+                                else if (item.StatusPagamentoId == 7)
+                                {
+                                    <span class="badge bg-success">
+                                        @item.StatusPagamento?.Nome
+                                    </span>
+                                }
+                                else if (item.StatusPagamentoId == 9)
+                                {
+                                    <span class="badge bg-danger">
+                                        @item.StatusPagamento?.Nome
+                                    </span>
+                                }
                             </td>
 
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-1 flex-nowrap">
 
-                                    <a href="#"                                                          
+                                    <a href="#"
                                        class="btn btn-outline-warning btn-sm btn-editar-pagamento"
-                                       data-bs-toggle="modal" 
+                                       data-bs-toggle="modal-edit-pagamento"
                                        data-bs-target="#pagamentoModalEdit"
                                        data-id="@item.Id"
-                                       data-valor="@item.Valor.ToString("N2")"
-                                       data-parcelas="@item.Parcelas"
-                                       data-vencimento="@item.DataVencimento.ToString("yyyy-MM-dd")"
-                                       data-pagamento="@item.DataPagamento.ToString("yyyy-MM-dd")"
-                                       data-metodo="@item.MetodoPagamentoId"
-                                       data-status="@item.StatusPagamentoId"
                                        title="Editar">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
 
                                     <button type="button"
-                                        class="btn btn-outline-danger btn-sm btn-excluir-pagamento"
-                                        data-id="@item.Id"
-                                        title="Excluir">
+                                            class="btn btn-outline-danger btn-sm btn-excluir-pagamento"
+                                            data-id="@item.Id"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#pagamentoModalDelete"
+                                            title="Excluir">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -393,6 +1036,76 @@
 
 </div>
 
+
+<div class="modal fade" id="pagamentoModal" tabindex="-1" aria-labelledby="pagamentoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pagamentoModalLabel">Adicionar Pagamento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" id="PagamentoCreate">
+                    <div class="row g-3">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="info-label">Valor</label>
+                                <input name="Valor" id="Valor" type="text" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="info-label">Parcelas</label>
+                                <input name="Parcelas" id="Parcelas" type="number" min="1" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="info-label">Data Vencimento</label>
+                                <input name="DataVencimento" id="DataVencimento" type="date" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 d-none" id="campoDataPagamento">
+                            <div class="form-group">
+                                <label class="info-label">Data Pagamento</label>
+                                <input name="DataPagamento" id="DataPagamento" type="date" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="info-label">Método de Pagamento</label>
+                                @Html.DropDownList("MetodoPagamentoId",
+                                        new SelectList(ViewBag.MetodoPagamento, "Id", "Nome"),
+                                        "Selecione",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("StatusPagamentoId",
+                                        new SelectList(ViewBag.StatusPagamento, "Id", "Nome"),
+                                        "Selecione",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="adicionarPagamento()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="pagamentoModalEdit" tabindex="-1" aria-labelledby="pagamentoModalLabelEdit" aria-hidden="true">
     <div class="modal-dialog">
@@ -477,9 +1190,9 @@
             </div>
 
             <div class="modal-body">
-                <div class="text-center"> 
+                <div class="text-center">
 
-                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;"> 
+                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;">
                     </i>
 
                     <h5 class="mt-3">
@@ -490,17 +1203,17 @@
                         Essa ação não poderá ser desfeita!
                     </p>
 
-                </div>                
+                </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 
                 <form id="pagamentoDeleteForm" asp-action="ExcluirPagamento" method="post">
-                    <input type="hidden" id="pagamentoDeleteId" name="id"/>
-                    <input type="hidden" name="veiculoId" value="@Model.Id"/>
+                    <input type="hidden" id="pagamentoDeleteId" name="id" />
+                    <input type="hidden" name="veiculoId" value="@Model.Id" />
 
-                    <button type="submit" class="btn btn-danger" id="pagamentoDeleteButton">
+                    <button type="submit" class="btn btn-danger" name="pagamento_delete" id="pagamentoDeleteButton">
                         <i class="fa-solid fa-trash-can"></i>
                         Excluir
                     </button>
@@ -512,7 +1225,7 @@
 </div>
 
 @section Scripts {
-<script>
+    <script>
         var ID_PAGO = 1;
 
         function alternarDataPagamento() {
@@ -530,49 +1243,172 @@
         $(document).ready(function() {
             $('#Valor').mask('#.##0,00', { reverse: true });
             $('#edit_Valor').mask('#.##0,00', { reverse: true });
-           
+            $('#ValorCompra, #Desconto, #Edit_ValorCompra, #Edit_Desconto').mask('#.##0,00', { reverse: true });
+            $('#ValorVenda, #DescontoVenda, #Edit_ValorVenda, #Edit_DescontoVenda').mask('#.##0,00', { reverse: true });
+
             alternarDataPagamento();
             $('#StatusPagamentoId').on('change', alternarDataPagamento);
             $('#edit_StatusPagamentoId').on('change', alternarDataPagamentoEdit);
 
+            $(document).on("click", ".btn-editar-pagamento", function() {
+                var idPagamento = $(this).attr('data-id');
+                editarPagamentoGet(idPagamento);
+            });
+
+            $(document).on("click", ".btn-editar-compra", function() {
+                var idCompra = $(this).attr('data-id');
+                editarCompraGet(idCompra);
+            });
+
+            $(document).on("click", ".btn-editar-venda", function() {
+                var idVenda = $(this).attr('data-id');
+                editarVendaGet(idVenda);
+            });
+
+            $(document).on("click", ".btn-excluir-pagamento", function() {
+                var idPagamento = $(this).attr('data-id');
+                $('#pagamentoDeleteId').val(idPagamento);
+            });
+
+            $(document).on("click", ".btn-excluir-compra", function() {
+                var idCompra = $(this).attr('data-id');
+                $('#compraDeleteId').val(idCompra);
+            });
+
+            $(document).on("click", ".btn-excluir-venda", function() {
+                var idVenda = $(this).attr('data-id');
+                $('#vendaDeleteId').val(idVenda);
+            });
+
           
-
         });
 
-    function adicionarPagamento(){
-        var pagamento = 
-        { 
-            VeiculoId : '@Model.Id',
-            Valor : $("#Valor").val(), 
-            Parcelas : $("#Parcelas").val(), 
-            DataVencimento : $("#DataVencimento").val(), 
-            StatusPagamentoId :  $("#StatusPagamentoId").val(),
-            MetodoPagamentoId : $("#MetodoPagamentoId").val()
-        };
+        function adicionarPagamento() {
+            var pagamento =
+            {
+                VeiculoId: '@Model.Id',
+                Valor: $("#Valor").val(),
+                Parcelas: $("#Parcelas").val(),
+                DataVencimento: $("#DataVencimento").val(),
+                StatusPagamentoId: $("#StatusPagamentoId").val(),
+                MetodoPagamentoId: $("#MetodoPagamentoId").val()
+            };
 
-        $.ajax({
-            type: "POST",
-            url: "/Veiculos/AdicionarPagamento",
-            data: pagamento,
-            success: function (retorno) {
-                
-                if(retorno.Sucesso){
-                    // alert(retorno.Mensagem);
-                    
-                    $("#Valor").val('');
-                    $("#pagamentoModal").modal('hide');
-                    location.reload();
-                }
-                else{
-                    alert("Erro: " + retorno.Mensagem);
-                }
-            },
-            error: function (res) {
-                console.log(res);
-            }
-        });
+            $.ajax({
+                type: "POST",
+                url: "/Veiculos/AdicionarPagamento",
+                data: pagamento,
+                success: function(retorno) {
 
-    }
+                    if (retorno.Sucesso) {
+                        // alert(retorno.Mensagem);
+
+                        $("#Valor").val('');
+                        $("#pagamentoModal").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+
+        }
+
+        function adicionarCompra() {
+            var compra =
+            {
+                VeiculoId: '@Model.Id',
+                DataCompra: $("#DataCompra").val(),
+                VendedorId: $("#VendedorId").val(),
+                StatusCompraId: $("#StatusCompraId").val(),
+                ValorCompra: $("#ValorCompra").val(),
+                Desconto: $("#Desconto").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Veiculos/AdicionarCompra",
+                data: compra,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        $("#ValorCompra").val('');
+                        $("#compraModal").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+
+        }
+
+        function editarPagamentoGet(id) {
+
+            $.ajax({
+                url: '/Veiculos/ConsultarPagamentoPorId/' + id,
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                datatype: 'json',
+                success: function(response) {
+                    if (response == null || response == undefined) {
+                        alert('Não foi possivel ler os dados 1')
+                    }
+                    else {
+                        $('#pagamentoModalEdit').modal('show');
+                        $('#pagamentoModalLabelEdit').text('Atualizar Pagamento');
+                        $('#edit_Id').val(response.Resultado.Id);
+                        $('#edit_Valor').val(response.Resultado.Valor);
+                        $('#edit_Parcelas').val(response.Resultado.Parcelas);
+                        $('#edit_DataVencimento').val(response.Resultado.DataVencimento);
+                        $('#edit_DataPagamento').val(response.Resultado.DataPagamento);
+                        $('#edit_StatusPagamentoId').val(response.Resultado.StatusPagamentoId);
+                        $('#edit_MetodoPagamentoId').val(response.Resultado.MetodoPagamentoId);
+                    }
+                },
+                error: function() {
+                    alert('Não foi possível ler os dados.')
+                }
+            });
+        }
+
+        function editarCompraGet(id) {
+
+            $.ajax({
+                url: '/Veiculos/ConsultarCompraPorId/' + id,
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                datatype: 'json',
+                success: function(response) {
+                    if (response == null || response == undefined) {
+                        alert('Não foi possivel ler os dados 1')
+                    }
+                    else {
+                        $('#compraModalEdit').modal('show');
+                        $('#compraModalLabelEdit').text('Atualizar Compra');
+                        $('#CompraEdit_Id').val(response.Resultado.Id);
+                        $('#CompraEdit_Data').val(response.Resultado.DataCompra);
+                        $('#edit_VendedorId').val(response.Resultado.VendedorId);
+                        $('#edit_VeiculoId').val(response.Resultado.VeiculoId);
+                        $('#edit_StatusCompraId').val(response.Resultado.StatusCompraId);
+                        $('#Edit_ValorCompra').val(response.Resultado.ValorCompra);
+                        $('#Edit_Desconto').val(response.Resultado.Desconto);
+                    }
+                },
+                error: function() {
+                    alert('Não foi possível ler os dados.')
+                }
+            });
+        }
+
 
         function editarPagamento() {
             var pagamento =
@@ -610,5 +1446,136 @@
 
         }
 
-</script>
+        function editarCompra() {
+            var compra =
+            {
+                Id: $("#CompraEdit_Id").val(),
+                VeiculoId: '@Model.Id',
+                DataCompra: $("#CompraEdit_Data").val(),
+                VendedorId: $("#edit_VendedorId").val(),
+                VeiculoId: $("#edit_VeiculoId").val(),
+                StatusCompraId: $("#edit_StatusCompraId").val(),
+                ValorCompra: $("#Edit_ValorCompra").val(),
+                Desconto: $("#Edit_Desconto").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Veiculos/EditarCompra",
+                data: compra,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        // alert(retorno.Mensagem);
+                        $("#Edit_ValorCompra").val('');
+                        $("#compraModalEdit").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+
+        }
+
+
+        function adicionarVenda() {
+            var venda =
+            {
+                VeiculoId: '@Model.Id',
+                DataVenda: $("#DataVenda").val(),
+                ClienteId: $("#ClienteId").val(),
+                StatusVendaId: $("#StatusVendaId").val(),
+                ValorVenda: $("#ValorVenda").val(),
+                Desconto: $("#DescontoVenda").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Veiculos/AdicionarVenda",
+                data: venda,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        $("#ValorVenda").val('');
+                        $("#vendaModal").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+
+        }
+
+        function editarVendaGet(id) {
+
+            $.ajax({
+                url: '/Veiculos/ConsultarVendaPorId/' + id,
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                datatype: 'json',
+                success: function(response) {
+                    if (response == null || response == undefined) {
+                        alert('Não foi possivel ler os dados 1')
+                    }
+                    else {
+                        $('#vendaModalEdit').modal('show');
+                        $('#vendaModalLabelEdit').text('Atualizar Venda');
+                        $('#VendaEdit_Id').val(response.Resultado.Id);
+                        $('#VendaEdit_Data').val(response.Resultado.DataVenda);
+                        $('#edit_ClienteId').val(response.Resultado.ClienteId);
+                        $('#edit_StatusVendaId').val(response.Resultado.StatusVendaId);
+                        $('#Edit_ValorVenda').val(response.Resultado.ValorVenda);
+                        $('#Edit_DescontoVenda').val(response.Resultado.Desconto);
+                    }
+                },
+                error: function() {
+                    alert('Não foi possível ler os dados.')
+                }
+            });
+        }
+
+        function editarVenda() {
+            var venda =
+            {
+                Id: $("#VendaEdit_Id").val(),
+                VeiculoId: '@Model.Id',
+                DataVenda: $("#VendaEdit_Data").val(),
+                ClienteId: $("#edit_ClienteId").val(),
+                StatusVendaId: $("#edit_StatusVendaId").val(),
+                ValorVenda: $("#Edit_ValorVenda").val(),
+                Desconto: $("#Edit_DescontoVenda").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Veiculos/EditarVenda",
+                data: venda,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        $("#Edit_ValorVenda").val('');
+                        $("#vendaModalEdit").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+
+        }
+    </script>
 }

@@ -1,0 +1,200 @@
+﻿@model CarCRM.ViewModels.CompraViewModel
+
+@{
+    ViewData["Title"] = "Create";
+
+}
+
+<style>
+    body {
+        background: #f4f6f9;
+    }
+
+    .page-title {
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    .card {
+        border: none;
+        border-radius: 18px;
+        box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
+
+    .card-header {
+        background: white;
+        border-bottom: 1px solid #ececec;
+        padding: 20px 30px;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #9a9a9a;
+        font-weight: 600;
+    }
+
+    .info-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2f3640;
+    }
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+        background: #0d6efd15;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #0d6efd;
+        margin-right: 15px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .btn {
+        border-radius: 10px;
+    }
+
+    .badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+</style>
+
+<div class="container-py-5">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <div>
+            <h2 class="page-title">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                Cadastrar Compra
+            </h2>
+
+            <small class="text-muted">
+                Criação dos dados da compra
+            </small>
+        </div>
+
+        <div>
+
+            <button type="submit" form="CompraCreate" class="btn btn-success">
+                <i class="fa-solid fa-plus"></i>
+                Criar
+            </button>
+
+            <a class="btn btn-secondary" asp-action="Index">
+                <i class="fa-solid fa-arrow-left"></i>
+                Voltar
+            </a>
+
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="section-title">
+
+                <div class="icon-box">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+
+                Dados da Compra
+
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" id="CompraCreate">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-4">
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label class="info-label">Data da Compra</label>
+                                <input name="DataCompra" type="date" class="form-control" required />
+                                <span asp-validation-for="DataCompra" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="VendedorId" class="info-label">Vendedor</label>
+                            <select asp-for="VendedorId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.vendedores, "Id", "Nome"))">
+                                <option value="">Selecione o Vendedor</option>
+                            </select>
+                            <span asp-validation-for="VendedorId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="VeiculoId" class="info-label">Veiculo</label>
+                            <select asp-for="VeiculoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.veiculos, "Id", "Placa"))">
+                                <option value="">Selecione o Veiculo</option>
+                            </select>
+                            <span asp-validation-for="VeiculoId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="StatusCompraId" class="info-label">Status</label>
+                            <select asp-for="StatusCompraId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.statuscompras, "Id", "Nome"))">
+                                <option value="">Selecione o Status</option>
+                            </select>
+                            <span asp-validation-for="StatusCompraId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label class="info-label">Valor da Compra</label>
+                            <input name="ValorCompra" id="valorCompra" type="text" inputmode="decimal"
+                                   placeholder="Ex.: 15.000,50" class="form-control" required />
+                            <span asp-validation-for="ValorCompra" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label class="info-label">Desconto</label>
+                            <input name="Desconto" id="desconto" type="text" inputmode="decimal"
+                                   placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
+                            <span asp-validation-for="Desconto" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function() {
+            $('#valorCompra, #desconto').mask('#.##0,00', { reverse: true });
+        });
+    </script>
+
+}
