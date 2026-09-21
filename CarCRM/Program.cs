@@ -16,6 +16,11 @@ builder.Configuration.GetConnectionString("ImagemConnection")));
 
 var app = builder.Build();
 
+app.UseRequestLocalization(new RequestLocalizationOptions()
+    .SetDefaultCulture("pt-BR")
+    .AddSupportedCultures("pt-BR")
+    .AddSupportedUICultures("pt-BR"));
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

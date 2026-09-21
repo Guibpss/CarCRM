@@ -4,6 +4,7 @@ using CarCRM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarCRM.Migrations
 {
     [DbContext(typeof(CarCRMContext))]
-    partial class CarCRMContextModelSnapshot : ModelSnapshot
+    [Migration("20260920235320_newPecaModel")]
+    partial class newPecaModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -281,9 +284,8 @@ namespace CarCRM.Migrations
                     b.Property<int>("StatusPagamentoId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Valor")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("Valor")
+                        .HasColumnType("real");
 
                     b.Property<int?>("VendaId")
                         .HasColumnType("int");
@@ -347,6 +349,31 @@ namespace CarCRM.Migrations
                     b.ToTable("PagamentoVendas");
                 });
 
+            modelBuilder.Entity("CarCRM.Models.Peca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Valor")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("Pecas");
+                });
+
             modelBuilder.Entity("CarCRM.Models.Perfil", b =>
                 {
                     b.Property<int>("Id")
@@ -393,32 +420,6 @@ namespace CarCRM.Migrations
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("CarCRM.Models.Produto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Valor")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.ToTable("Produtos");
-                });
-
             modelBuilder.Entity("CarCRM.Models.Servico", b =>
                 {
                     b.Property<int>("Id")
@@ -437,9 +438,8 @@ namespace CarCRM.Migrations
                     b.Property<int>("ServicoTipoId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Valor")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("Valor")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -1144,7 +1144,7 @@ namespace CarCRM.Migrations
                     b.Navigation("Venda");
                 });
 
-            modelBuilder.Entity("CarCRM.Models.Produto", b =>
+            modelBuilder.Entity("CarCRM.Models.Peca", b =>
                 {
                     b.HasOne("CarCRM.Models.Cliente", "Cliente")
                         .WithMany()

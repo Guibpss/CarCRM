@@ -1,8 +1,11 @@
-﻿namespace CarCRM.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace CarCRM.Models
 {
     public class Pagamento : EntidadeBase
     {
-        public float Valor { get; set; }
+        [Precision(18, 2)]
+        public decimal Valor { get; set; }
 
         public int Parcelas { get; set; }
 
@@ -17,6 +20,6 @@
         public int MetodoPagamentoId { get; set; }
 
         public MetodoPagamento? MetodoPagamento { get; set; }
-       
+
     }
 }

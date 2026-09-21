@@ -134,18 +134,15 @@ namespace CarCRM.Controllers
             var compra = _context.Compras
                 .Include(c => c.Vendedor)
                 .Include(c => c.StatusCompra)
-                .Include(c => c.Pagamentos)
-                .Where(c => c.VeiculoId == id)
-                .FirstOrDefault();
+                .FirstOrDefault(c => c.VeiculoId == id);
 
             var venda = _context.Vendas
                 .Include(v => v.Cliente)
                     .ThenInclude(c => c.Pessoa)
                 .Include(v => v.StatusVenda)
-                .Include(v => v.Pagamentos)
                 .Where(v => v.VeiculoId == id)
                 .FirstOrDefault();
-            
+
             var veiculoViewModel = new VeiculoViewModel
             {
                 Id = veiculo.Id,
@@ -196,10 +193,10 @@ namespace CarCRM.Controllers
                     Nome = veiculo.VeiculoVersao.Nome
                 },
                 CriadoEm = veiculo.CriadoEm,
-                Excluido = veiculo.Excluido,                                
+                Excluido = veiculo.Excluido,
             };
 
-            if(compra != null)
+            if (compra != null)
             {
                 veiculoViewModel.Compra = new CompraViewModel
                 {
@@ -229,29 +226,35 @@ namespace CarCRM.Controllers
                     }
                 };
 
-                veiculoViewModel.PagamentosCompra = compra.Pagamentos == null ? null : compra.Pagamentos.Select(p => new PagamentoViewModel
+                veiculoViewModel.PagamentosCompra = _context.PagamentoCompras
+                .Where(pc => pc.CompraId == compra.Id)
+                .Include(pc => pc.Pagamento)
+                    .ThenInclude(p => p.MetodoPagamento)
+                .Include(pc => pc.Pagamento)
+                    .ThenInclude(p => p.StatusPagamento)
+                .Select(pc => new PagamentoViewModel
                 {
-                    Id = p.Id,
-                    Valor = p.Valor,
-                    Parcelas = p.Parcelas,
-                    DataVencimento = p.DataVencimento,
-                    DataPagamento = p.DataPagamento,
-                    MetodoPagamentoId = p.MetodoPagamentoId,
+                    Id = pc.Pagamento.Id,
+                    Valor = pc.Pagamento.Valor,
+                    Parcelas = pc.Pagamento.Parcelas,
+                    DataVencimento = pc.Pagamento.DataVencimento,
+                    DataPagamento = pc.Pagamento.DataPagamento,
+                    MetodoPagamentoId = pc.Pagamento.MetodoPagamentoId,
                     MetodoPagamento = new MetodoPagamentoViewModel
                     {
-                        Id = p.MetodoPagamento.Id,
-                        Nome = p.MetodoPagamento.Nome,
+                        Id = pc.Pagamento.MetodoPagamento.Id,
+                        Nome = pc.Pagamento.MetodoPagamento.Nome,
                     },
-                    StatusPagamentoId = p.StatusPagamentoId,
+                    StatusPagamentoId = pc.Pagamento.StatusPagamentoId,
                     StatusPagamento = new StatusPagamentoViewModel
                     {
-                        Id = p.StatusPagamento.Id,
-                        Nome = p.StatusPagamento.Nome,
+                        Id = pc.Pagamento.StatusPagamento.Id,
+                        Nome = pc.Pagamento.StatusPagamento.Nome,
                     }
                 }).ToList();
             }
 
-            if(venda != null)
+            if (venda != null)
             {
                 veiculoViewModel.Venda = new VendaViewModel
                 {
@@ -287,24 +290,30 @@ namespace CarCRM.Controllers
                     }
                 };
 
-                veiculoViewModel.PagamentosVenda = venda.Pagamentos == null ? null : venda.Pagamentos.Select(p => new PagamentoViewModel
+                veiculoViewModel.PagamentosVenda = _context.PagamentoVendas
+                .Where(pv => pv.VendaId == venda.Id)
+                .Include(pv => pv.Pagamento)
+                    .ThenInclude(p => p.MetodoPagamento)
+                .Include(pv => pv.Pagamento)
+                    .ThenInclude(p => p.StatusPagamento)
+                .Select(pv => new PagamentoViewModel
                 {
-                    Id = p.Id,
-                    Valor = p.Valor,
-                    Parcelas = p.Parcelas,
-                    DataVencimento = p.DataVencimento,
-                    DataPagamento = p.DataPagamento,
-                    MetodoPagamentoId = p.MetodoPagamentoId,
+                    Id = pv.Pagamento.Id,
+                    Valor = pv.Pagamento.Valor,
+                    Parcelas = pv.Pagamento.Parcelas,
+                    DataVencimento = pv.Pagamento.DataVencimento,
+                    DataPagamento = pv.Pagamento.DataPagamento,
+                    MetodoPagamentoId = pv.Pagamento.MetodoPagamentoId,
                     MetodoPagamento = new MetodoPagamentoViewModel
                     {
-                        Id = p.MetodoPagamento.Id,
-                        Nome = p.MetodoPagamento.Nome,
+                        Id = pv.Pagamento.MetodoPagamento.Id,
+                        Nome = pv.Pagamento.MetodoPagamento.Nome,
                     },
-                    StatusPagamentoId = p.StatusPagamentoId,
+                    StatusPagamentoId = pv.Pagamento.StatusPagamentoId,
                     StatusPagamento = new StatusPagamentoViewModel
                     {
-                        Id = p.StatusPagamento.Id,
-                        Nome = p.StatusPagamento.Nome,
+                        Id = pv.Pagamento.StatusPagamento.Id,
+                        Nome = pv.Pagamento.StatusPagamento.Nome,
                     }
                 }).ToList();
             }
@@ -653,61 +662,302 @@ namespace CarCRM.Controllers
             return _context.Veiculos.Any(e => e.Id == id);
         }
 
+       
+
         [HttpPost]
-        public IActionResult AdicionarPagamento(PagamentoViewModel pagamentoViewModel)
+        public IActionResult AdicionarPagamentoCompra(PagamentoViewModel pagamentoViewModel, int compraId)
         {
+
             if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
             {
                 var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor e método de pagamento" };
                 return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
             }
 
-            var pagamento = new Pagamento();
-            //pagamento.VeiculoId = pagamentoViewModel.VeiculoId;
-            pagamento.Valor = pagamentoViewModel.Valor;
-            pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
-            pagamento.DataPagamento = pagamentoViewModel.DataPagamento;
-            pagamento.Parcelas = pagamentoViewModel.Parcelas;
-            pagamento.MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId;
-            pagamento.StatusPagamentoId = pagamentoViewModel.StatusPagamentoId;
-            pagamento.CriadoEm = DateTime.Now;
+            var compra = _context.Compras.Find(compraId);
+
+            if (compra == null)
+            {
+                return Content(JsonConvert.SerializeObject(
+                new { Sucesso = false, Mensagem = "Compra não encontrada." }), "application/json");
+            }
+
+            var pagamento = new Pagamento
+            {
+
+                Valor = pagamentoViewModel.Valor,
+                DataPagamento = pagamentoViewModel.DataPagamento,
+                DataVencimento = pagamentoViewModel.DataVencimento,
+                Parcelas = pagamentoViewModel.Parcelas,
+                MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId,
+                StatusPagamentoId = pagamentoViewModel.StatusPagamentoId,
+                CriadoEm = DateTime.Now,
+            };
 
             _context.Pagamentos.Add(pagamento);
             _context.SaveChanges();
 
-            var retorno = new { Sucesso = true, Mensagem = "Pagamento cadastrado com sucesso!" };
+            _context.PagamentoCompras.Add(new PagamentoCompra
+            {
+                CompraId = compraId,
+                PagamentoId = pagamento.Id
+            });
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento da compra cadastrado com sucesso!" };
             return Content(JsonConvert.SerializeObject(retorno), "application/json");
         }
 
-        public IActionResult AdicionarPagamentoCompra(PagamentoViewModel pagamentoViewModel)
+        public IActionResult ConsultarPagamentoCompraPorId(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pagamentoCompra = _context.PagamentoCompras
+                .Where(pc => pc.PagamentoId == id)
+                .Select(pc => pc.Pagamento)
+                .FirstOrDefault();
+
+
+            if (pagamentoCompra == null)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Não foi possível localizar o pagamento da compra." };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var ptBR = new System.Globalization.CultureInfo("pt-BR");
+
+            var resultado = new
+            {
+                Id = pagamentoCompra.Id,
+                Valor = pagamentoCompra.Valor.ToString("N2", ptBR),
+                Parcelas = pagamentoCompra.Parcelas,
+                DataVencimento = pagamentoCompra.DataVencimento.ToString("yyyy-MM-dd"),
+                DataPagamento = pagamentoCompra.DataPagamento == default
+                    ? "" : pagamentoCompra.DataPagamento.ToString("yyyy-MM-dd"),
+                StatusPagamentoId = pagamentoCompra.StatusPagamentoId,
+                MetodoPagamentoId = pagamentoCompra.MetodoPagamentoId
+            };
+
+            var retorno = new { Sucesso = true, Resultado = resultado };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditarPagamentoCompra(PagamentoViewModel pagamentoViewModel)
+        {
+            if (pagamentoViewModel.Id == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Pagamento da compra Inválido." };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
             if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
             {
                 var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor e método de pagamento" };
                 return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
             }
 
-            var pagamento = new Pagamento();
+
+            var pagamento = await _context.Pagamentos.FirstOrDefaultAsync(p => p.Id == pagamentoViewModel.Id);
+
+            if (pagamento == null)
+            {
+                var erroNaoEncontrado = new { Sucesso = false, Mensagem = "Pagamento não encontrado." };
+                return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
+            }
+
             pagamento.Valor = pagamentoViewModel.Valor;
             pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
-            pagamento.DataPagamento = pagamentoViewModel.DataPagamento;
+            pagamento.DataPagamento = pagamentoViewModel.StatusPagamentoId == 1 ? pagamentoViewModel.DataPagamento : default;
             pagamento.Parcelas = pagamentoViewModel.Parcelas;
             pagamento.MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId;
             pagamento.StatusPagamentoId = pagamentoViewModel.StatusPagamentoId;
-            pagamento.CriadoEm = DateTime.Now;
+
+            _context.Update(pagamento);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento da compra atualizado com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExcluirPagamentoCompra(int? id, int veiculoId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pagamentoCompra = _context.PagamentoCompras
+                .Where(pc => pc.PagamentoId == id)
+                .Select(pc => pc.Pagamento)
+                .FirstOrDefault();
+
+            if (pagamentoCompra == null)
+            {
+                return NotFound();
+            }
+
+            var vinculo = _context.PagamentoCompras.Where(pc => pc.PagamentoId == id);
+
+            _context.PagamentoCompras.RemoveRange(vinculo);
+
+            _context.Pagamentos.Remove(pagamentoCompra);
+            await _context.SaveChangesAsync();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento da compra excluído com sucesso!" };
+            return RedirectToAction("Details", new { id = veiculoId });
+        }
+
+
+        [HttpPost]
+        public IActionResult AdicionarPagamentoVenda(PagamentoViewModel pagamentoViewModel, int vendaId)
+        {
+
+            if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor e método de pagamento" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var venda = _context.Vendas.Find(vendaId);
+
+            if (venda == null)
+            {
+                return Content(JsonConvert.SerializeObject(
+                new { Sucesso = false, Mensagem = "Venda não encontrada." }), "application/json");
+            }
+
+            var pagamento = new Pagamento
+            {
+
+                Valor = pagamentoViewModel.Valor,
+                DataPagamento = pagamentoViewModel.DataPagamento,
+                DataVencimento = pagamentoViewModel.DataVencimento,
+                Parcelas = pagamentoViewModel.Parcelas,
+                MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId,
+                StatusPagamentoId = pagamentoViewModel.StatusPagamentoId,
+                CriadoEm = DateTime.Now,
+            };
 
             _context.Pagamentos.Add(pagamento);
             _context.SaveChanges();
 
-            var compra = _context.Compras.Where(c => c.VeiculoId == pagamentoViewModel.VeiculoId).FirstOrDefault();
-            var pagamentoCompra = new PagamentoCompra();
-            pagamentoCompra.CompraId = compra.Id;
-            pagamentoCompra.PagamentoId = pagamento.Id;
-            _context.PagamentoCompras.Add(pagamentoCompra);
+            _context.PagamentoVendas.Add(new PagamentoVenda
+            {
+                VendaId = vendaId,
+                PagamentoId = pagamento.Id
+            });
             _context.SaveChanges();
 
-            var retorno = new { Sucesso = true, Mensagem = "Pagamento cadastrado com sucesso!" };
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento da venda cadastrado com sucesso!" };
             return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        public IActionResult ConsultarPagamentoVendaPorId(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pagamentoVenda = _context.PagamentoVendas
+                .Where(pc => pc.PagamentoId == id)
+                .Select(pc => pc.Pagamento)
+                .FirstOrDefault();
+
+            if (pagamentoVenda == null)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Não foi possível localizar o pagamento da venda." };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var ptBR = new System.Globalization.CultureInfo("pt-BR");
+
+            var resultado = new
+            {
+                Id = pagamentoVenda.Id,
+                Valor = pagamentoVenda.Valor.ToString("N2", ptBR),
+                Parcelas = pagamentoVenda.Parcelas,
+                DataVencimento = pagamentoVenda.DataVencimento.ToString("yyyy-MM-dd"),
+                DataPagamento = pagamentoVenda.DataPagamento == default
+                    ? "" : pagamentoVenda.DataPagamento.ToString("yyyy-MM-dd"),
+                StatusPagamentoId = pagamentoVenda.StatusPagamentoId,
+                MetodoPagamentoId = pagamentoVenda.MetodoPagamentoId
+            };
+
+            var retorno = new { Sucesso = true, Resultado = resultado };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditarPagamentoVenda(PagamentoViewModel pagamentoViewModel)
+        {
+            if (pagamentoViewModel.Id == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Pagamento da venda Inválido." };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
+            {
+                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor e método de pagamento" };
+                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+
+            var pagamento = await _context.Pagamentos.FirstOrDefaultAsync(p => p.Id == pagamentoViewModel.Id);
+
+            if (pagamento == null)
+            {
+                var erroNaoEncontrado = new { Sucesso = false, Mensagem = "Pagamento não encontrado." };
+                return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
+            }
+
+            pagamento.Valor = pagamentoViewModel.Valor;
+            pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
+            pagamento.DataPagamento = pagamentoViewModel.StatusPagamentoId == 1 ? pagamentoViewModel.DataPagamento : default;
+            pagamento.Parcelas = pagamentoViewModel.Parcelas;
+            pagamento.MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId;
+            pagamento.StatusPagamentoId = pagamentoViewModel.StatusPagamentoId;
+
+            _context.Update(pagamento);
+            _context.SaveChanges();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento da venda atualizado com sucesso!" };
+            return Content(JsonConvert.SerializeObject(retorno), "application/json");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExcluirPagamentoVenda(int? id, int veiculoId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pagamentoVenda = _context.PagamentoVendas
+                .Where(pc => pc.PagamentoId == id)
+                .Select(pc => pc.Pagamento)
+                .FirstOrDefault();
+
+            if (pagamentoVenda == null)
+            {
+                return NotFound();
+            }
+
+            var vinculo = _context.PagamentoVendas.Where(pc => pc.PagamentoId == id);
+
+            _context.PagamentoVendas.RemoveRange(vinculo);
+
+            _context.Pagamentos.Remove(pagamentoVenda);
+            await _context.SaveChangesAsync();
+
+            var retorno = new { Sucesso = true, Mensagem = "Pagamento da venda excluído com sucesso!" };
+            return RedirectToAction("Details", new { id = veiculoId });
         }
 
 
@@ -736,34 +986,15 @@ namespace CarCRM.Controllers
             return Content(JsonConvert.SerializeObject(retorno), "application/json");
         }
 
-        public IActionResult ConsultarPagamentoPorId(int id)
+        public IActionResult ConsultarCompraPorId(int? id)
         {
-            var pagamento = _context.Pagamentos.Find(id);
-            if (pagamento == null)
+            if (id == null)
             {
-                var retornoErro = new { Sucesso = false, Mensagem = "Não foi possível localizar o pagamento" };
-                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+                return NotFound();
             }
 
-            var resultado = new
-            {
-                Id = pagamento.Id,
-                Valor = pagamento.Valor,
-                Parcelas = pagamento.Parcelas,
-                DataVencimento = pagamento.DataVencimento.ToString("yyyy-MM-dd"),
-                DataPagamento = pagamento.DataPagamento == default
-            ? "" : pagamento.DataPagamento.ToString("yyyy-MM-dd"),
-                StatusPagamentoId = pagamento.StatusPagamentoId,
-                MetodoPagamentoId = pagamento.MetodoPagamentoId
-            };
-
-            var retorno = new { Sucesso = true, Resultado = resultado };
-            return Content(JsonConvert.SerializeObject(retorno), "application/json");
-        }
-
-        public IActionResult ConsultarCompraPorId(int id)
-        {
             var compra = _context.Compras.Find(id);
+
             if (compra == null)
             {
                 var retornoErro = new { Sucesso = false, Mensagem = "Não foi possível localizar a compra" };
@@ -781,45 +1012,6 @@ namespace CarCRM.Controllers
             };
 
             var retorno = new { Sucesso = true, Resultado = resultado };
-            return Content(JsonConvert.SerializeObject(retorno), "application/json");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditarPagamento(PagamentoViewModel pagamentoViewModel)
-        {
-            if (pagamentoViewModel.Id == 0)
-            {
-                var retornoErro = new { Sucesso = false, Mensagem = "Pagamento Inválido." };
-                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
-            }
-
-            if (pagamentoViewModel.Valor == 0 || pagamentoViewModel.MetodoPagamentoId == 0)
-            {
-                var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor e método de pagamento" };
-                return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
-            }
-
-
-            var pagamento = await _context.Pagamentos.FirstOrDefaultAsync(p => p.Id == pagamentoViewModel.Id);
-
-            if (pagamento == null)
-            {
-                var erroNaoEncontrado = new { Sucesso = false, Mensagem = "Pagamento não encontrado." };
-                return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
-            }
-
-            //pagamento.VeiculoId = pagamentoViewModel.VeiculoId;
-            pagamento.Valor = pagamentoViewModel.Valor;
-            pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
-            pagamento.DataPagamento = pagamentoViewModel.DataPagamento;
-            pagamento.Parcelas = pagamentoViewModel.Parcelas;
-            pagamento.MetodoPagamentoId = pagamentoViewModel.MetodoPagamentoId;
-            pagamento.StatusPagamentoId = pagamentoViewModel.StatusPagamentoId;
-
-            _context.Update(pagamento);
-            _context.SaveChanges();
-
-            var retorno = new { Sucesso = true, Mensagem = "Pagamento cadastrado com sucesso!" };
             return Content(JsonConvert.SerializeObject(retorno), "application/json");
         }
 
@@ -861,27 +1053,6 @@ namespace CarCRM.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ExcluirPagamento(int? id, int veiculoId)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var pagamento = await _context.Pagamentos.FindAsync(id);
-
-            if (pagamento == null)
-            {
-                return NotFound();
-            }
-
-            _context.Pagamentos.Remove(pagamento);
-            _context.SaveChangesAsync();
-
-            var retorno = new { Sucesso = true, Mensagem = "Pagamento excluído com sucesso!" };
-            return RedirectToAction("Details", new { id = veiculoId });
-        }
-
         public async Task<IActionResult> ExcluirCompra(int? id, int veiculoId)
         {
             if (id == null)
@@ -896,12 +1067,29 @@ namespace CarCRM.Controllers
                 return NotFound();
             }
 
+            var pagamentosCompra = await _context.PagamentoCompras
+                .Where(pc => pc.CompraId == id)
+                .Select(pc => pc.PagamentoId)
+                .ToListAsync();
+
+            var vinculos = _context.PagamentoCompras
+                .Where(pc => pc.CompraId == id);
+
+            _context.PagamentoCompras.RemoveRange(vinculos);
+
+            var pagamentos = _context.Pagamentos
+                .Where(p => pagamentosCompra.Contains(p.Id));
+
+            _context.Pagamentos.RemoveRange(pagamentos);
+           
             _context.Compras.Remove(compra);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            
 
             var retorno = new { Sucesso = true, Mensagem = "Compra excluída com sucesso!" };
             return RedirectToAction("Details", new { id = veiculoId });
         }
+
 
         [HttpPost]
         public IActionResult AdicionarVenda(VendaViewModel vendaViewModel)
@@ -931,6 +1119,7 @@ namespace CarCRM.Controllers
         public IActionResult ConsultarVendaPorId(int id)
         {
             var venda = _context.Vendas.Find(id);
+
             if (venda == null)
             {
                 var retornoErro = new { Sucesso = false, Mensagem = "Não foi possível localizar a venda" };
@@ -1004,9 +1193,26 @@ namespace CarCRM.Controllers
                 return NotFound();
             }
 
+            var pagamentosVenda = await _context.PagamentoVendas
+                .Where(pc => pc.VendaId == id)
+                .Select(pc => pc.PagamentoId)
+                .ToListAsync();
+
+            var vinculos = _context.PagamentoVendas
+                .Where(pc => pc.VendaId == id);
+
+            _context.PagamentoVendas.RemoveRange(vinculos);
+
+            var pagamentos = _context.Pagamentos
+                .Where(p => pagamentosVenda.Contains(p.Id));
+
+            _context.Pagamentos.RemoveRange(pagamentos);
+
             _context.Vendas.Remove(venda);
             await _context.SaveChangesAsync();
+            
 
+            var retorno = new { Sucesso = true, Mensagem = "venda excluída com sucesso!" };
             return RedirectToAction("Details", new { id = veiculoId });
         }
     }

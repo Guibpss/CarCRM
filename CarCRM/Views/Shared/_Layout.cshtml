@@ -87,6 +87,7 @@
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Vendas" asp-action="Index">Venda</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Compras" asp-action="Index">Compra</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Servicos" asp-action="Index">Serviço</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Produtos" asp-action="Index">Produto</a></li>
                                 </ul>
                             </li>
 
@@ -147,6 +148,15 @@
     <div class="container">
 
         <main role="main" class="pb-3">
+                @if(TempData["MensagemSucesso"] != null)
+                {
+                    <div class="alert alert-success">
+                        <text>
+                            @TempData["MensagemSucesso"]
+                        </text>
+                    </div>
+                }
+
             @RenderBody()
         </main>
     </div>

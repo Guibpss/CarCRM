@@ -4,6 +4,7 @@ using CarCRM.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarCRM.Migrations
 {
     [DbContext(typeof(CarCRMContext))]
-    partial class CarCRMContextModelSnapshot : ModelSnapshot
+    [Migration("20260921073813_ValorDecimalProduto")]
+    partial class ValorDecimalProduto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -281,9 +284,8 @@ namespace CarCRM.Migrations
                     b.Property<int>("StatusPagamentoId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Valor")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("Valor")
+                        .HasColumnType("real");
 
                     b.Property<int?>("VendaId")
                         .HasColumnType("int");
@@ -437,9 +439,8 @@ namespace CarCRM.Migrations
                     b.Property<int>("ServicoTipoId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Valor")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("Valor")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 

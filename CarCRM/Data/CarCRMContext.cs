@@ -48,6 +48,7 @@ namespace CarCRM.Data
         public DbSet<PagamentoVenda> PagamentoVendas { get; set; }
         public DbSet<PagamentoCompra> PagamentoCompras { get; set; }
         public DbSet<Perfil> Perfis {  get; set; }
+        public DbSet<Produto> Produtos { get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<PessoaFisica> PessoasFisica { get; set; }
         public DbSet<PessoaJuridica> PessoasJuridica { get; set; }

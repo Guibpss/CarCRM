@@ -96,57 +96,70 @@
 							<div class="bg-secondary-soft px-4 py-5 rounded">
 								<div class="row g-3">
 									<h4 class="mb-4 mt-0">Dados de contato</h4>
-									<!-- Nome -->
+
+									 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
 									<div class="col-md-6">
-										<label class="form-label">Nome *</label>
-										<input type="text" class="form-control" placeholder="" aria-label="Nome" value="Scaralet">
+										 <label asp-for="Nome" class="form-label">Nome *</label>
+										 <input asp-for="Nome" class="form-control" />
+										 <span asp-validation-for="Nome" class="text-danger"></span>
 									</div>
-									<!-- Sobrenome -->
+
 									<div class="col-md-6">
-										<label class="form-label">Sobrenome *</label>
-										<input type="text" class="form-control" placeholder="" aria-label="Sobrenome" value="Doe">
+										<label asp-for="Email" class="form-label">E-mail *</label>
+										<input asp-for="Email" class="form-control" />
+										<span asp-validation-for="Email" class="text-danger"></span>
+										<small class="text-muted">Este e-mail é usado para entrar no sistema.</small>
 									</div>
-									<!-- Telefone -->
-									<div class="col-md-6">
-										<label class="form-label">Telefone *</label>
-										<input type="text" class="form-control" placeholder="" aria-label="Telefone" value="(333) 000 555">
-									</div>
-									<!-- Celular -->
-									<div class="col-md-6">
-										<label class="form-label">Celular *</label>
-										<input type="text" class="form-control" placeholder="" aria-label="Celular" value="+91 9852 8855 252">
-									</div>
-									<!-- E-mail -->
-									<div class="col-md-6">
-										<label for="inputEmail4" class="form-label">E-mail *</label>
-										<input type="email" class="form-control" id="inputEmail4" value="example@homerealty.com">
-									</div>
-									<!-- Skype -->
-									<div class="col-md-6">
-										<label class="form-label">Skype *</label>
-										<input type="text" class="form-control" placeholder="" aria-label="Skype" value="Scaralet D">
-									</div>
-								</div> <!-- FIM da row -->
+
+									 <div class="col-md-3">
+									     <label asp-for="TelefoneDDD" class="form-label">DDD</label>
+									     <input asp-for="TelefoneDDD" class="form-control" maxlength="3" />
+									     <span asp-validation-for="TelefoneDDD" class="text-danger"></span>
+									 </div>
+									 <div class="col-md-3">
+									     <label asp-for="TelefoneNumero" class="form-label">Telefone</label>
+									     <input asp-for="TelefoneNumero" class="form-control" maxlength="10" />
+									     <span asp-validation-for="TelefoneNumero" class="text-danger"></span>
+									 </div>
+
+									 <!-- Celular -->
+									 <div class="col-md-3">
+									     <label asp-for="CelularDDD" class="form-label">DDD</label>
+									     <input asp-for="CelularDDD" class="form-control" maxlength="3" />
+									     <span asp-validation-for="CelularDDD" class="text-danger"></span>
+									 </div>
+									 <div class="col-md-3">
+									     <label asp-for="CelularNumero" class="form-label">Celular</label>
+									     <input asp-for="CelularNumero" class="form-control" maxlength="10" />
+									     <span asp-validation-for="CelularNumero" class="text-danger"></span>
+									 </div>
+
+								</div> 
 							</div>
 							<div class="bg-secondary-soft px-4 py-5 rounded mt-5">
 								<div class="row g-3">
 									<h4 class="mb-4 mt-0">Alterar Senha</h4>
-									<!-- Senha atual -->
+									<p class="text-muted mt-0">Deixe em branco se não quiser alterar a senha.</p>
+			
 									<div class="col-md-6">
-										<label for="exampleInputPassword1" class="form-label">Senha atual *</label>
-										<input type="password" class="form-control" id="exampleInputPassword1">
+									    <label asp-for="SenhaAtual" class="form-label">Senha atual *</label>
+									    <input asp-for="SenhaAtual" class="form-control" autocomplete="current-password"/>
+										<span asp-validation-for="SenhaAtual" class="text-danger"></span>
 									</div>
-									<!-- Nova senha -->
+
 									<div class="col-md-6">
-										<label for="exampleInputPassword2" class="form-label">Nova senha *</label>
-										<input type="password" class="form-control" id="exampleInputPassword2">
+									    <label asp-for="NovaSenha" class="form-label">Nova senha *</label>
+									    <input asp-for="NovaSenha" class="form-control" autocomplete="new-password" />
+										<span asp-validation-for="NovaSenha" class="text-danger"></span>
 									</div>
-									<!-- Confirmar senha -->
+
 									<div class="col-md-6">
-										<label for="exampleInputPassword3" class="form-label">Confirmar senha *</label>
-										<input type="password" class="form-control" id="exampleInputPassword3">
+									    <label asp-for="ConfirmarSenha" class="form-label">Confirmar senha *</label>
+									    <input asp-for="ConfirmarSenha" class="form-control" autocomplete="new-password" />
+										<span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
 									</div>
-								</div> <!-- FIM da row -->
+								</div> 
 							</div>
 						</div>
 						<!-- Foto de perfil -->
@@ -158,7 +171,7 @@
 										<!-- Envio da imagem -->
 										<div class="square position-relative display-2 mb-3">
 											@* <i class="fas fa-fw fa-user position-absolute top-50 start-50 translate-middle text-secondary"></i> *@
-										<img width="200" height="200" id="imgUsuario" src="" />
+										<img width="200" height="200" id="imgUsuario" src="@ViewBag.ImagemUsuario" />
 										</div>
 										<!-- Botões -->
 										<input type="file" id="customFile" name="FotoPerfil" hidden="">

@@ -25,7 +25,7 @@ namespace CarCRM.ViewModels
         [Range(1, int.MaxValue, ErrorMessage = "Selecione o Veiculo")]
         public int VeiculoId { get; set; }
 
-        public VeiculoViewModel Veiculo { get; set; }
+        public VeiculoViewModel? Veiculo { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Selecione o Status da Venda")]
         public int StatusVendaId { get; set; }

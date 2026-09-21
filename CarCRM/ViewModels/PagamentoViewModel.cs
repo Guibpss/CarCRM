@@ -4,7 +4,7 @@ namespace CarCRM.ViewModels
 {
     public class PagamentoViewModel : ViewModelBase
     {
-        public float Valor { get; set; }
+        public decimal Valor { get; set; }
 
         public int Parcelas { get; set; }
 
@@ -23,5 +23,7 @@ namespace CarCRM.ViewModels
         public Veiculo? Veiculo { get; set; }
 
         public int CompraId { get; set; }
+
+        public int VendaId { get; set; }
     }
 }

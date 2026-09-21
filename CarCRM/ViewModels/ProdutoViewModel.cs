@@ -1,9 +1,9 @@
-﻿using CarCRM.Models;
+using CarCRM.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarCRM.ViewModels
 {
-    public class ServicoViewModel
+    public class ProdutoViewModel
     {
         public int Id { get; set; }
 
@@ -14,11 +14,6 @@ namespace CarCRM.ViewModels
         [Required(ErrorMessage = "O campo Valor é obrigatório")]
         [Range(0.01, 99_999_999, ErrorMessage = "O Valor deve estar entre {1} e {2}")]
         public decimal Valor { get; set; }
-
-        [Range(1, int.MaxValue, ErrorMessage = "Selecione o Tipo de Serviço")]
-        public int ServicoTipoId { get; set; }
-
-        public ServicoTipoViewModel? ServicoTipo { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Selecione o Cliente")]
         public int ClienteId { get; set; }
