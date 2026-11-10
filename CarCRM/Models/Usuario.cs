@@ -1,19 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
 namespace CarCRM.Models
 {
-    public class Usuario
+    public class Usuario : IdentityUser
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Nome { get; set; }
-        public string Senha { get; set; }
-        [NotMapped]
-        public string ConfirmaSenha { get; set; }
-        public DateTime CriadoEm { get; set; }
+        //public string Senha { get; set; }
+        //[NotMapped]
+        //public string ConfirmaSenha { get; set; }
+        //public DateTime CriadoEm { get; set; }
         public bool Ativo { get; set; }
-        public int PerfilId { get; set; }
-        public Perfil? Perfil { get; set; }
         public int PessoaId { get; set; }
         public PessoaFisica Pessoa { get; set; } = new PessoaFisica();
 

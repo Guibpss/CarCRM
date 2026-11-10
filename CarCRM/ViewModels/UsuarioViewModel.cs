@@ -1,17 +1,22 @@
 using CarCRM.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarCRM.ViewModels
 {
     public class UsuarioViewModel
     {
-        public int Id { get; set; }
+        public string? Id { get; set; }
 
         [Required(ErrorMessage = "O campo Nome é obrigatório")]
         [StringLength(120, MinimumLength = 3, ErrorMessage = "O Nome deve ter entre {2} e {1} caracteres")]
         public string Nome { get; set; } = string.Empty;
 
-        [StringLength(50, MinimumLength = 6, ErrorMessage = "A Senha deve ter entre {2} e {1} caracteres")]
+        [Required(ErrorMessage = "Selecione um perfil")]
+        [Display(Name = "Perfil")]
+        public string? PerfilId { get; set; }
+
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "A Senha deve ter entre {2} e {1} caracteres")]
         [DataType(DataType.Password)]
         public string? Senha { get; set; }
 
@@ -22,11 +27,6 @@ namespace CarCRM.ViewModels
         public DateTime CriadoEm { get; set; }
 
         public bool Ativo { get; set; }
-
-        [Range(1, int.MaxValue, ErrorMessage = "Selecione o Perfil")]
-        public int PerfilId { get; set; }
-
-        public PerfilViewModel? Perfil { get; set; }
 
         public int PessoaId { get; set; }
 

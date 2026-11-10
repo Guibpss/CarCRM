@@ -72,6 +72,7 @@
 
         <div>
 
+
             <h2 class="page-title">
                 <i class="fa-solid fa-box text-primary"></i>
                 Produtos
@@ -115,7 +116,9 @@
                     
                     <th>Nome</th>
                     <th>Valor</th>
-                    <th>Cliente</th>
+                    <th>Quantidade</th>
+                    <th>Valor Final</th>
+                    <th>Produto Tipo</th>
                     <th class="text-center no-sort" data-priority="1">Ações</th>
                 </tr>
             </thead>
@@ -135,7 +138,15 @@
                         </td>
 
                         <td>
-                            @item.Cliente?.Pessoa?.Nome
+                            @item.Quantidade
+                        </td>
+
+                        <td>
+                            R$ @String.Format("{0:N2}", item.ValorFinal)
+                        </td>
+
+                        <td>
+                            @item.ProdutoTipo.Nome
                         </td>
 
                         <td class="text-center">

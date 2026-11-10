@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarCRM.ViewModels
 {
-    public class PerfilViewModel
+    public class MeuPerfilViewModel
     {
-        public int Id { get; set; }
+        public string? Id { get; set; }
 
         [Required(ErrorMessage = "O campo Nome é obrigatório")]
         [StringLength(100)]
@@ -37,7 +37,7 @@ namespace CarCRM.ViewModels
         public string? SenhaAtual { get; set; }
 
         [DataType(DataType.Password)]
-        [MinLength(8, ErrorMessage = "A senha deve ter no mínimo 8 caracteres.")]
+        [MinLength(8, ErrorMessage = "A senha deve ter no mínimo 8 caracteres, letra Maiúscula e caractere especial!")]
         [Display(Name = "Nova senha")]
         public string? NovaSenha { get; set; }
 
@@ -45,6 +45,6 @@ namespace CarCRM.ViewModels
         [Compare(nameof(NovaSenha), ErrorMessage = "As senhas não conferem.")]
         [Display(Name = "Confirmar senha")]
         public string? ConfirmarSenha { get; set; }
-        public IFormFile FotoPerfil { get; set; }
+        public IFormFile? FotoPerfil { get; set; }
     }
 }

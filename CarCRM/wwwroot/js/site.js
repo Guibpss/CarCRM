@@ -51,3 +51,8 @@ $(function () {
         });
     });
 });
+
+function mostrarAlerta(mensagem) {
+    $('#modalAlertaMensagem').text(mensagem);
+    $('#modalAlerta').modal('show');
+}

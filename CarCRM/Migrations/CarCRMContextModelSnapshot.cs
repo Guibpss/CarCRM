@@ -134,8 +134,9 @@ namespace CarCRM.Migrations
                     b.Property<int>("VeiculoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendedorId")
-                        .HasColumnType("int");
+                    b.Property<string>("VendedorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -146,6 +147,49 @@ namespace CarCRM.Migrations
                     b.HasIndex("VendedorId");
 
                     b.ToTable("Compras");
+                });
+
+            modelBuilder.Entity("CarCRM.Models.CompraProduto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCompra")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("Desconto")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("Excluido")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("FornecedorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusCompraId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("ValorCompra")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FornecedorId");
+
+                    b.HasIndex("ProdutoId");
+
+                    b.HasIndex("StatusCompraId");
+
+                    b.ToTable("CompraProdutos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Estoque", b =>
@@ -260,6 +304,9 @@ namespace CarCRM.Migrations
                     b.Property<int?>("CompraId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CompraProdutoId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("datetime2");
 
@@ -288,15 +335,22 @@ namespace CarCRM.Migrations
                     b.Property<int?>("VendaId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VendaProdutoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompraId");
+
+                    b.HasIndex("CompraProdutoId");
 
                     b.HasIndex("MetodoPagamentoId");
 
                     b.HasIndex("StatusPagamentoId");
 
                     b.HasIndex("VendaId");
+
+                    b.HasIndex("VendaProdutoId");
 
                     b.ToTable("Pagamentos");
                 });
@@ -324,6 +378,29 @@ namespace CarCRM.Migrations
                     b.ToTable("PagamentoCompras");
                 });
 
+            modelBuilder.Entity("CarCRM.Models.PagamentoCompraProduto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompraProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PagamentoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompraProdutoId");
+
+                    b.HasIndex("PagamentoId");
+
+                    b.ToTable("PagamentoCompraProdutos");
+                });
+
             modelBuilder.Entity("CarCRM.Models.PagamentoVenda", b =>
                 {
                     b.Property<int>("Id")
@@ -347,7 +424,7 @@ namespace CarCRM.Migrations
                     b.ToTable("PagamentoVendas");
                 });
 
-            modelBuilder.Entity("CarCRM.Models.Perfil", b =>
+            modelBuilder.Entity("CarCRM.Models.PagamentoVendaProduto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -355,13 +432,19 @@ namespace CarCRM.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PagamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VendaProdutoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Perfis");
+                    b.HasIndex("PagamentoId");
+
+                    b.HasIndex("VendaProdutoId");
+
+                    b.ToTable("PagamentoVendaProdutos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Pessoa", b =>
@@ -401,12 +484,15 @@ namespace CarCRM.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProdutoTipoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
                         .HasPrecision(18, 2)
@@ -414,9 +500,26 @@ namespace CarCRM.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ProdutoTipoId");
 
                     b.ToTable("Produtos");
+                });
+
+            modelBuilder.Entity("CarCRM.Models.ProdutoTipo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProdutoTipos");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Servico", b =>
@@ -426,9 +529,6 @@ namespace CarCRM.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -442,8 +542,6 @@ namespace CarCRM.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
 
                     b.HasIndex("ServicoTipoId");
 
@@ -617,43 +715,79 @@ namespace CarCRM.Migrations
 
             modelBuilder.Entity("CarCRM.Models.Usuario", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ConfirmaSenha")
-                        .IsRequired()
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PerfilId")
-                        .HasColumnType("int");
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PessoaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Senha")
-                        .IsRequired()
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PerfilId");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("PessoaId");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("CarCRM.Models.Veiculo", b =>
@@ -921,9 +1055,189 @@ namespace CarCRM.Migrations
                     b.ToTable("Vendas");
                 });
 
+            modelBuilder.Entity("CarCRM.Models.VendaProduto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataVenda")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("Desconto")
+                        .HasColumnType("real");
+
+                    b.Property<bool>("Excluido")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusVendaId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("ValorVenda")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("ProdutoId");
+
+                    b.HasIndex("StatusVendaId");
+
+                    b.ToTable("VendaProdutos");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("CarCRM.Models.Fornecedor", b =>
                 {
                     b.HasBaseType("CarCRM.Models.Pessoa");
+
+                    b.Property<string>("Documento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FornecedorTipoId")
                         .HasColumnType("int");
@@ -1060,6 +1374,33 @@ namespace CarCRM.Migrations
                     b.Navigation("Vendedor");
                 });
 
+            modelBuilder.Entity("CarCRM.Models.CompraProduto", b =>
+                {
+                    b.HasOne("CarCRM.Models.Fornecedor", "Fornecedor")
+                        .WithMany()
+                        .HasForeignKey("FornecedorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CarCRM.Models.Produto", "Produto")
+                        .WithMany()
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CarCRM.Models.StatusCompra", "StatusCompra")
+                        .WithMany()
+                        .HasForeignKey("StatusCompraId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Fornecedor");
+
+                    b.Navigation("Produto");
+
+                    b.Navigation("StatusCompra");
+                });
+
             modelBuilder.Entity("CarCRM.Models.FuncionarioCargo", b =>
                 {
                     b.HasOne("CarCRM.Models.Cargo", "Cargo")
@@ -1085,6 +1426,10 @@ namespace CarCRM.Migrations
                         .WithMany("Pagamentos")
                         .HasForeignKey("CompraId");
 
+                    b.HasOne("CarCRM.Models.CompraProduto", null)
+                        .WithMany("Pagamentos")
+                        .HasForeignKey("CompraProdutoId");
+
                     b.HasOne("CarCRM.Models.MetodoPagamento", "MetodoPagamento")
                         .WithMany()
                         .HasForeignKey("MetodoPagamentoId")
@@ -1100,6 +1445,10 @@ namespace CarCRM.Migrations
                     b.HasOne("CarCRM.Models.Venda", null)
                         .WithMany("Pagamentos")
                         .HasForeignKey("VendaId");
+
+                    b.HasOne("CarCRM.Models.VendaProduto", null)
+                        .WithMany("Pagamentos")
+                        .HasForeignKey("VendaProdutoId");
 
                     b.Navigation("MetodoPagamento");
 
@@ -1125,6 +1474,25 @@ namespace CarCRM.Migrations
                     b.Navigation("Pagamento");
                 });
 
+            modelBuilder.Entity("CarCRM.Models.PagamentoCompraProduto", b =>
+                {
+                    b.HasOne("CarCRM.Models.CompraProduto", "CompraProduto")
+                        .WithMany()
+                        .HasForeignKey("CompraProdutoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CarCRM.Models.Pagamento", "Pagamento")
+                        .WithMany()
+                        .HasForeignKey("PagamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CompraProduto");
+
+                    b.Navigation("Pagamento");
+                });
+
             modelBuilder.Entity("CarCRM.Models.PagamentoVenda", b =>
                 {
                     b.HasOne("CarCRM.Models.Pagamento", "Pagamento")
@@ -1144,32 +1512,43 @@ namespace CarCRM.Migrations
                     b.Navigation("Venda");
                 });
 
-            modelBuilder.Entity("CarCRM.Models.Produto", b =>
+            modelBuilder.Entity("CarCRM.Models.PagamentoVendaProduto", b =>
                 {
-                    b.HasOne("CarCRM.Models.Cliente", "Cliente")
+                    b.HasOne("CarCRM.Models.Pagamento", "Pagamento")
                         .WithMany()
-                        .HasForeignKey("ClienteId")
+                        .HasForeignKey("PagamentoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
+                    b.HasOne("CarCRM.Models.VendaProduto", "VendaProduto")
+                        .WithMany()
+                        .HasForeignKey("VendaProdutoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Pagamento");
+
+                    b.Navigation("VendaProduto");
+                });
+
+            modelBuilder.Entity("CarCRM.Models.Produto", b =>
+                {
+                    b.HasOne("CarCRM.Models.ProdutoTipo", "ProdutoTipo")
+                        .WithMany()
+                        .HasForeignKey("ProdutoTipoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ProdutoTipo");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Servico", b =>
                 {
-                    b.HasOne("CarCRM.Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CarCRM.Models.ServicoTipo", "ServicoTipo")
                         .WithMany()
                         .HasForeignKey("ServicoTipoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Cliente");
 
                     b.Navigation("ServicoTipo");
                 });
@@ -1195,19 +1574,11 @@ namespace CarCRM.Migrations
 
             modelBuilder.Entity("CarCRM.Models.Usuario", b =>
                 {
-                    b.HasOne("CarCRM.Models.Perfil", "Perfil")
-                        .WithMany()
-                        .HasForeignKey("PerfilId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("CarCRM.Models.PessoaFisica", "Pessoa")
                         .WithMany()
                         .HasForeignKey("PessoaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Perfil");
 
                     b.Navigation("Pessoa");
                 });
@@ -1326,6 +1697,84 @@ namespace CarCRM.Migrations
                     b.Navigation("Veiculo");
                 });
 
+            modelBuilder.Entity("CarCRM.Models.VendaProduto", b =>
+                {
+                    b.HasOne("CarCRM.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CarCRM.Models.Produto", "Produto")
+                        .WithMany()
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CarCRM.Models.StatusVenda", "StatusVenda")
+                        .WithMany()
+                        .HasForeignKey("StatusVendaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Produto");
+
+                    b.Navigation("StatusVenda");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("CarCRM.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("CarCRM.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CarCRM.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("CarCRM.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CarCRM.Models.Fornecedor", b =>
                 {
                     b.HasOne("CarCRM.Models.FornecedorTipo", "FornecedorTipo")
@@ -1375,12 +1824,22 @@ namespace CarCRM.Migrations
                     b.Navigation("Pagamentos");
                 });
 
+            modelBuilder.Entity("CarCRM.Models.CompraProduto", b =>
+                {
+                    b.Navigation("Pagamentos");
+                });
+
             modelBuilder.Entity("CarCRM.Models.Pessoa", b =>
                 {
                     b.Navigation("Telefones");
                 });
 
             modelBuilder.Entity("CarCRM.Models.Venda", b =>
+                {
+                    b.Navigation("Pagamentos");
+                });
+
+            modelBuilder.Entity("CarCRM.Models.VendaProduto", b =>
                 {
                     b.Navigation("Pagamentos");
                 });

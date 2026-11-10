@@ -15,8 +15,6 @@ namespace CarCRM.Models
 
         public ServicoTipo ServicoTipo { get; set; }
 
-        public int ClienteId { get; set; }
-
-        public Cliente Cliente { get; set; }
+        
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HHuPMdyD/vM=",
+  "dgSpecHash": "7v6Rm8RwJo0=",
   "success": true,
   "projectFilePath": "C:\\Users\\guilherme.santos\\Documents\\ESTUDOS\\CarCRM\\CarCRM\\CarCRM.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,7 @@
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\guilherme.santos\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.9\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.9.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\6.0.0\\microsoft.aspnetcore.mvc.razor.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\10.0.9\\microsoft.aspnetcore.mvc.razor.runtimecompilation.10.0.9.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.24\\microsoft.aspnetcore.razor.language.6.0.24.nupkg.sha512",
@@ -125,10 +126,11 @@
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.configuration.configurationmanager\\9.0.4\\system.configuration.configurationmanager.9.0.4.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512",
+    "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.formats.asn1\\11.0.0\\system.formats.asn1.11.0.0.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.7.1\\system.identitymodel.tokens.jwt.7.7.1.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.reflection.metadataloadcontext\\8.0.0\\system.reflection.metadataloadcontext.8.0.0.nupkg.sha512",
-    "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.security.cryptography.pkcs\\9.0.4\\system.security.cryptography.pkcs.9.0.4.nupkg.sha512",
+    "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.security.cryptography.pkcs\\11.0.0\\system.security.cryptography.pkcs.11.0.0.nupkg.sha512",
     "C:\\Users\\guilherme.santos\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.6\\system.security.cryptography.protecteddata.9.0.6.nupkg.sha512"
   ],
   "logs": []

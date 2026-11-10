@@ -740,7 +740,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="info-label">Desconto</label>
-                                <input name="Desconto" id="Desconto" type="text" inputmode="decimal"
+                                <input name="Desconto" id="DescontoCompra" type="text" inputmode="decimal"
                                        placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
                             </div>
                         </div>
@@ -807,7 +807,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="info-label">Desconto</label>
-                                <input name="Desconto" id="Edit_Desconto" type="text" inputmode="decimal"
+                                <input name="Desconto" id="Edit_DescontoCompra" type="text" inputmode="decimal"
                                        placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
                             </div>
                         </div>
@@ -868,6 +868,9 @@
 </div>
 
 
+
+@if (Model.Compra != null && Model.Compra?.Id != 0)
+{
 
 <div class="container-fluid py-5">
 
@@ -1153,6 +1156,7 @@
 
 </div>
 
+}
 
 <div class="modal fade" id="pagVendaModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
@@ -1472,7 +1476,7 @@
                         <i class="fa-solid fa-trash-can"></i>
                         Excluir
                     </button>
-
+                    
                 </form>
             </div>
         </div>
@@ -1572,7 +1576,7 @@
                     Valor: $("#pagCompra_Valor").val(),
                     Parcelas: $("#pagCompra_Parcelas").val(),
                     DataVencimento: $("#pagCompra_DataVencimento").val(),
-                    DataPagamento: $("#pagCompra_DataPagamento").val(),
+                    DataPagamento: $("#pagCompra_DataPagamento").prop('disabled') ? '' : $("#pagCompra_DataPagamento").val(),
                     StatusPagamentoId: $("#pagCompra_StatusPagamentoId").val(),
                     MetodoPagamentoId: $("#pagCompra_MetodoPagamentoId").val()
                 },
@@ -1593,7 +1597,7 @@
                     Valor: $("#pagVenda_Valor").val(),
                     Parcelas: $("#pagVenda_Parcelas").val(),
                     DataVencimento: $("#pagVenda_DataVencimento").val(),
-                    DataPagamento: $("#pagVenda_DataPagamento").val(),
+                    DataPagamento: $("#pagVenda_DataPagamento").prop('disabled') ? '' : $("#pagVenda_DataPagamento").val(),
                     StatusPagamentoId: $("#pagVenda_StatusPagamentoId").val(),
                     MetodoPagamentoId: $("#pagVenda_MetodoPagamentoId").val()
                 },
@@ -1613,7 +1617,7 @@
                 VendedorId: $("#VendedorId").val(),
                 StatusCompraId: $("#StatusCompraId").val(),
                 ValorCompra: $("#ValorCompra").val(),
-                Desconto: $("#Desconto").val()
+                Desconto: $("#DescontoCompra").val()
             };
 
             $.ajax({
@@ -1717,7 +1721,7 @@
                         $('#edit_VendedorId').val(response.Resultado.VendedorId);
                         $('#edit_StatusCompraId').val(response.Resultado.StatusCompraId);
                         $('#Edit_ValorCompra').val(response.Resultado.ValorCompra);
-                        $('#Edit_Desconto').val(response.Resultado.Desconto);
+                        $('#Edit_DescontoCompra').val(response.Resultado.Desconto);
                     }
                 },
                 error: function() {
@@ -1777,7 +1781,7 @@
                 VendedorId: $("#edit_VendedorId").val(),
                 StatusCompraId: $("#edit_StatusCompraId").val(),
                 ValorCompra: $("#Edit_ValorCompra").val(),
-                Desconto: $("#Edit_Desconto").val()
+                Desconto: $("#Edit_DescontoCompra").val()
             };
 
             $.ajax({

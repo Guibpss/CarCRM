@@ -119,7 +119,6 @@
                         <th>RG</th>
                         <th>Email</th>
                         <th>Nascimento</th>
-                        <th>Perfil</th>
                         <th>Status</th>
                         <th class="text-center no-sort" data-priority="1">Ações</th>
                     </tr>
@@ -149,10 +148,6 @@
 
                             <td>
                                 @(item.Pessoa != null ? item.Pessoa.DataNascimento.ToString("dd/MM/yyyy") : "")
-                            </td>
-
-                            <td>
-                                @item.Perfil?.Nome
                             </td>
 
                             <td>

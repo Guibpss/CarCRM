@@ -104,7 +104,23 @@
 
     <form asp-action="Create" id="UsuarioCreate">
 
-        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            @{
+                var erroSenha = ViewData.ModelState[string.Empty]?.Errors
+                        .Any(e => e.ErrorMessage.StartsWith("Passwords")) == true;
+            }
+
+            @if (erroSenha)
+            {
+                <div class="alert alert-danger mb-3">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Senha inválida. 
+                    A senha deve ter no mínimo 8 caracteres, com letra maiúscula, minúscula, número e símbolo.
+                </div>
+            }
+            else
+            {
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            }
 
         <input type="hidden" name="Pessoa.Nome" id="pessoaNome" />
 
@@ -141,17 +157,6 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label asp-for="PerfilId" class="info-label">Perfil</label>
-                            <select asp-for="PerfilId" class="form-select"
-                                    asp-items="@(new SelectList(ViewBag.Perfis, "Id", "Nome"))">
-                                <option value="">Selecione o Perfil</option>
-                            </select>
-                            <span asp-validation-for="PerfilId" class="text-danger"></span>
-                        </div>
-                    </div>
-
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label asp-for="Pessoa.CPF" class="info-label">CPF</label>
@@ -171,12 +176,14 @@
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label class="info-label">Data de Nascimento</label>
-                            <input name="Pessoa.DataNascimento" type="date" class="form-control" required />
+                            <input asp-for="Pessoa.DataNascimento" type="date" class="form-control" required 
+                                value="@(Model.Pessoa.DataNascimento == default(DateTime) ? "" : 
+                                         Model.Pessoa.DataNascimento.ToString("yyyy-MM-dd"))"/>
                             <span asp-validation-for="Pessoa.DataNascimento" class="text-danger"></span>
                         </div>
                     </div>
 
-                    <div class="col-lg-3">
+                    @* <div class="col-lg-3">
                         <div class="form-group">
                             <label asp-for="Ativo" class="info-label">Ativo</label>
                             <div class="form-check form-switch mt-2">
@@ -184,7 +191,7 @@
                             </div>
                             <span asp-validation-for="Ativo" class="text-danger"></span>
                         </div>
-                    </div>
+                    </div> *@
 
                 </div>
 
@@ -222,6 +229,17 @@
                             <label asp-for="ConfirmaSenha" class="info-label">Confirmar Senha</label>
                             <input asp-for="ConfirmaSenha" type="password" class="form-control" maxlength="50" required />
                             <span asp-validation-for="ConfirmaSenha" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="PerfilId" class="info-label">Perfil</label>
+                            <select asp-for="PerfilId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Perfis, "Id", "Name"))" required>
+                                <option value="">Selecione...</option>
+                            </select>
+                            <span asp-validation-for="PerfilId" class="text-danger"></span>
                         </div>
                     </div>
 

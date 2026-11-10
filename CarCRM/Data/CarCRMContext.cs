@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using CarCRM.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CarCRM.Data
 {
-    public class CarCRMContext : DbContext
+    public class CarCRMContext : IdentityDbContext<Usuario>
     {
         public DbSet<CarCRM.Models.VeiculoMotorizacao> VeiculoMotorizacao { get; set; } = default!;
         public DbSet<CarCRM.Models.VeiculoCombustivel> VeiculoCombustivel { get; set; } = default!;
@@ -39,6 +40,7 @@ namespace CarCRM.Data
         public DbSet<Cargo> Cargos { get; set; }
         public DbSet<Comissao> Comissoes { get; set; }
         public DbSet<Compra> Compras { get; set; }
+        public DbSet<CompraProduto> CompraProdutos { get; set; }
         public DbSet<Estoque> Estoques { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<FornecedorTipo> FornecedorTipos { get; set; }
@@ -47,8 +49,10 @@ namespace CarCRM.Data
         public DbSet<Pagamento> Pagamentos { get; set; }
         public DbSet<PagamentoVenda> PagamentoVendas { get; set; }
         public DbSet<PagamentoCompra> PagamentoCompras { get; set; }
-        public DbSet<Perfil> Perfis {  get; set; }
+        public DbSet<PagamentoVendaProduto> PagamentoVendaProdutos { get; set; }
+        public DbSet<PagamentoCompraProduto> PagamentoCompraProdutos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
+        public DbSet<ProdutoTipo> ProdutoTipos { get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<PessoaFisica> PessoasFisica { get; set; }
         public DbSet<PessoaJuridica> PessoasJuridica { get; set; }
@@ -66,6 +70,7 @@ namespace CarCRM.Data
         public DbSet<VeiculoMarca> veiculoMarcas { get; set; }
         public DbSet<VeiculoTipo> VeiculoTipos { get; set; }
         public DbSet<Venda> Vendas { get; set; }
+        public DbSet<VendaProduto> VendaProdutos { get; set; }
 
     }
 }

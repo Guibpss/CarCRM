@@ -38,6 +38,7 @@
     ".NETCoreApp,Version=v10.0": {
       "CarCRM/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "10.0.9",
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "10.0.9",
           "Microsoft.EntityFrameworkCore": "10.0.9",
           "Microsoft.EntityFrameworkCore.Design": "10.0.9",
@@ -46,6 +47,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "10.0.2",
           "NuGet.Packaging": "7.6.0",
           "NuGet.Protocol": "7.6.0",
+          "System.Security.Cryptography.Pkcs": "11.0.0",
           "Microsoft.AspNetCore.Antiforgery": "10.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "10.0.0.0",
           "Microsoft.AspNetCore.Authentication.BearerToken": "10.0.0.0",
@@ -223,7 +225,6 @@
           "System.Drawing": "4.0.0.0",
           "System.Drawing.Primitives": "10.0.0.0",
           "System.Dynamic.Runtime": "10.0.0.0",
-          "System.Formats.Asn1": "10.0.0.0",
           "System.Formats.Cbor": "10.0.0.0",
           "System.Formats.Tar": "10.0.0.0",
           "System.Globalization.Calendars": "10.0.0.0",
@@ -936,6 +937,20 @@
           }
         }
       },
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/10.0.9": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.9"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
+            "assemblyVersion": "10.0.9.0",
+            "fileVersion": "10.0.926.27113"
+          }
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Mvc.Razor.Extensions/6.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Razor.Language": "6.0.24",
@@ -1550,7 +1565,7 @@
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "7.7.1",
           "Microsoft.SqlServer.Server": "1.0.0",
           "System.Configuration.ConfigurationManager": "9.0.4",
-          "System.Security.Cryptography.Pkcs": "9.0.4"
+          "System.Security.Cryptography.Pkcs": "11.0.0"
         },
         "runtime": {
           "lib/net9.0/Microsoft.Data.SqlClient.dll": {
@@ -2226,7 +2241,7 @@
           "Newtonsoft.Json": "13.0.3",
           "NuGet.Configuration": "7.6.0",
           "NuGet.Versioning": "7.6.0",
-          "System.Security.Cryptography.Pkcs": "9.0.4"
+          "System.Security.Cryptography.Pkcs": "11.0.0"
         },
         "runtime": {
           "lib/net8.0/NuGet.Packaging.dll": {
@@ -2391,6 +2406,17 @@
           "lib/net9.0/System.Configuration.ConfigurationManager.dll": {}
         }
       },
+      "System.Formats.Asn1/11.0.0": {
+        "runtime": {
+          "lib/net10.0/System.Formats.Asn1.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.53018"
+          }
+        },
+        "compile": {
+          "lib/net10.0/System.Formats.Asn1.dll": {}
+        }
+      },
       "System.IdentityModel.Tokens.Jwt/7.7.1": {
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "7.7.1",
@@ -2426,6 +2452,28 @@
         },
         "compile": {
           "lib/net8.0/System.Reflection.MetadataLoadContext.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Pkcs/11.0.0": {
+        "dependencies": {
+          "System.Formats.Asn1": "11.0.0"
+        },
+        "runtime": {
+          "lib/net10.0/System.Security.Cryptography.Pkcs.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.53018"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net10.0/System.Security.Cryptography.Pkcs.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.53018"
+          }
+        },
+        "compile": {
+          "lib/net10.0/System.Security.Cryptography.Pkcs.dll": {}
         }
       },
       "System.Security.Cryptography.ProtectedData/9.0.6": {
@@ -3501,12 +3549,6 @@
         },
         "compileOnly": true
       },
-      "System.Formats.Asn1/10.0.0.0": {
-        "compile": {
-          "System.Formats.Asn1.dll": {}
-        },
-        "compileOnly": true
-      },
       "System.Formats.Cbor/10.0.0.0": {
         "compile": {
           "System.Formats.Cbor.dll": {}
@@ -4295,12 +4337,6 @@
       },
       "System.Data.DataSetExtensions/4.5.0": {
         "compileOnly": true
-      },
-      "System.Security.Cryptography.Pkcs/9.0.4": {
-        "compile": {
-          "lib/net9.0/System.Security.Cryptography.Pkcs.dll": {}
-        },
-        "compileOnly": true
       }
     }
   },
@@ -4673,6 +4709,13 @@
       "sha512": "sha512-VIXB7HCUC34OoaGnO3HJVtSv2/wljPhjV7eKH4+TFPgQdJj2lvHNKY41Dtg0Bphu7X5UaXFR4zrYYyo+GNOjbA==",
       "path": "humanizer.core.zh-hant/2.14.1",
       "hashPath": "humanizer.core.zh-hant.2.14.1.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore/10.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5yHCQ6fDsOKJTCyXCHb7Q4KFPrlTF5k+u5unV7GXI89NJkvgk6nXr6jGxdBi003Sx8MzTjZGpjABLmpOZ2Pg1A==",
+      "path": "microsoft.aspnetcore.identity.entityframeworkcore/10.0.9",
+      "hashPath": "microsoft.aspnetcore.identity.entityframeworkcore.10.0.9.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Mvc.Razor.Extensions/6.0.0": {
       "type": "package",
@@ -5129,6 +5172,13 @@
       "path": "system.configuration.configurationmanager/9.0.4",
       "hashPath": "system.configuration.configurationmanager.9.0.4.nupkg.sha512"
     },
+    "System.Formats.Asn1/11.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RSIrJ7D8gEHykZWTfS/r9tz/G5YpxIQAaFFXSLLHhVaRed+/26KvqaXvUtqqMJMlNjubAcMvf3UJ+E6ABT8AWw==",
+      "path": "system.formats.asn1/11.0.0",
+      "hashPath": "system.formats.asn1.11.0.0.nupkg.sha512"
+    },
     "System.IdentityModel.Tokens.Jwt/7.7.1": {
       "type": "package",
       "serviceable": true,
@@ -5149,6 +5199,13 @@
       "sha512": "sha512-SZxrQ4sQYnIcdwiO3G/lHZopbPYQ2lW0ioT4JezgccWUrKaKbHLJbAGZaDfkYjWcta1pWssAo3MOXLsR0ie4tQ==",
       "path": "system.reflection.metadataloadcontext/8.0.0",
       "hashPath": "system.reflection.metadataloadcontext.8.0.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.Pkcs/11.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-G8mTjSWrwaPJ2bJRbKuI4ZqdKUYcANK0KtNH3s8/va3nXiF/Pk/yhv2R17rv5PBKJO5+ZXDyhTnZXh0W9v0J8w==",
+      "path": "system.security.cryptography.pkcs/11.0.0",
+      "hashPath": "system.security.cryptography.pkcs.11.0.0.nupkg.sha512"
     },
     "System.Security.Cryptography.ProtectedData/9.0.6": {
       "type": "package",
@@ -6042,11 +6099,6 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Formats.Asn1/10.0.0.0": {
-      "type": "referenceassembly",
-      "serviceable": false,
-      "sha512": ""
-    },
     "System.Formats.Cbor/10.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
@@ -6719,13 +6771,6 @@
       "sha512": "sha512-221clPs1445HkTBZPL+K9sDBdJRB8UN8rgjO3ztB0CQ26z//fmJXtlsr6whGatscsKGBrhJl5bwJuKSA8mwFOw==",
       "path": "system.data.datasetextensions/4.5.0",
       "hashPath": "system.data.datasetextensions.4.5.0.nupkg.sha512"
-    },
-    "System.Security.Cryptography.Pkcs/9.0.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-cUFTcMlz/Qw9s90b2wnWSCvHdjv51Bau9FQqhsr4TlwSe1OX+7SoXUqphis5G74MLOvMOCghxPPlEqOdCrVVGA==",
-      "path": "system.security.cryptography.pkcs/9.0.4",
-      "hashPath": "system.security.cryptography.pkcs.9.0.4.nupkg.sha512"
     }
   }
 }

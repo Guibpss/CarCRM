@@ -15,9 +15,32 @@ namespace CarCRM.ViewModels
         [Range(0.01, 99_999_999, ErrorMessage = "O Valor deve estar entre {1} e {2}")]
         public decimal Valor { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Selecione o Cliente")]
-        public int ClienteId { get; set; }
+        [Required(ErrorMessage = "O campo Quantidade é obrigatório")]
+        public int Quantidade { get; set; }
 
-        public ClienteViewModel? Cliente { get; set; }
+        //[Range(1, int.MaxValue, ErrorMessage = "Selecione o Cliente")]
+        //public int ClienteId { get; set; }
+
+        //public ClienteViewModel? Cliente { get; set; }
+        public decimal ValorFinal
+        {
+            get
+            {
+                return Valor * Quantidade;
+            }
+        }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Selecione o tipo do Produto")]
+        public int ProdutoTipoId { get; set; }
+
+        public ProdutoTipoViewModel? ProdutoTipo { get; set; }
+
+        public CompraProdutoViewModel? CompraProduto { get; set; } 
+
+        public VendaProdutoViewModel? VendaProduto { get; set;} 
+
+        public List<PagamentoViewModel>? PagamentosProdutoCompra { get; set; }
+
+        public List<PagamentoViewModel>? PagamentosProdutoVenda { get; set; }
     }
 }

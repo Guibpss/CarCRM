@@ -10,7 +10,7 @@ namespace CarCRM.ViewModels
 
         public float Desconto { get; set; }
 
-        public int VendedorId { get; set; }
+        public string VendedorId { get; set; }
 
         public UsuarioViewModel? Vendedor { get; set; }
 
@@ -21,6 +21,7 @@ namespace CarCRM.ViewModels
         public int StatusCompraId { get; set; }
 
         public StatusCompraViewModel? StatusCompra { get; set; }
+        public int ProdutoId { get; set; }
 
         public float ValorFinal
         {

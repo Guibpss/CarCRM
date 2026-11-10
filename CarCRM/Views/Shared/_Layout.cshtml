@@ -130,9 +130,12 @@
                                     <li><a class="dropdown-item" href="~/Home/EditarPerfil">Meu perfil</a></li>
                                     <li><a class="dropdown-item" href="#">Configurações</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li>
+                                    @* <li>
                                         <a class="dropdown-item" asp-controller="Home" asp-action="Index">Sair</a>
-                                    </li>
+                                    </li> *@
+                                    <form asp-controller="Usuarios" asp-action="Logout" method="post">
+                                        <button type="submit" class="btn btn-link">Sair</button>
+                                    </form>
                                 </ul>
                             </li>
                         </ul>
@@ -167,6 +170,22 @@
             <p class="copyright">Copyright © 2026 CarCRM. Todos os direitos reservados.</p>
         </footer>
     </div>
+
+    <div class="modal fade" id="modalAlerta" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aviso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalAlertaMensagem"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>

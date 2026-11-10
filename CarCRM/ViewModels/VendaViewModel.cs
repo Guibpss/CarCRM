@@ -31,6 +31,7 @@ namespace CarCRM.ViewModels
         public int StatusVendaId { get; set; }
 
         public StatusVendaViewModel? StatusVenda { get; set; }
+        public int ProdutoId { get; set; }
 
         public float ValorFinal
         {

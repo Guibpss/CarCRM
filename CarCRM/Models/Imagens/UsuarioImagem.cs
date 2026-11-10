@@ -6,6 +6,6 @@
 
         public byte[] Imagem { get; set; }
 
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; }
     }
 }

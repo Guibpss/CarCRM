@@ -17,8 +17,8 @@ public class ServicosController : Controller
     public async Task<IActionResult> Index()
     {
         var servicos = await _context.Servicos
-            .Include(s => s.Cliente)
-                .ThenInclude(c => c.Pessoa)
+            //.Include(s => s.Cliente)
+                //.ThenInclude(c => c.Pessoa)
             .Include(s => s.ServicoTipo)
             .ToListAsync();
 
@@ -33,13 +33,13 @@ public class ServicosController : Controller
                 Id = s.ServicoTipo.Id,
                 Nome = s.ServicoTipo.Nome
             },
-            ClienteId = s.ClienteId,
+            //ClienteId = s.ClienteId,
             Cliente = new ClienteViewModel
             {
-                PessoaId = s.Cliente.PessoaId,
+                //PessoaId = s.Cliente.PessoaId,
                 Pessoa = new PessoaViewModel
                 {
-                    Nome = s.Cliente.Pessoa.Nome
+                    //Nome = s.Cliente.Pessoa.Nome
                 }
             }
         }).ToList();
@@ -55,8 +55,8 @@ public class ServicosController : Controller
         }
 
         var servico = await _context.Servicos
-            .Include(s => s.Cliente)
-                .ThenInclude(c => c.Pessoa)
+            //.Include(s => s.Cliente)
+                //.ThenInclude(c => c.Pessoa)
             .Include(s => s.ServicoTipo)
             .FirstOrDefaultAsync(s => s.Id == id);
 
@@ -76,13 +76,13 @@ public class ServicosController : Controller
                 Id = servico.ServicoTipo.Id,
                 Nome = servico.ServicoTipo.Nome
             },
-            ClienteId = servico.ClienteId,
+            //ClienteId = servico.ClienteId,
             Cliente = new ClienteViewModel
             {
-                PessoaId = servico.Cliente.PessoaId,
+                //PessoaId = servico.Cliente.PessoaId,
                 Pessoa = new PessoaViewModel
                 {
-                    Nome = servico.Cliente.Pessoa.Nome
+                   // Nome = servico.Cliente.Pessoa.Nome
                 }
             }
         };
@@ -113,7 +113,7 @@ public class ServicosController : Controller
                 Nome = servicoViewModel.Nome,
                 Valor = servicoViewModel.Valor,
                 ServicoTipoId = servicoViewModel.ServicoTipoId,
-                ClienteId = servicoViewModel.ClienteId,
+                //ClienteId = servicoViewModel.ClienteId,
             };
 
             _context.Add(servico);
@@ -136,8 +136,8 @@ public class ServicosController : Controller
         }
 
         var servico = await _context.Servicos
-            .Include(s => s.Cliente)
-                .ThenInclude(c => c.Pessoa)
+            //.Include(s => s.Cliente)
+                //.ThenInclude(c => c.Pessoa)
             .Include(s => s.ServicoTipo)
             .FirstOrDefaultAsync(s => s.Id == id);
 
@@ -155,7 +155,7 @@ public class ServicosController : Controller
             Nome = servico.Nome,
             Valor = servico.Valor,
             ServicoTipoId = servico.ServicoTipoId,
-            ClienteId = servico.ClienteId,
+            //ClienteId = servico.ClienteId,
             
         };
         return View(servicoViewModel);
@@ -177,8 +177,8 @@ public class ServicosController : Controller
             try
             {
                 var servico = await _context.Servicos
-                    .Include(s => s.Cliente)
-                        .ThenInclude(c => c.Pessoa)
+                    //.Include(s => s.Cliente)
+                        //.ThenInclude(c => c.Pessoa)
                     .Include(s => s.ServicoTipo)
                     .FirstOrDefaultAsync(s => s.Id == id);
 
@@ -190,7 +190,7 @@ public class ServicosController : Controller
                 servico.Nome = servicoViewModel.Nome;
                 servico.Valor = servicoViewModel.Valor;
                 servico.ServicoTipoId = servicoViewModel.ServicoTipoId;
-                servico.ClienteId = servicoViewModel.ClienteId;
+                //servico.ClienteId = servicoViewModel.ClienteId;
 
                 _context.Update(servico);
                 await _context.SaveChangesAsync();
@@ -224,8 +224,8 @@ public class ServicosController : Controller
         }
 
         var servico = await _context.Servicos
-            .Include(s => s.Cliente)
-                .ThenInclude(c => c.Pessoa)
+            //.Include(s => s.Cliente)
+                //.ThenInclude(c => c.Pessoa)
             .Include(s => s.ServicoTipo)
             .FirstOrDefaultAsync(s => s.Id == id);
 
@@ -245,13 +245,13 @@ public class ServicosController : Controller
                 Id = servico.ServicoTipo.Id,
                 Nome = servico.ServicoTipo.Nome
             },
-            ClienteId = servico.ClienteId,
+           //ClienteId = servico.ClienteId,
             Cliente = new ClienteViewModel
             {
-                PessoaId = servico.Cliente.PessoaId,
+                //PessoaId = servico.Cliente.PessoaId,
                 Pessoa = new PessoaViewModel
                 {
-                    Nome = servico.Cliente.Pessoa.Nome
+                   // Nome = servico.Cliente.Pessoa.Nome
                 }
             }
         };

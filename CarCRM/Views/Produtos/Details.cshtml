@@ -129,11 +129,1651 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="info-label">Cliente</div>
-                    <div class="info-value">@Model.Cliente?.Pessoa?.Nome</div>
+                    <div class="info-label">Quantidade</div>
+                    <div class="info-value">@Model.Quantidade</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Valor Final</div>
+                    <div class="info-value">R$ @String.Format("{0:N2}", Model.ValorFinal)</div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="info-label">Produto Tipo</div>
+                    <div class="info-value">@Model.ProdutoTipo?.Nome</div>
                 </div>
 
             </div>
         </div>
     </div>
 </div>
+
+<div class="container-fluid py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="page-title">
+                <i class="fa-solid fa-file-invoice-dollar text-primary"></i>
+                Compra
+            </h2>
+
+            <small class="text-muted">
+                Gerencie a compra cadastrada.
+            </small>
+
+        </div>
+
+        <div class="d-flex gap-2">
+            @if (Model.CompraProduto == null || Model.CompraProduto.Id ==0)
+            {
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#compraProdutoModal">
+                    <i class="fa-solid fa-plus"></i> Adicionar Compra
+                </button>
+            }
+            else
+            {
+                <a href="#" class="btn btn-warning btn-editar-compra" data-id="@Model.CompraProduto.Id">
+                    <i class="fa-solid fa-pencil"></i> Editar
+                </a>
+                <button type="button" class="btn btn-danger btn-excluir-compra"
+                        data-id="@Model.CompraProduto.Id" data-bs-toggle="modal"
+                        data-bs-target="#compraProdutoModalDelete">
+                        <i class="fa-solid fa-trash-can"></i> Excluir
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+        </div>
+
+        <div class="card-body">
+            @if (Model.CompraProduto == null || Model.CompraProduto.Id == 0)
+            {
+                <p class="text-muted mb-0">Nenhuma compra cadastrada para este produto.</p>
+            }
+            else
+            {
+                <div class="row g-4">
+
+                    <div class="col-md-3">
+                        <div class="info-label">Data da Compra</div>
+                        <div class="info-value">@Model.CompraProduto.DataCompra.ToString("dd/MM/yyyy")</div>
+                    </div>
+
+                     <div class="col-md-3">
+                        <div class="info-label">Fornecedor</div>
+                        <div class="info-value">@Model.CompraProduto.Fornecedor?.Nome</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">@Model.CompraProduto.StatusCompra?.Nome</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Valor da Compra</div>
+                        <div class="info-value">R$ @String.Format("{0:N2}", Model.CompraProduto.ValorCompra)</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Desconto</div>
+                        <div class="info-value">R$ @String.Format("{0:N2}", Model.CompraProduto.Desconto)</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Valor Final</div>
+                        <div class="info-value">R$ @String.Format("{0:N2}", Model.CompraProduto.ValorFinal)</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Criado Em</div>
+                        <div class="info-value">@Model.CompraProduto.CriadoEm.ToString("dd/MM/yyyy")</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Excluido</div>
+                        <div class="info-value">@(Model.CompraProduto.Excluido ? "Sim" : "Não")</div>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+        <div class="container-fluid py-5">
+            @if (Model.CompraProduto == null || Model.CompraProduto.Id ==0)
+            {
+                <p class="text-muted mb-0"></p>
+            }
+            else
+            {
+                var totalPago = Model.PagamentosProdutoCompra?.Sum(p => p.Valor) ?? 0;
+                var valorFinal = (decimal)Model.CompraProduto.ValorFinal;
+
+                <div class="d-flex justify-content-end align-items-center mb-4">
+
+                    @if (totalPago < valorFinal)
+                    {
+                     <div>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pagCompraProdutoModal">
+                            <i class="fa-solid fa-plus"></i>
+                            Adicionar Pagamento
+                        </button>
+                    </div>
+
+                    } else
+                    {
+                       <span class="badge bg-success">
+                            <i class="fa-solid fa-check"></i> Pagamento quitado
+                       </span> 
+                    }
+                </div>
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header">
+
+                        <div class="section-title">
+
+                            <div class="icon-box">
+                                <i class="fa-solid fa-money-bill-wave"></i>
+                            </div>
+
+                            Pagamentos Cadastrados
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <table id="pagCompraProdutoListaId" class="table table-hover align-middle js-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Valor</th>
+                                    <th>Parcelas</th>
+                                    <th>Vencimento</th>
+                                    <th>Pagamento</th>
+                                    <th>Método</th>
+                                    <th>Status</th>
+                                    <th class="text-center no-sort" data-priority="1">Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.PagamentosProdutoCompra)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span class="fw-semibold">
+                                                R$ @String.Format("{0:N2}", item.Valor)
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            @item.Parcelas
+                                        </td>
+
+                                        <td>
+                                            @item.DataVencimento.ToString("dd/MM/yyyy")
+                                        </td>
+
+                                        <td>
+                                            @item.DataPagamento.ToString("dd/MM/yyyy")
+                                        </td>
+
+                                        <td>
+                                            @item.MetodoPagamento?.Nome
+                                        </td>
+
+                                        <td>
+                                            @if (item.StatusPagamentoId == 1)
+                                            {
+                                                <span class="badge bg-success">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+
+                                            }
+                                            else if (item.StatusPagamentoId == 2)
+                                            {
+                                                <span class="badge bg-primary">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 3)
+                                            {
+                                                <span class="badge bg-warning">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 4)
+                                            {
+                                                <span class="badge bg-secondary">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 5)
+                                            {
+                                                <span class="badge bg-info">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 7)
+                                            {
+                                                <span class="badge bg-success">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 9)
+                                            {
+                                                <span class="badge bg-danger">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                        </td>
+
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center gap-1 flex-nowrap">
+
+                                                <a href="#"
+                                                    class="btn btn-outline-warning btn-sm btn-editar-pagamentocompraproduto"
+                                                    data-bs-toggle="modal-edit-pagamento"
+                                                    data-bs-target="#pagCompraProdutoModalEdit"
+                                                    data-id="@item.Id"
+                                                    title="Editar">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </a>
+
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-sm btn-excluir-pagamentocompraproduto"
+                                                        data-id="@item.Id"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#pagCompraProdutoModalDelete"
+                                                        title="Excluir">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pagCompraProdutoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Adicionar Pagamento da Compra</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="info-label">Valor</label>
+                        <input id="pagCompraProduto_Valor" type="text" class="form-control" />
+                    </div>
+                    <div class="col-md-6 d-none" id="pagCompraProduto_campoParcelas">
+                        <label class="info-label">Parcelas</label>
+                        <input id="pagCompraProduto_Parcelas" type="number" min="1" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="info-label">Data Vencimento</label>
+                        <input id="pagCompraProduto_DataVencimento" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-6 d-none" id="pagCompraProduto_campoDataPagamento">
+                        <label class="info-label">Data Pagamento</label>
+                        <input id="pagCompraProduto_DataPagamento" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="info-label">Método de Pagamento</label>
+                        @Html.DropDownList("pagCompraProduto_MetodoPagamentoId",
+                            new SelectList(ViewBag.MetodoPagamento, "Id", "Nome"),
+                            "Selecione", new {@class = "form-select"})
+                    </div>
+                    <div class="col-md-6">
+                        <label class="info-label">Status</label>
+                        @Html.DropDownList("pagCompraProduto_StatusPagamentoId",
+                            new SelectList(ViewBag.StatusPagamento, "Id", "Nome"),
+                            "Selecione", new {@class = "form-select"})
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="adicionarPagamentoCompraProduto()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pagCompraProdutoModalEdit" tabindex="-1" aria-labelledby="pagCompraProdutoModalLabelEdit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pagCompraProdutoModalLabelEdit">Editar Pagamento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card-body">
+
+                <form asp-action="Edit" id="PagCompraProdutoEditar">
+                    <input type="hidden" id="pagCompraProdutoEdit_Id" />
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="info-label">Valor</label>
+                            <input name="Valor" id="pagCompraProdutoEdit_Valor" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6 d-none" id="pagCompraProdutoEdit_campoParcelas">
+                            <label class="info-label">Parcelas</label>
+                            <input name="Parcelas" id="pagCompraProdutoEdit_Parcelas" type="number" min="1" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="info-label">Data Vencimento</label>
+                            <input name="DataVencimento" id="pagCompraProdutoEdit_DataVencimento" type="date" class="form-control"/>
+                        </div>
+                        <div class="col-md-6 d-none" id="pagCompraProdutoEdit_campoDataPagamento">
+                            <label class="info-label">Data Pagamento</label>
+                            <input name="DataPagamento" id="pagCompraProdutoEdit_DataPagamento" type="date" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="info-label">Método de Pagamento</label>
+                            @Html.DropDownList("pagCompraProdutoEdit_MetodoPagamentoId",
+                                new SelectList(ViewBag.MetodoPagamento, "Id", "Nome"),
+                                "Selecione", new { @class = "form-select" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="info-label">Status</label>
+                            @Html.DropDownList("pagCompraProdutoEdit_StatusPagamentoId",
+                                new SelectList(ViewBag.StatusPagamento, "Id", "Nome"),
+                                "Selecione", new { @class = "form-select" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="pagCompraProdutoEditarPagamento()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pagCompraProdutoModalDelete" tabindex="-1" aria-labelledby="pagCompraProdutoModalLabelDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pagCompraProdutoModalLabelDelete">Confirmar Exclusão?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center">
+
+                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;">
+                    </i>
+
+                    <h5 class="mt-3">
+                        Tem certeza que deseja excluir este pagamento?
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Essa ação não poderá ser desfeita!
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                <form id="pagCompraProdutoDeleteForm" asp-action="ExcluirPagamentoProdutoCompra" method="post">
+                    <input type="hidden" id="pagCompraProdutoDeleteId" name="id" />
+                    <input type="hidden" name="produtoId" value="@Model.Id"/>
+
+                    <button type="submit" class="btn btn-danger" name="pagamento_delete" id="pagCompraProdutoDeleteButton">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Excluir
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="compraProdutoModal" tabindex="-1" aria-labelledby="compraProdutoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="compraProdutoModalLabel">Adicionar Compra</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" id="CompraProdutoCreate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-4">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Data da Compra</label>
+                                <input name="DataCompra" id="DataCompra" type="date" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Fornecedor</label>
+                                @Html.DropDownList("FornecedorId",
+                                    new SelectList(ViewBag.fornecedores, "Id", "Nome"),
+                                    "Selecione",
+                                    new { @class = "form-control"})
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("StatusCompraId",
+                                      new SelectList(ViewBag.statuscompras, "Id", "Nome"),
+                                        "Selecione",
+                                      new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Valor da Compra</label>
+                                <input name="ValorCompra" id="ValorCompra" type="text" inputmode="decimal" placeholder="Ex: 0,00" value="0,00" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Desconto</label>
+                                <input name="Desconto" id="DescontoCompra" type="text" inputmode="decimal" placeholder="Ex: 0,00" value="0,00" class="form-control" required />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="adicionarCompraProduto()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="compraProdutoModalEdit" tabindex="-1" aria-labelledby="compraProdutoModalLabelEdit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="compraProdutoModalLabelEdit">Editar Compra</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="card-body">
+
+                <form asp-action="Edit" id="CompraEditar">
+                    <input type="hidden" id="CompraEdit_Id" />
+
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="info-label">Data da Compra</label>
+                                <input name="DataCompra" id="CompraEdit_Data" type="date" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="info-label">Fornecedor</label>
+                                @Html.DropDownList("edit_FornecedorId",
+                                        new SelectList(ViewBag.fornecedores, "Id", "Nome"),
+                                        "Selecione",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("edit_StatusCompraId",
+                                        new SelectList(ViewBag.statuscompras, "Id", "Nome"),
+                                        "Selecione",
+                                        new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="info-label">Valor da Compra</label>
+                                <input name="ValorCompra" id="Edit_ValorCompra" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 15.000,50" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="info-label">Desconto</label>
+                                <input name="Desconto" id="Edit_DescontoCompra" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="editarCompraProduto()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="compraProdutoModalDelete" tabindex="-1" aria-labelledby="compraProdutoModalLabelDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="compraProdutoModalLabelDelete">Confirmar Exclusão?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center">
+
+                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;"></i>
+
+                    <h5 class="mt-3">
+                        Tem certeza que deseja excluir esta compra?
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Essa ação não poderá ser desfeita!
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                <form id="compraDeleteForm" asp-action="ExcluirCompraProduto" method="post">
+                    <input type="hidden" id="compraProdutoDeleteId" name="id" />
+                    <input  type="hidden" name="produtoId" value="@Model.Id"/>
+
+                    <button type="submit" class="btn btn-danger" name="compra_delete" id="compraProdutoDeleteButton">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Excluir
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.CompraProduto != null && Model.CompraProduto?.Id != 0)
+{
+
+<div class="container-fluid py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="page-title">
+                <i class="fa-solid fa-tags text-primary"></i>
+                Venda
+            </h2>
+
+            <small class="text-muted">
+                Gerencie a venda do produto cadastrada.
+            </small>
+
+        </div>
+
+        <div class="d-flex gap-2">
+            @if (Model.VendaProduto == null || Model.VendaProduto.Id == 0)
+            {
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#vendaProdutoModal">
+                    <i class="fa-solid fa-plus"></i>
+                        Adicionar Venda
+                </button>
+            }
+            else
+            {
+                <a href="#" class="btn btn-warning btn-editar-venda" data-id="@Model.VendaProduto.Id">
+                    <i class="fa-solid fa-pencil"></i> Editar
+                </a>
+                <button type="button" class="btn btn-danger btn-excluir-venda"
+                        data-id="@Model.VendaProduto.Id" data-bs-toggle="modal"
+                        data-bs-target="#vendaProdutoModalDelete">
+                        <i class="fa-solid fa-trash-can"></i> Excluir
+                </button>
+            }
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+        </div>
+
+        <div class="card-body">
+            @if (Model.VendaProduto == null || Model.VendaProduto.Id == 0)
+            {
+                <p class="text-muted mb-0">Nenhuma venda cadastrada para este produto.</p>
+            }
+            else
+            {
+                
+                <div class="row g-4">
+
+                    <div class="col-md-3">
+                        <div class="info-label">Data da Venda</div>
+                        <div class="info-value">@Model.VendaProduto.DataVenda.ToString("dd/MM/yyyy")</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Cliente</div>
+                        <div class="info-value"> @Model.VendaProduto.Cliente?.Pessoa?.Nome</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">@Model.VendaProduto.StatusVenda?.Nome</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Valor da Venda</div>
+                        <div class="info-value">R$ @String.Format("{0:N2}", Model.VendaProduto.ValorVenda)</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Desconto</div>
+                        <div class="info-value">R$ @String.Format("{0:N2}", Model.VendaProduto.Desconto)</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Valor Final</div>
+                        <div class="info-value">R$ @String.Format("{0:N2}", Model.VendaProduto.ValorFinal)</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Criado Em</div>
+                        <div class="info-value">@Model.VendaProduto.CriadoEm.ToString("dd/MM/yyyy")</div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-label">Excluido</div>
+                        <div class="info-value">@(Model.VendaProduto.Excluido ? "Sim" : "Não")</div>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+        <div class="container-fluid py-5">
+            @if (Model.VendaProduto == null || Model.VendaProduto.Id == 0)
+            {
+                <p class="text-muted mb-0"></p>
+            }
+            else
+            {
+                var totalRecebido = Model.PagamentosProdutoVenda?.Sum(p => p.Valor) ?? 0;
+                var valorFinalVenda = (decimal)Model.VendaProduto.ValorFinal;
+
+                <div class="d-flex justify-content-end align-items-center mb-4">
+
+                    @if (totalRecebido < valorFinalVenda)
+                    {
+                        <div>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pagVendaProdutoModal">
+                                <i class="fa-solid fa-plus"></i>
+                                Adicionar Pagamento
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">
+                            <i class="fa-solid fa-check"></i> Pagamento quitado
+                        </span>
+                    }
+                </div>
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header">
+
+                        <div class="section-title">
+
+                            <div class="icon-box">
+                                <i class="fa-solid fa-money-bill-wave"></i>
+                            </div>
+
+                            Pagamentos Cadastrados
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <table id="pagVendaProdutoListaId" class="table table-hover align-middle js-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Valor</th>
+                                    <th>Parcelas</th>
+                                    <th>Vencimento</th>
+                                    <th>Pagamento</th>
+                                    <th>Método</th>
+                                    <th>Status</th>
+                                    <th class="text-center no-sort" data-priority="1">Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.PagamentosProdutoVenda)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span class="fw-semibold">
+                                                R$ @String.Format("{0:N2}", item.Valor)
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            @item.Parcelas
+                                        </td>
+
+                                        <td>
+                                            @item.DataVencimento.ToString("dd/MM/yyyy")
+                                        </td>
+
+                                        <td>
+                                            @item.DataPagamento.ToString("dd/MM/yyyy")
+                                        </td>
+
+                                        <td>
+                                            @item.MetodoPagamento?.Nome
+                                        </td>
+
+                                        <td>
+                                            @if (item.StatusPagamentoId == 1)
+                                            {
+                                                <span class="badge bg-success">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+
+                                            }
+                                            else if (item.StatusPagamentoId == 2)
+                                            {
+                                                <span class="badge bg-primary">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 3)
+                                            {
+                                                <span class="badge bg-warning">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 4)
+                                            {
+                                                <span class="badge bg-secondary">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 5)
+                                            {
+                                                <span class="badge bg-info">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 7)
+                                            {
+                                                <span class="badge bg-success">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                            else if (item.StatusPagamentoId == 9)
+                                            {
+                                                <span class="badge bg-danger">
+                                                    @item.StatusPagamento?.Nome
+                                                </span>
+                                            }
+                                        </td>
+
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center gap-1 flex-nowrap">
+
+                                                <a href="#"
+                                                    class="btn btn-outline-warning btn-sm btn-editar-pagamentovenda"
+                                                    data-bs-toggle="modal-edit-pagamento"
+                                                    data-bs-target="#pagVendaProdutoModalEdit"
+                                                    data-id="@item.Id"
+                                                    title="Editar">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                </a>
+
+                                                <button type="button"
+                                                 class="btn btn-outline-danger btn-sm btn-excluir-pagamentovenda"
+                                                 data-id="@item.Id"
+                                                 data-bs-toggle="modal"
+                                                 data-bs-target="#pagVendaProdutoModalDelete"
+                                                 title="Excluir">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+    
+}
+
+<div class="modal fade" id="pagVendaProdutoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Adicionar Pagamento da Venda do Produto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="info-label">Valor</label>
+                        <input id="pagVendaProduto_Valor" type="text" class="form-control" />
+                    </div>
+                    <div class="col-md-6 d-none" id="pagVendaProduto_campoParcelas">
+                        <label class="info-label">Parcelas</label>
+                        <input id="pagVendaProduto_Parcelas" type="number" min="1" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="info-label">Data Vencimento</label>
+                        <input id="pagVendaProduto_DataVencimento" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-6 d-none" id="pagVendaProduto_campoDataPagamento">
+                        <label class="info-label">Data Pagamento</label>
+                        <input id="pagVendaProduto_DataPagamento" type="date" class="form-control" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="info-label">Método de Pagamento</label>
+                        @Html.DropDownList("pagVendaProduto_MetodoPagamentoId",
+                            new SelectList(ViewBag.MetodoPagamento, "Id", "Nome"),
+                            "Selecione", new { @class = "form-select" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="info-label">Status</label>
+                        @Html.DropDownList("pagVendaProduto_StatusPagamentoId",
+                            new SelectList(ViewBag.StatusPagamento, "Id", "Nome"),
+                            "Selecione", new { @class = "form-select" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="adicionarPagamentoVendaProduto()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pagVendaProdutoModalEdit" tabindex="-1" aria-labelledby="pagVendaModalLabelEdit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pagVendaProdutoModalLabelEdit">Editar Pagamento</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="card-body">
+
+                <form asp-action="Edit" id="PagVendaProdutoEditar">
+                    <input type="hidden" id="pagVendaProdutoEdit_Id" />
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="info-label">Valor</label>
+                            <input name="Valor" id="pagVendaProdutoEdit_Valor" type="text" class="form-control" />
+                        </div>
+                        <div class="col-md-6 d-none" id="pagVendaProdutoEdit_campoParcelas">
+                            <label class="info-label">Parcelas</label>
+                            <input name="Parcelas" id="pagVendaProdutoEdit_Parcelas" type="number" min="1" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="info-label">Data Vencimento</label>
+                            <input name="DataVencimento" id="pagVendaProdutoEdit_DataVencimento" type="date" class="form-control" />
+                        </div>
+                        <div class="col-md-6 d-none" id="pagVendaProdutoEdit_campoDataPagamento">
+                            <label class="info-label">Data Pagamento</label>
+                            <input name="DataPagamento" id="pagVendaProdutoEdit_DataPagamento" type="date" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="info-label">Método de Pagamento</label>
+                            @Html.DropDownList("pagVendaProdutoEdit_MetodoPagamentoId",
+                                new SelectList(ViewBag.MetodoPagamento, "Id", "Nome"),
+                                "Selecione", new { @class = "form-select" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="info-label">Status</label>
+                            @Html.DropDownList("pagVendaProdutoEdit_StatusPagamentoId",
+                                new SelectList(ViewBag.StatusPagamento, "Id", "Nome"),
+                                "Selecione", new { @class = "form-select" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="pagVendaProdutoEditarPagamento()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pagVendaProdutoModalDelete" tabindex="-1" aria-labelledby="pagVendaProdutoModalLabelDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="pagVendaProdutoModalLabelDelete">Confirmar Exclusão?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center">
+
+                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;">
+                    </i>
+
+                    <h5 class="mt-3">
+                        Tem certeza que deseja excluir este pagamento?
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Essa ação não poderá ser desfeita!
+                    </p>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                <form id="pagVendaProdutoDeleteForm" asp-action="ExcluirPagamentoVendaProduto" method="post">
+                    <input type="hidden" id="pagVendaProdutoDeleteId" name="id" />
+                    <input type="hidden" name="produtoId" value="@Model.Id"/>
+
+                    <button type="submit" class="btn btn-danger" name="pagamento_delete" id="pagVendaProdutoDeleteButton">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Excluir
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="vendaProdutoModal" tabindex="-1" aria-labelledby="vendaProdutoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="vendaProdutoModalLabel">Adicionar Venda</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" id="VendaProdutoCreate">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-4">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Data da Venda</label>
+                                <input name="DataVenda" id="DataVenda" type="date" class="form-control" required/>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Cliente</label>
+                                @Html.DropDownList("ClienteId",
+                                      (List<SelectListItem>)ViewBag.clientes,
+                                        "Selecione",
+                                      new { @class = "form-select" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("StatusVendaId",
+                                      new SelectList(ViewBag.statusvendas, "Id", "Nome"),
+                                        "Selecione",
+                                      new { @class = "form-select" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Valor da Venda</label>
+                                <input name="ValorVenda" id="ValorVenda" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 15.000,50" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Desconto</label>
+                                <input name="Desconto" id="DescontoVenda" type="text" inputmode="decimal"
+                                       placeholder="Ex.: 0,00" value="0,00" class="form-control" required />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="adicionarVendaProduto()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="vendaProdutoModalEdit" tabindex="-1" aria-labelledby="vendaProdutoModalLabelEdit" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="vendaProdutoModalLabelEdit">Editar Venda</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form asp-action="Edit" id="VendaProdutoEditar">
+                    <input type="hidden" id="VendaProdutoEdit_Id" />
+
+                    <div class="row g-4">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Data da Venda</label>
+                                <input name="DataVenda" id="VendaProdutoEdit_Data" type="date" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Cliente</label>
+                                @Html.DropDownList("edit_ClienteId",
+                                      (List<SelectListItem>)ViewBag.clientes,
+                                       "Selecione",
+                                        new { @class = "form-select"})
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Status</label>
+                                @Html.DropDownList("edit_StatusVendaId",
+                                      new SelectList(ViewBag.statusvendas, "Id", "Nome"),
+                                        "Selecione",
+                                      new { @class = "form-select"})   
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Valor da Venda</label>
+                                <input name="ValorVenda" id="Edit_ValorVenda" type="text" inputmode="decimal"
+                                        placeholder="Ex: 15.000,00" class="form-control" required/>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="info-label">Desconto</label>
+                                <input name="Desconto" id="Edit_DescontoVenda" type="text" inputmode="decimal"
+                                        placeholder="Ex: 0,00" value="0,00"  class="form-control" required/>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary" onclick="editarVendaProduto()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="vendaProdutoModalDelete" tabindex="-1" aria-labelledby="vendaProdutoModalLabelDelete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="vendaProdutoModalLabelDelete">Confirmar Exclusão?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center">
+
+                    <i class="fa-solid fa-triangle-exclamation text-danger" style="font-size: 45px;">
+                    </i>
+
+                    <h5 class="mt-3">
+                        Tem certeza que deseja excluir esta venda?
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Essa ação não poderá ser desfeita!
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                <form id="vendaProdutoDeleteForm" asp-action="ExcluirVendaProduto" method="post">
+                    <input type="hidden" id="vendaProdutoDeleteId" name="Id" />
+                    <input type="hidden" name="produtoId" value="@Model.Id" />
+
+                    <button type="submit" class="btn btn-danger" name="venda_delete" id="vendaProdutoDeleteButton">
+                        <i class="fa-solid fa-trash-can"></i>
+                        Excluir
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        var ID_PAGO = 1;
+        var ID_CREDITO = 2;
+
+        function alternarDataCompraPagamento() {
+            var pago = $("#pagCompraProduto_StatusPagamentoId").val() == ID_PAGO;
+            $("#pagCompraProduto_campoDataPagamento").toggleClass('d-none', !pago);
+            $("#pagCompraProduto_DataPagamento").prop('disabled', !pago);
+        }
+
+        function alternarParcelaCompraMetodoPagamento() {
+            var metodo = $("#pagCompraProduto_MetodoPagamentoId").val() == ID_CREDITO;
+            $("#pagCompraProduto_campoParcelas").toggleClass('d-none', !metodo);
+            $("#pagCompraProduto_Parcelas").prop('disabled', !metodo);
+        }
+
+        function alternarDataVendaPagamento() {
+            var pago = $("#pagVendaProduto_StatusPagamentoId").val() == ID_PAGO;
+            $("#pagVendaProduto_campoDataPagamento").toggleClass('d-none', !pago);
+            $("#pagVendaProduto_DataPagamento").prop('disabled', !pago);
+        }
+
+        function alternarParcelaVendaMetodoPagamento() {
+            var metodo = $("#pagVendaProduto_MetodoPagamentoId").val() == ID_CREDITO;
+            $("#pagVendaProduto_campoParcelas").toggleClass('d-none', !metodo);
+            $("#pagVendaProduto_Parcelas").prop('disabled', !metodo);
+        }
+
+        function alternarDataCompraProdutoPagamentoEdit() {
+            var pago = $("#pagCompraProdutoEdit_StatusPagamentoId").val() == ID_PAGO;
+            $("#pagCompraProdutoEdit_campoDataPagamento").toggleClass('d-none', !pago);
+            $("#pagCompraProdutoEdit_DataPagamento").prop('disabled', !pago);
+        }
+
+        function alternarParcelaCompraMetodoPagamentoEdit() {
+            var metodo = $("#pagCompraProdutoEdit_MetodoPagamentoId").val() == ID_CREDITO;
+            $("#pagCompraProdutoEdit_campoParcelas").toggleClass('d-none', !metodo);
+            $("#pagCompraProdutoEdit_Parcelas").prop('disabled', !metodo);
+        }
+
+        function alternarDataVendaProdutoPagamentoEdit() {
+            var pago = $("#pagVendaProdutoEdit_StatusPagamentoId").val() == ID_PAGO;
+            $("#pagVendaProdutoEdit_campoDataPagamento").toggleClass('d-none', !pago);
+            $("#pagVendaProdutoEdit_DataPagamento").prop('disabled', !pago);
+        }
+
+        function alternarParcelaVendaMetodoPagamentoEdit() {
+            var metodo = $("#pagVendaProdutoEdit_MetodoPagamentoId").val() == ID_CREDITO;
+            $("#pagVendaProdutoEdit_campoParcelas").toggleClass('d-none', !metodo);
+            $("#pagVendaProdutoEdit_Parcelas").prop('disabled', !metodo);
+        }
+
+        $(document).ready(function() {
+            $('#ValorCompra, #DescontoCompra, #Edit_ValorCompra, #Edit_DescontoCompra').mask('#.##0,00', { reverse: true});
+            $('#ValorVenda, #DescontoVenda, #Edit_ValorVenda, #Edit_DescontoVenda').mask('#.##0,00', { reverse: true});
+            $('#pagCompraProduto_Valor, #pagVendaProduto_Valor, #pagCompraProdutoEdit_Valor, #pagVendaProdutoEdit_Valor').mask('#.##0,00', { reverse: true});
+
+
+            $('#pagCompraProduto_StatusPagamentoId').on('change', alternarDataCompraPagamento);
+            $('#pagCompraProdutoEdit_StatusPagamentoId').on('change', alternarDataCompraProdutoPagamentoEdit);
+            $('#pagVendaProduto_StatusPagamentoId').on('change', alternarDataVendaPagamento);
+            $('#pagVendaProdutoEdit_StatusPagamentoId').on('change', alternarDataVendaProdutoPagamentoEdit);
+
+            $('#pagCompraProduto_MetodoPagamentoId').on('change', alternarParcelaCompraMetodoPagamento);
+            $('#pagCompraProdutoEdit_MetodoPagamentoId').on('change', alternarParcelaCompraMetodoPagamentoEdit);
+            $('#pagVendaProduto_MetodoPagamentoId').on('change', alternarParcelaVendaMetodoPagamento);
+            $('#pagVendaProdutoEdit_MetodoPagamentoId').on('change', alternarParcelaVendaMetodoPagamentoEdit);
+
+
+            $(document).on("click", ".btn-editar-pagamentocompraproduto", function() {
+                var idPagamentoCompra = $(this).attr('data-id');
+                editarPagamentoCompraGet(idPagamentoCompra);
+            });
+
+            $(document).on("click", ".btn-editar-pagamentovenda", function() {
+                var idPagamentoVenda = $(this).attr('data-id');
+                editarPagamentoVendaGet(idPagamentoVenda);
+            });
+
+            $(document).on("click", ".btn-editar-compra", function() {
+                var idCompra = $(this).attr('data-id');
+                editarCompraGet(idCompra);
+            });
+
+            $(document).on("click", ".btn-editar-venda", function() {
+                var idVenda = $(this).attr('data-id');
+                editarVendaGet(idVenda);
+            });
+
+             $(document).on("click", ".btn-excluir-pagamentocompraproduto", function() {
+                var idPagamentoCompra = $(this).attr('data-id');
+                $('#pagCompraProdutoDeleteId').val(idPagamentoCompra);
+            });
+
+            $(document).on("click", ".btn-excluir-pagamentovenda", function() {
+                var idPagamentoVenda = $(this).attr('data-id');
+                $('#pagVendaProdutoDeleteId').val(idPagamentoVenda);
+            });
+
+            $(document).on("click", ".btn-excluir-compra", function() {
+                var idCompra = $(this).attr('data-id');
+                $('#compraProdutoDeleteId').val(idCompra);
+            });
+
+            $(document).on("click", ".btn-excluir-venda", function() {
+                var idVenda = $(this).attr('data-id');
+                $('#vendaProdutoDeleteId').val(idVenda);
+            });
+        });
+
+        function adicionarPagamentoCompraProduto() {
+            $.ajax({
+                type: "POST",
+                url: "/Produtos/AdicionarPagamentoProdutoCompra",
+                data: {
+                    CompraId: '@(Model.CompraProduto?.Id ?? 0)',
+                    Valor: $("#pagCompraProduto_Valor").val(),
+                    Parcelas: $("#pagCompraProduto_Parcelas").val(),
+                    DataVencimento: $("#pagCompraProduto_DataVencimento").val(),
+                    DataPagamento: $("#pagCompraProduto_DataPagamento").val(),
+                    StatusPagamentoId: $("#pagCompraProduto_StatusPagamentoId").val(),
+                    MetodoPagamentoId: $("#pagCompraProduto_MetodoPagamentoId").val()
+                },
+                success: function(r) {
+                    if (r.Sucesso) { $("#pagCompraProdutoModal").modal('hide'); location.reload(); }
+                    else { mostrarAlerta("Erro: " + r.Mensagem); }
+                },
+                error: function(res) { console.log(res); }
+            });
+        }
+
+        function adicionarPagamentoVendaProduto() {
+            $.ajax({
+                type: "POST",
+                url: "/Produtos/AdicionarPagamentoProdutoVenda",
+                data: {
+                    VendaId: '@(Model.VendaProduto?.Id ?? 0)',
+                    Valor: $("#pagVendaProduto_Valor").val(),
+                    Parcelas: $("#pagVendaProduto_Parcelas").val(),
+                    DataVencimento: $("#pagVendaProduto_DataVencimento").val(),
+                    DataPagamento: $("#pagVendaProduto_DataPagamento").val(),
+                    StatusPagamentoId: $("#pagVendaProduto_StatusPagamentoId").val(),
+                    MetodoPagamentoId: $("#pagVendaProduto_MetodoPagamentoId").val()
+                },
+                success: function(r) {
+                    if (r.Sucesso) { $("#pagVendaProdutoModal").modal('hide'); location.reload(); }
+                    else { mostrarAlerta("Erro: " + r.Mensagem); }
+                },
+                error: function(res) { console.log(res); }
+            });
+        }
+
+        function adicionarCompraProduto() {
+            var compra = 
+            {
+                ProdutoId: '@Model.Id',
+                DataCompra: $("#DataCompra").val(),
+                FornecedorId: $("#FornecedorId").val(),
+                StatusCompraId: $("#StatusCompraId").val(),
+                ValorCompra: $("#ValorCompra").val(),
+                Desconto: $("#DescontoCompra").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Produtos/AdicionarCompraProduto",
+                data: compra,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        $("#ValorCompra").val('');
+                        $("#compraProdutoModal").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res)
+                }
+            });
+
+        }
+
+        function editarPagamentoCompraGet(id) {
+
+            $.ajax({
+                url: '/Produtos/ConsultarPagamentoCompraProdutoPorId/' + id,
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                datatype: 'json',
+                success: function(response) {
+                    if (response == null || response == undefined) {
+                        alert('Não foi possivel ler os dados')
+                    }
+                    else {
+                        $('#pagCompraProdutoModalEdit').modal('show');
+                        $('#pagCompraProdutoModalLabelEdit').text('Atualizar Pagamento da Compra');
+                        $('#pagCompraProdutoEdit_Id').val(response.Resultado.Id);
+                        $('#pagCompraProdutoEdit_Valor').val(response.Resultado.Valor);
+                        $('#pagCompraProdutoEdit_Parcelas').val(response.Resultado.Parcelas);
+                        $('#pagCompraProdutoEdit_DataVencimento').val(response.Resultado.DataVencimento);
+                        $('#pagCompraProdutoEdit_DataPagamento').val(response.Resultado.DataPagamento);
+                        $('#pagCompraProdutoEdit_StatusPagamentoId').val(response.Resultado.StatusPagamentoId);
+                        $('#pagCompraProdutoEdit_MetodoPagamentoId').val(response.Resultado.MetodoPagamentoId);
+                        alternarDataCompraProdutoPagamentoEdit();
+                        alternarParcelaCompraMetodoPagamentoEdit()
+                    }
+                },
+                error: function() {
+                    alert('Não foi possível ler os dados.')
+                }
+            });
+        }
+
+        function editarPagamentoVendaGet(id) {
+
+            $.ajax({
+                url: '/Produtos/ConsultarPagamentoVendaProdutoPorId/' + id,
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                datatype: 'json',
+                success: function(response) {
+                    if (response == null || response == undefined) {
+                        alert('Não foi possivel ler os dados')
+                    }
+                    else {
+                        $('#pagVendaProdutoModalEdit').modal('show');
+                        $('#pagVendaProdutoModalLabelEdit').text('Atualizar Pagamento da Venda');
+                        $('#pagVendaProdutoEdit_Id').val(response.Resultado.Id);
+                        $('#pagVendaProdutoEdit_Valor').val(response.Resultado.Valor);
+                        $('#pagVendaProdutoEdit_Parcelas').val(response.Resultado.Parcelas);
+                        $('#pagVendaProdutoEdit_DataVencimento').val(response.Resultado.DataVencimento);
+                        $('#pagVendaProdutoEdit_DataPagamento').val(response.Resultado.DataPagamento);
+                        $('#pagVendaProdutoEdit_StatusPagamentoId').val(response.Resultado.StatusPagamentoId);
+                        $('#pagVendaProdutoEdit_MetodoPagamentoId').val(response.Resultado.MetodoPagamentoId);
+                        alternarDataVendaProdutoPagamentoEdit();
+                        alternarParcelaVendaMetodoPagamentoEdit()
+                    }
+                },
+                error: function() {
+                    alert('Não foi possível ler os dados.')
+                }
+            });
+        }
+
+        function editarCompraGet(id) {
+
+            $.ajax({
+                url: '/Produtos/ConsultarCompraProdutoPorId/' + id,
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                datatype: 'json',
+                success: function(response) {
+                    if (response == null || response == undefined) {
+                        alert('Não foi possivel ler os dados 1')
+                    }
+                    else {
+                        $('#compraProdutoModalEdit').modal('show');
+                        $('#compraProdutoModalLabelEdit').text('Atualizar Compra');
+                        $('#CompraEdit_Id').val(response.Resultado.Id);
+                        $('#CompraEdit_Data').val(response.Resultado.DataCompra);
+                        $('#edit_FornecedorId').val(response.Resultado.FornecedorId);
+                        $('#edit_StatusCompraId').val(response.Resultado.StatusCompraId);
+                        $('#Edit_ValorCompra').val(response.Resultado.ValorCompra);
+                        $('#Edit_DescontoCompra').val(response.Resultado.Desconto);
+                    }
+                },
+                error: function() {
+                    alert('Não foi possível ler os dados.')
+                }
+            });
+        }
+
+        function pagCompraProdutoEditarPagamento() {
+            $.ajax({
+                type:"POST",
+                url: "/Produtos/EditarPagamentoCompraProduto",
+                data: {
+                    Id: $("#pagCompraProdutoEdit_Id").val(),
+                    Valor: $("#pagCompraProdutoEdit_Valor").val(),
+                    Parcelas: $("#pagCompraProdutoEdit_Parcelas").val(),
+                    DataVencimento: $("#pagCompraProdutoEdit_DataVencimento").val(),
+                    DataPagamento: $("#pagCompraProdutoEdit_DataPagamento").val(),
+                    StatusPagamentoId: $("#pagCompraProdutoEdit_StatusPagamentoId").val(),
+                    MetodoPagamentoId: $("#pagCompraProdutoEdit_MetodoPagamentoId").val()
+                },
+                success: function(r) {
+                    if (r.Sucesso) { $("#pagCompraProdutoModalEdit").modal('hide'); location.reload(); }
+                    else { alert("Erro: " + r.Mensagem); }
+                },
+                error: function(res) { console.log(res); }
+            });
+        }
+
+        function pagVendaProdutoEditarPagamento() {
+            $.ajax({
+                type: "POST",
+                url: "/Produtos/EditarPagamentoVendaProduto",
+                data: {
+                    Id: $("#pagVendaProdutoEdit_Id").val(),
+                    Valor: $("#pagVendaProdutoEdit_Valor").val(),
+                    Parcelas: $("#pagVendaProdutoEdit_Parcelas").val(),
+                    DataVencimento: $("#pagVendaProdutoEdit_DataVencimento").val(),
+                    DataPagamento: $("#pagVendaProdutoEdit_DataPagamento").val(),
+                    StatusPagamentoId: $("#pagVendaProdutoEdit_StatusPagamentoId").val(),
+                    MetodoPagamentoId: $("#pagVendaProdutoEdit_MetodoPagamentoId").val()
+                },
+                success: function(r) {
+                    if (r.Sucesso) { $("#pagVendaProdutoModalEdit").modal('hide'); location.reload(); }
+                    else { alert("Erro: " + r.Mensagem); }
+                },
+                error: function(res) { console.log(res); }
+            });
+        }
+
+         function editarCompraProduto() {
+            var compra =
+            {
+                Id: $("#CompraEdit_Id").val(),
+                ProdutoId: '@Model.Id',
+                DataCompra: $("#CompraEdit_Data").val(),
+                FornecedorId: $("#edit_FornecedorId").val(),
+                StatusCompraId: $("#edit_StatusCompraId").val(),
+                ValorCompra: $("#Edit_ValorCompra").val(),
+                Desconto: $("#Edit_DescontoCompra").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Produtos/EditarCompraProduto",
+                data: compra,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        $("#Edit_ValorCompra").val('');
+                        $("#compraProdutoModalEdit").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+
+        }
+
+        function adicionarVendaProduto() {
+            var venda = 
+            {
+                ProdutoId: '@Model.Id',
+                DataVenda: $("#DataVenda").val(),
+                ClienteId: $("#ClienteId").val(),
+                StatusVendaId: $("#StatusVendaId").val(),
+                ValorVenda: $("#ValorVenda").val(),
+                Desconto: $("#DescontoVenda").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Produtos/AdicionarVendaProduto",
+                data: venda,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        $("#ValorVenda").val('');
+                        $("#vendaProdutoModal").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem)
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+        }
+
+        function editarVendaGet(id) {
+
+            $.ajax({
+                url: '/Produtos/ConsultarVendaProdutoPorId/' + id,
+                type: 'GET',
+                contentType: 'application/json;charset=utf-8',
+                datatype: 'json',
+                success: function(response) {
+                    if (response == null || response == undefined) {
+                        alert('Não foi possível ler os dados')
+                    }
+                    else {
+                        $('#vendaProdutoModalEdit').modal('show');
+                        $('#vendaProdutoModalLabelEdit').text('Atualizar Venda');
+                        $('#VendaProdutoEdit_Id').val(response.Resultado.Id);
+                        $('#VendaProdutoEdit_Data').val(response.Resultado.DataVenda);
+                        $('#edit_ClienteId').val(response.Resultado.ClienteId);
+                        $('#edit_StatusVendaId').val(response.Resultado.StatusVendaId);
+                        $('#Edit_ValorVenda').val(response.Resultado.ValorVenda);
+                        $('#Edit_DescontoVenda').val(response.Resultado.Desconto);
+                    }
+                },
+                error: function() {
+                    alert('Não foi possível ler os dados.')
+                }
+            });
+        }
+
+         function editarVendaProduto() {
+            var venda =
+            {
+                Id: $("#VendaProdutoEdit_Id").val(),
+                ProdutoId: '@Model.Id',
+                DataVenda: $("#VendaProdutoEdit_Data").val(),
+                ClienteId: $("#edit_ClienteId").val(),
+                StatusVendaId: $("#edit_StatusVendaId").val(),
+                ValorVenda: $("#Edit_ValorVenda").val(),
+                Desconto: $("#Edit_DescontoVenda").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Produtos/EditarVendaProduto",
+                data: venda,
+                success: function(retorno) {
+
+                    if (retorno.Sucesso) {
+                        $("#Edit_ValorVenda").val('');
+                        $("#vendaProdutoModalEdit").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        alert("Erro: " + retorno.Mensagem);
+                    }
+                },
+                error: function(res) {
+                    console.log(res);
+                }
+            });
+
+        }
+    </script>
+}

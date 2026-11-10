@@ -8,7 +8,7 @@
 
         public float Desconto { get; set; }
 
-        public int VendedorId { get; set; }
+        public string VendedorId { get; set; }
 
         public Usuario Vendedor { get; set; }
 

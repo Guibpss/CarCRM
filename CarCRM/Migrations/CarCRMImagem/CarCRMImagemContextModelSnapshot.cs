@@ -33,8 +33,9 @@ namespace CarCRM.Migrations.CarCRMImagem
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

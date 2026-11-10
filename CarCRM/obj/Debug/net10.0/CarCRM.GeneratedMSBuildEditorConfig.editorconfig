@@ -151,6 +151,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybmVjZWRvclRpcG9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Fornecedor/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybmVjZWRvclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/FuncionarioCargo/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRnVuY2lvbmFyaW9DYXJnb1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -193,10 +197,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Home/EditarPerfil.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0YXJQZXJmaWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Home/LandingPage.cshtml]
@@ -245,26 +245,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Pagamento/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFnYW1lbnRvXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Perfils/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xDcmVhdGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Perfils/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xEZWxldGUuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Perfils/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xEZXRhaWxzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Perfils/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xFZGl0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Perfils/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/PessoaFisica/Create.cshtml]
@@ -509,6 +489,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Usuarios/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/Usuarios/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/guilherme.santos/Documents/ESTUDOS/CarCRM/CarCRM/Views/VeiculoCombustivel/Create.cshtml]

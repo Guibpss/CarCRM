@@ -41,7 +41,7 @@ namespace CarCRM.Controllers
             {
                 Id = v.Id,
                 AnoFabricacao = v.AnoFabricacao,
-                AnoModelo = v.AnoModelo,
+               AnoModelo = v.AnoModelo,
                 VeiculoCor = new VeiculoCorViewModel
                 {
                     Id = v.VeiculoCor.Id,
@@ -662,6 +662,20 @@ namespace CarCRM.Controllers
             return _context.Veiculos.Any(e => e.Id == id);
         }
 
+        private decimal TotalPagoCompra(int compraId, int? ignorarPagamentoId = null)
+        {
+            return _context.PagamentoCompras
+                .Where(pc => pc.CompraId == compraId && pc.PagamentoId != ignorarPagamentoId)
+                .Sum(pc => (decimal?)pc.Pagamento.Valor) ?? 0;
+        }
+
+        private decimal TotalPagoVenda(int vendaId, int? ignorarPagamentoId = null)
+        {
+            return _context.PagamentoVendas
+                .Where(pv => pv.VendaId == vendaId && pv.PagamentoId != ignorarPagamentoId)
+                .Sum(pv => (decimal?)pv.Pagamento.Valor) ?? 0;
+        }
+
        
 
         [HttpPost]
@@ -680,6 +694,14 @@ namespace CarCRM.Controllers
             {
                 return Content(JsonConvert.SerializeObject(
                 new { Sucesso = false, Mensagem = "Compra não encontrada." }), "application/json");
+            }
+
+            var totalCompra = Math.Round((decimal)compra.ValorFinal, 2);
+            var pago = TotalPagoCompra(compraId);
+
+            if (pago + pagamentoViewModel.Valor > totalCompra)
+            {
+                return Content(JsonConvert.SerializeObject(new { Sucesso = false, Mensagem = $"O valor ultrapassa o total da compra. Restante: R$ {(totalCompra - pago):N2}" }), "application/json");
             }
 
             var pagamento = new Pagamento
@@ -769,6 +791,24 @@ namespace CarCRM.Controllers
                 return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
             }
 
+            var compra = _context.PagamentoCompras
+                .Where(pc => pc.PagamentoId == pagamentoViewModel.Id)
+                .Select(pc => pc.Compra)
+                .FirstOrDefault();
+
+            if (compra == null)
+            {
+                return Content(JsonConvert.SerializeObject(new { Sucesso = false, Mensagem = "Compra do pagamento não encontrada." }), "application/json");
+            }
+
+            var totalCompra = Math.Round((decimal)compra.ValorFinal, 2);
+            var pago = TotalPagoCompra(compra.Id, ignorarPagamentoId: pagamentoViewModel.Id);
+
+            if (pago + pagamentoViewModel.Valor > totalCompra)
+            {
+                return Content(JsonConvert.SerializeObject(new { Sucesso = false, Mensagem = $"O valor ultrapassa o total da compra. Restante: R$ {(totalCompra - pago):N2}" }), "application/json");
+            }
+
             pagamento.Valor = pagamentoViewModel.Valor;
             pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
             pagamento.DataPagamento = pagamentoViewModel.StatusPagamentoId == 1 ? pagamentoViewModel.DataPagamento : default;
@@ -829,6 +869,14 @@ namespace CarCRM.Controllers
             {
                 return Content(JsonConvert.SerializeObject(
                 new { Sucesso = false, Mensagem = "Venda não encontrada." }), "application/json");
+            }
+
+            var totalVenda = Math.Round((decimal)venda.ValorFinal, 2);
+            var pago = TotalPagoVenda(vendaId);
+
+            if (pago + pagamentoViewModel.Valor > totalVenda)
+            {
+                return Content(JsonConvert.SerializeObject(new { Sucesso = false, Mensagem = $"O valor ultrapassa o total da venda. Restante: R$ {(totalVenda - pago):N2}" }), "application/json");
             }
 
             var pagamento = new Pagamento
@@ -917,6 +965,24 @@ namespace CarCRM.Controllers
                 return Content(JsonConvert.SerializeObject(erroNaoEncontrado), "application/json");
             }
 
+            var venda = _context.PagamentoVendas
+                .Where(pv => pv.PagamentoId == pagamentoViewModel.Id)
+                .Select(pv => pv.Venda)
+                .FirstOrDefault();
+
+            if (venda == null)
+            {
+                return Content(JsonConvert.SerializeObject(new { Sucesso = false, Mensagem = "Venda do pagamento não encontrada." }), "application/json");
+            }
+
+            var totalVenda = Math.Round((decimal)venda.ValorFinal, 2);
+            var pago = TotalPagoVenda(venda.Id, ignorarPagamentoId: pagamentoViewModel.Id);
+
+            if (pago + pagamentoViewModel.Valor > totalVenda)
+            {
+                return Content(JsonConvert.SerializeObject(new { Sucesso = false, Mensagem = $"O valor ultrapassa o total da venda. Restante: R$ {(totalVenda - pago):N2}" }), "application/json");
+            }
+
             pagamento.Valor = pagamentoViewModel.Valor;
             pagamento.DataVencimento = pagamentoViewModel.DataVencimento;
             pagamento.DataPagamento = pagamentoViewModel.StatusPagamentoId == 1 ? pagamentoViewModel.DataPagamento : default;
@@ -988,6 +1054,8 @@ namespace CarCRM.Controllers
 
         public IActionResult ConsultarCompraPorId(int? id)
         {
+            var ptBR = new System.Globalization.CultureInfo("pt-BR");
+
             if (id == null)
             {
                 return NotFound();
@@ -1008,7 +1076,8 @@ namespace CarCRM.Controllers
                 VeiculoId = compra.VeiculoId,
                 VendedorId = compra.VendedorId,
                 StatusCompraId = compra.StatusCompraId,
-                ValorCompra = compra.ValorCompra
+                ValorCompra = compra.ValorCompra.ToString("N2", ptBR),
+                Desconto = compra.Desconto.ToString("N2", ptBR)
             };
 
             var retorno = new { Sucesso = true, Resultado = resultado };
@@ -1098,6 +1167,14 @@ namespace CarCRM.Controllers
             {
                 var retornoErro = new { Sucesso = false, Mensagem = "Por favor, preencha valor" };
                 return Content(JsonConvert.SerializeObject(retornoErro), "application/json");
+            }
+
+            var compraExists = _context.Compras
+                .Any(c => c.VeiculoId == vendaViewModel.VeiculoId);
+
+            if (!compraExists)
+            {
+                return Content(JsonConvert.SerializeObject(new { Sucesso = false, Mensagem = "Por favor, cadastre uma compra!" }), "application/json");
             }
 
             var venda = new Venda();

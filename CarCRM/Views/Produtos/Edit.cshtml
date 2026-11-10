@@ -142,16 +142,25 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3">
+                   <div class="col-lg-3">
                         <div class="form-group">
-                            <label asp-for="ClienteId" class="info-label">Cliente</label>
-                            <select asp-for="ClienteId" class="form-select"
-                                    asp-items="@(new SelectList(ViewBag.Clientes, "Id", "Pessoa.Nome"))" required>
-                                <option value="">Selecione o Cliente</option>
-                                </select>
-                            <span asp-validation-for="ClienteId" class="text-danger"></span>
+                            <label asp-for="Quantidade" class="info-label">Quantidade</label>
+                            <input asp-for="Quantidade" class="form-control" required />
+                            <span asp-validation-for="Quantidade" class="text-danger"></span>
                         </div>
                     </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label asp-for="ProdutoTipoId" class="info-label">Produto Tipo</label>
+                            <select asp-for="ProdutoTipoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Produtos, "Id", "Nome"))" required>
+                                <option value="">Selecione o Produto</option>
+                            </select>
+                            <span asp-validation-for="ProdutoTipoId" class="text-danger"></span>
+                        </div>
+                    </div>
+
                 </div>
             </form>
         </div>

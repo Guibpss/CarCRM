@@ -132,9 +132,14 @@
                     <div class="info-value">R$ @String.Format("{0:N2}", Model.Valor)</div>
                 </div>
 
+                 <div class="col-md-3">
+                    <div class="info-label">Quantidade</div>
+                    <div class="info-value">@Model.Quantidade</div>
+                </div>
+
                 <div class="col-md-3">
-                    <div class="info-label">Cliente</div>
-                    <div class="info-value">@Model.Cliente?.Pessoa?.Nome</div>
+                    <div class="info-label">Produto Tipo</div>
+                    <div class="info-value">@Model.ProdutoTipo.Nome</div>
                 </div>
 
             </div>
